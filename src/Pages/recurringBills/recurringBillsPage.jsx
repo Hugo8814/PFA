@@ -1,5 +1,5 @@
-function recurringBillsPage() {
-  return <div>recurringBillsPage</div>;
+function RecurringBillsPage() {
+  return <div>RecurringBillsPage</div>;
 }
 
-export default recurringBillsPage;
+export default RecurringBillsPage;

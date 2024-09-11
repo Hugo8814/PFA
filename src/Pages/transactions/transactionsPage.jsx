@@ -1,5 +1,5 @@
-function transactionsPage() {
-  return <div>transactionsPage</div>;
+function TransactionsPage() {
+  return <div>TransactionsPage</div>;
 }
 
-export default transactionsPage;
+export default TransactionsPage;
