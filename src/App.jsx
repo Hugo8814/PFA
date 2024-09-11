@@ -1,7 +1,13 @@
-import "./App.css";
+import OverviewPage from "./Pages/overview/overviewPage";
+import PotsPage from "./Pages/pots/potsPage";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <OverviewPage />
+      <PotsPage />
+    </>
+  );
 }
 
 export default App;
