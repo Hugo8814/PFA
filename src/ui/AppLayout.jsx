@@ -1,5 +1,6 @@
 import { Outlet, useNavigation } from "react-router-dom";
 import Loader from "./Loader";
+import SideBar from "./SideBar";
 
 function AppLayout() {
   const navigation = useNavigation();
@@ -7,13 +8,12 @@ function AppLayout() {
 
   return (
     <div className="container">
-      hello
+      <SideBar />
       {isLoading && <Loader />}
-      <div>
-        <main>
-          <Outlet />
-        </main>
-      </div>
+
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 }

@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import { Link, useNavigate } from "react-router-dom";
 
-function LinkButton({ children, to }) {
+function LinkButton({ children, to, className }) {
   const navigate = useNavigate();
-  const className = "Linkbutton";
 
   if (to === "-1")
     return (

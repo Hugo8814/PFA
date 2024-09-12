@@ -6,5 +6,25 @@
   padding: 0;
 }
 
+//Colors
+$white: #ffffff;
+$beige-100: #f8f4f0;
+$beige-500: #98908b;
+
+$grey-100: #b3b3b3;
+$grey-300: #b3b3b3;
+$grey-500: #696868;
+$grey-900: #201f24;
+
+//Secondary Colors
+$green: #277c78;
+$yellow: #f2cdac;
+$cyan: #82c9d7;
+$navy: #626070;
+$red: #c94736;
+$purple: #826cb0;
+//other Colors
+
 @import "./loader";
 @import "./applayout";
+@import "./sidebar";
