@@ -10,22 +10,41 @@
 
     &__logo {
         margin: 1rem 0rem 5rem 0rem;
+        fill: $green;
+
+        &-fill {
+            fill: $green;
+        }
     }
 
     &__btn {
         border: 0;
         width: 100%;
+        display: flex;
+        align-items: center;
         background-color: $grey-900;
         padding: 1rem;
         color: $grey-100;
         font-weight: 600;
         font-size: 1.7rem;
+        gap: 1rem;
         text-decoration: none;
     }
 
+    &__icon {
+        width: 1.6rem;
+        fill: $green;
+
+        &-active {
+            fill: $green;
+        }
+    }
+
     &__active {
-        border-radius: 0 2rem 2rem 0;
-        background-color: $beige-500;
+        border-radius: 0 1rem 1rem 0;
+        background-color: $beige-100;
         color: $grey-900;
+        border-left: $green solid 0.3rem;
+        fill: $green;
     }
 }
