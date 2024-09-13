@@ -33,10 +33,10 @@
 
     &__icon {
         width: 1.6rem;
-        fill: $green;
 
         &-active {
-            fill: $green;
+            filter: invert(33%) sepia(37%) saturate(415%) hue-rotate(126deg)
+            brightness(92%) contrast(86%);
         }
     }
 
@@ -45,6 +45,5 @@
         background-color: $beige-100;
         color: $grey-900;
         border-left: $green solid 0.3rem;
-        fill: $green;
     }
 }

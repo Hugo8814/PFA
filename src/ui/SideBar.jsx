@@ -11,7 +11,7 @@ function SideBar() {
     <div className="sideBar">
       {/* Logo Section */}
       <div className="sideBar__logo">
-        <img src={logo} alt="logo" className="sideBar__logo-fill" />
+        <img src={logo} alt="logo" />
       </div>
 
       {/* Navigation Links */}
@@ -21,8 +21,18 @@ function SideBar() {
           `sideBar__btn ${isActive ? "sideBar__active" : ""}`
         }
       >
-        <img src={houseLogo} alt="Overview icon" className="sideBar__icon" />
-        Overview
+        {({ isActive }) => (
+          <>
+            <img
+              src={houseLogo}
+              alt="Overview icon"
+              className={`sideBar__icon ${
+                isActive ? "sideBar__icon-active" : ""
+              }`}
+            />
+            Overview
+          </>
+        )}
       </NavLink>
 
       <NavLink
@@ -31,12 +41,18 @@ function SideBar() {
           `sideBar__btn ${isActive ? "sideBar__active" : ""}`
         }
       >
-        <img
-          src={transactionsLogo}
-          alt="Transactions icon"
-          className="sideBar__icon"
-        />
-        Transactions
+        {({ isActive }) => (
+          <>
+            <img
+              src={transactionsLogo}
+              alt="Transactions icon"
+              className={`sideBar__icon ${
+                isActive ? "sideBar__icon-active" : ""
+              }`}
+            />
+            Transactions
+          </>
+        )}
       </NavLink>
 
       <NavLink
@@ -45,8 +61,18 @@ function SideBar() {
           `sideBar__btn ${isActive ? "sideBar__active" : ""}`
         }
       >
-        <img src={budgetLogo} alt="Budgets icon" className="sideBar__icon" />
-        Budgets
+        {({ isActive }) => (
+          <>
+            <img
+              src={budgetLogo}
+              alt="Budgets icon"
+              className={`sideBar__icon ${
+                isActive ? "sideBar__icon-active" : ""
+              }`}
+            />
+            Budgets
+          </>
+        )}
       </NavLink>
 
       <NavLink
@@ -55,8 +81,18 @@ function SideBar() {
           `sideBar__btn ${isActive ? "sideBar__active" : ""}`
         }
       >
-        <img src={potsLogo} alt="Pots icon" className="sideBar__icon" />
-        Pots
+        {({ isActive }) => (
+          <>
+            <img
+              src={potsLogo}
+              alt="Pots icon"
+              className={`sideBar__icon ${
+                isActive ? "sideBar__icon-active" : ""
+              }`}
+            />
+            Pots
+          </>
+        )}
       </NavLink>
 
       <NavLink
@@ -65,12 +101,18 @@ function SideBar() {
           `sideBar__btn ${isActive ? "sideBar__active" : ""}`
         }
       >
-        <img
-          src={recurringLogo}
-          alt="Recurring Bills icon"
-          className="sideBar__icon"
-        />
-        Recurring Bills
+        {({ isActive }) => (
+          <>
+            <img
+              src={recurringLogo}
+              alt="Recurring Bills icon"
+              className={`sideBar__icon ${
+                isActive ? "sideBar__icon-active" : ""
+              }`}
+            />
+            Recurring Bills
+          </>
+        )}
       </NavLink>
     </div>
   );
