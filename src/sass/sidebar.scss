@@ -22,4 +22,10 @@
         font-size: 1.7rem;
         text-decoration: none;
     }
+
+    &__active {
+        border-radius: 0 2rem 2rem 0;
+        background-color: $beige-500;
+        color: $grey-900;
+    }
 }

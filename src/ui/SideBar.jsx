@@ -1,32 +1,41 @@
-import LinkButton from "./LinkButton";
+import { useState } from "react";
 import logo from "../../Temp/assets/images/logo-large.svg";
+import { Link } from "react-router-dom";
 
 function SideBar() {
+  const [isActive, setIsActive] = useState("");
+  function handleActive() {
+    setIsActive("sideBar__active");
+  }
   return (
     <div className="sideBar">
       <div className="sideBar__logo">
         <img src={logo} alt="logo" />
       </div>
 
-      <LinkButton to="Overview" className={"sideBar__btn"}>
+      <Link
+        onClick={handleActive}
+        to="Overview"
+        className={`sideBar__btn ${isActive}`}
+      >
         Overview
-      </LinkButton>
+      </Link>
 
-      <LinkButton to="Transactions" className={"sideBar__btn"}>
+      <Link to="Transactions" className={"sideBar__btn"}>
         Transactions
-      </LinkButton>
+      </Link>
 
-      <LinkButton to="Budgets" className={"sideBar__btn"}>
+      <Link to="Budgets" className={"sideBar__btn"}>
         Budgets
-      </LinkButton>
+      </Link>
 
-      <LinkButton to="Pots" className={"sideBar__btn"}>
+      <Link to="Pots" className={"sideBar__btn"}>
         Pots
-      </LinkButton>
+      </Link>
 
-      <LinkButton to="RecurringBills" className={"sideBar__btn"}>
+      <Link to="RecurringBills" className={"sideBar__btn"}>
         Recurring Bills
-      </LinkButton>
+      </Link>
     </div>
   );
 }
