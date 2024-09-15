@@ -28,6 +28,7 @@ $navy: #626070;
 $red: #c94736;
 $purple: #826cb0;
 //other Colors
-@import "./loader";
-@import "./applayout";
-@import "./sidebar";
+@import "./ui/loader";
+@import "./ui/applayout";
+@import "./ui/sidebar";
+@import "./overview/overviewLayout";
