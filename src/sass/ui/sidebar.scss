@@ -1,12 +1,12 @@
 .sideBar {
-    border-radius: 0 1rem 1rem 0;
-    width: 15%;
+    border-radius: 0 2rem 0rem 0;
     height: 100%;
     display: flex;
     flex-direction: column;
     background-color: $grey-900;
     padding: 3rem;
     color: $white;
+    gap: 1rem;
 
     &__logo {
         margin: 1rem 0rem 5rem 0rem;
@@ -23,16 +23,16 @@
         display: flex;
         align-items: center;
         background-color: $grey-900;
-        padding: 1rem;
+        padding: 1.5rem;
         color: $grey-100;
         font-weight: 600;
-        font-size: 1.7rem;
+        font-size: 1.8rem;
         gap: 1rem;
         text-decoration: none;
     }
 
     &__icon {
-        width: 1.6rem;
+        width: 1.9rem;
 
         &-active {
             filter: invert(33%) sepia(37%) saturate(415%) hue-rotate(126deg)
