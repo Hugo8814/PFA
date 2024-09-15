@@ -1,55 +1,72 @@
 .main {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 3rem;
-    gap: 6rem;
-}
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem;
+  gap: 3rem;
 
-.main2 {
+  .title {
+    font-size: 3.5rem;
+  }
+
+  .main2 {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6rem;
-}
+    gap: 3rem;
+    .box1,
+    .box2 {
+      border-radius: 1rem;
+      width: 100%;
+      height: 11rem;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      gap: 1.5rem;
 
-.main3 {
-    width: 100%;
-}
+      &.box1 {
+        background-color: $grey-900;
+        color: $white;
+      }
 
-.title {
-    font-size: 3.5rem;
-}
+      &.box2 {
+        background-color: $white;
+      }
 
-.box1 {
-    border-radius: 1rem;
-    width: 100%;
-    height: 11rem;
-    display: flex;
-    flex-direction: column;
-    background-color: $grey-900;
-    padding: 3rem;
-    color: $white;
-    gap: 1rem;
-
-    &__bal {
+      .box__bal {
         font-weight: 700;
         font-size: 3.5rem;
+      }
+
+      .subtitle {
+        margin-left: 0.5rem;
+        color: $grey-100;
+        font-size: 1.3rem;
+      }
     }
-}
+  }
 
-.box2 {
-    border-radius: 1rem;
+  .main3 {
     width: 100%;
-    height: 11rem;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    background-color: $white;
-    padding: 2rem;
-    gap: 1rem;
-}
 
-.subtitle {
-    color: $grey-100;
-    font-size: 1.3rem;
+    .potsWidget {
+      width: 60rem;
+      height: 20rem;
+      display: flex;
+      background-color: $white;
+      padding: 2rem;
+
+      &__titleBox {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+      &__title {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+    }
+  }
 }
