@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import iconCaretRight from "../../../Temp/assets/images/icon-caret-right.svg";
+import iconPot from "../../../Temp/assets/images/icon-pot.svg";
+import SubTitle from "./SubTitle";
 
 function OverviewPage() {
   return (
@@ -19,24 +19,32 @@ function OverviewPage() {
           <div className="font-bold text-5xl">$1,700.50</div>
         </div>
       </div>
-      <div className="w-full h-full flex">
-        <div className="flex flex-col w-full max-w-[60rem] h-[20rem] bg-white p-8">
-          <div className="flex justify-between">
-            <div className="text-3xl font-bold">Pots</div>
-            <Link to="/pots" className="text-gray-500 text-2xl ">
-              See Details <img src={iconCaretRight} alt="Right arrow" />
-            </Link>
+      <div className="w-full h-full flex gap-8">
+        <div className="flex flex-col gap-4 w-full ">
+          <div className="flex bg-white rounded-md h-full w-full flex-col p-8 ">
+            <SubTitle>Pots</SubTitle>
+            <div className="flex  gap-5 ">
+              <div className="flex gap-4 bg-  bg-[#F8F4F0] w-full rounded-md p-4">
+                <img src={iconPot} alt="money jar icon" className="w-18" />
+                <div className="">
+                  <div className="text-gray-400">Total Saved</div>
+                  <div className="text-6xl font-bold">$0</div>
+                </div>
+              </div>
+              <div className="w-full "></div>
+            </div>
           </div>
-          <div className="flex-1 mt-4"> {/* Add content here */} </div>
+          <div className="flex bg-white rounded-md h-full">
+            <SubTitle>Transactions</SubTitle>
+          </div>
         </div>
-        <div className="flex-1 ml-12 flex flex-col gap-4">
-          <div className="bg-gray-200 rounded-lg h-full">
-            {" "}
-            {/* Add content here */}{" "}
+
+        <div className="w-full  flex flex-col gap-4">
+          <div className="flex bg-white rounded-md h-full w-full">
+            <SubTitle>Budgets</SubTitle>
           </div>
-          <div className="bg-gray-200 rounded-lg h-full">
-            {" "}
-            {/* Add content here */}{" "}
+          <div className="flex bg-white rounded-md h-full w-full">
+            <SubTitle>Recurring Bills</SubTitle>
           </div>
         </div>
       </div>

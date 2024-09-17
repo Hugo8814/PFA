@@ -11,7 +11,7 @@ function AppLayout() {
       <SideBar />
       {isLoading && <Loader />}
 
-      <main>
+      <main className="px-20">
         <Outlet />
       </main>
     </div>
