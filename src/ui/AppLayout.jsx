@@ -7,7 +7,7 @@ function AppLayout() {
   const isLoading = navigation.state === "loading";
 
   return (
-    <div className="container">
+    <div className="w-screen h-screen grid bg-[#F8F4F0] grid-cols-[18%,82%]">
       <SideBar />
       {isLoading && <Loader />}
 
