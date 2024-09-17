@@ -10,7 +10,7 @@ function SideBar() {
   return (
     <div className="rounded-tr-3xl h-full flex flex-col p-12 gap-4 bg-gray-900 text-white ">
       {/* Logo Section */}
-      <div className="mt-4 mb-10">
+      <div className="mt-4 mb-28">
         <img src={logo} alt="logo" />
       </div>
 
