@@ -1,6 +1,7 @@
 import iconPot from "../../../Temp/assets/images/icon-pot.svg";
 import SubTitle from "./SubTitle";
 import breadIcon from "../../../Temp/assets/images/avatars/savory-bites-bistro.jpg";
+import BudgetChart from "../budgets/BudgetChart";
 
 function OverviewPage() {
   return (
@@ -110,8 +111,11 @@ function OverviewPage() {
         </div>
 
         <div className="w-full  flex flex-col gap-4">
-          <div className="flex bg-white rounded-md h-full w-full">
+          <div className="flex bg-white rounded-md h-full w-full flex-col p-10">
             <SubTitle>Budgets</SubTitle>
+            <div className="">
+              <BudgetChart />
+            </div>
           </div>
           <div className="flex bg-white rounded-md h-full w-full">
             <SubTitle>Recurring Bills</SubTitle>
