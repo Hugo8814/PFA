@@ -3,11 +3,12 @@ import SubTitle from "./SubTitle";
 import breadIcon from "../../../Temp/assets/images/avatars/savory-bites-bistro.jpg";
 import BudgetChart from "../budgets/BudgetChart";
 import Pots from "../pots/pots";
+import Header from "../../ui/Header";
 
 function OverviewPage() {
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
-      <h1 className="text-6xl font-semibold">Overview</h1>
+      <Header title="Overview" />
       <div className="w-full grid grid-cols-3 gap-12">
         <div className="bg-gray-900 text-white rounded-lg w-full h-44 flex flex-col p-8 gap-6">
           <h3 className="text-gray-300 text-2xl ml-2">Current balance</h3>
@@ -25,7 +26,7 @@ function OverviewPage() {
       <div className="w-full h-full flex gap-8">
         <div className="flex flex-col gap-4 w-full ">
           <div className="flex bg-white rounded-xl  w-full flex-col p-8 ">
-            <SubTitle>Pots</SubTitle>
+            <SubTitle to="/pots">Pots</SubTitle>
             <div className="flex  gap-5 ">
               <div className="flex gap-6 bg-  bg-[#F8F4F0] w-[85%] rounded-xl p-8">
                 <img src={iconPot} alt="money jar icon" className="w-14" />
@@ -69,7 +70,7 @@ function OverviewPage() {
           </div>
 
           <div className="flex bg-white rounded-xl  flex-col p-8">
-            <SubTitle>Transactions</SubTitle>
+            <SubTitle to="/transactions">Transactions</SubTitle>
             <div className="flex justify-between p-6">
               <div className="flex gap-4 items-center ">
                 <img src={breadIcon} alt="" className="w-16 rounded-full" />
@@ -113,7 +114,7 @@ function OverviewPage() {
 
         <div className="w-full  flex flex-col gap-4">
           <div className="flex bg-white rounded-md h-full w-full flex-col p-10">
-            <SubTitle>Budgets</SubTitle>
+            <SubTitle to="/budgets">Budgets</SubTitle>
 
             <div className="flex gap-6 justify-between ">
               <div className="ml-[20%] relative text-center">
@@ -128,7 +129,7 @@ function OverviewPage() {
             </div>
           </div>
           <div className="flex bg-white rounded-md h-full w-full flex-col gap-4">
-            <SubTitle>Recurring Bills</SubTitle>
+            <SubTitle to="/recurringBills">Recurring Bills</SubTitle>
 
             <div className="flex justify-between mx-6 p-6 bg-[#F8F4F0]  border-l-4 border-lime-500 rounded-xl">
               <div className="flex gap-4 items-center  ">
