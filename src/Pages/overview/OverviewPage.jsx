@@ -1,5 +1,6 @@
 import iconPot from "../../../Temp/assets/images/icon-pot.svg";
 import SubTitle from "./SubTitle";
+import breadIcon from "../../../Temp/assets/images/avatars/savory-bites-bistro.jpg";
 
 function OverviewPage() {
   return (
@@ -24,7 +25,7 @@ function OverviewPage() {
           <div className="flex bg-white rounded-xl h-full w-full flex-col p-8 ">
             <SubTitle>Pots</SubTitle>
             <div className="flex  gap-5 ">
-              <div className="flex gap-6 bg-  bg-[#F8F4F0] w-full rounded-xl p-8">
+              <div className="flex gap-6 bg-  bg-[#F8F4F0] w-[85%] rounded-xl p-8">
                 <img src={iconPot} alt="money jar icon" className="w-14" />
                 <div className="space-y-4">
                   <div className="text-gray-400">Total Saved</div>
@@ -64,8 +65,47 @@ function OverviewPage() {
               </div>
             </div>
           </div>
-          <div className="flex bg-white rounded-md h-full">
+
+          <div className="flex bg-white rounded-xl h-full flex-col p-8">
             <SubTitle>Transactions</SubTitle>
+            <div className="flex justify-between p-6">
+              <div className="flex gap-4 items-center ">
+                <img src={breadIcon} alt="" className="w-16 rounded-full" />
+                <p className="text-2xl font-bold">Name</p>
+              </div>
+              <div className="space-y-2">
+                <div className="text-2xl font-bold text-green-700">
+                  +$399.50
+                </div>
+                <div className="text-gray-500 text-xl">19 Jul 2021</div>
+              </div>
+            </div>
+
+            <div className="flex justify-between p-6">
+              <div className="flex gap-4 items-center ">
+                <img src={breadIcon} alt="" className="w-16 rounded-full" />
+                <p className="text-2xl font-bold">Name</p>
+              </div>
+              <div className="space-y-2">
+                <div className="text-2xl font-bold text-green-700">
+                  +$399.50
+                </div>
+                <div className="text-gray-500 text-xl">19 Jul 2021</div>
+              </div>
+            </div>
+
+            <div className="flex justify-between p-6">
+              <div className="flex gap-4 items-center ">
+                <img src={breadIcon} alt="" className="w-16 rounded-full" />
+                <p className="text-2xl font-bold">Name</p>
+              </div>
+              <div className="space-y-2">
+                <div className="text-2xl font-bold text-green-700">
+                  +$399.50
+                </div>
+                <div className="text-gray-500 text-xl">19 Jul 2021</div>
+              </div>
+            </div>
           </div>
         </div>
 
