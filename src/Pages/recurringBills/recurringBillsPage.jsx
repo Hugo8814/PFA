@@ -6,6 +6,7 @@ import iconCaretRight from "../../../Temp/assets/images/icon-caret-right.svg";
 import BillsIcon from "../../../Temp/assets/images/icon-recurring-bills.svg";
 
 function RecurringBillsPage() {
+  //long day
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
       <Header title="Recurring Bills" />
