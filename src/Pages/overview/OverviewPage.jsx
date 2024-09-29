@@ -4,8 +4,10 @@ import breadIcon from "../../../Temp/assets/images/avatars/savory-bites-bistro.j
 import BudgetChart from "../budgets/BudgetChart";
 import Pots from "../pots/pots";
 import Header from "../../ui/Header";
+import { apiCall } from "../../apis/api";
 
 function OverviewPage() {
+  apiCall();
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
       <Header title="Overview" />
@@ -118,10 +120,10 @@ function OverviewPage() {
 
             <div className="flex gap-6 justify-between ">
               <div className="ml-[20%] relative text-center">
-                <p className="text-6xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
+                <div className="text-6xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
                   $338
                   <p className="text-gray-500 text-lg">of $845 limit</p>
-                </p>
+                </div>
                 <BudgetChart />
               </div>
 
