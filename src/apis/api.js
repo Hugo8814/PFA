@@ -1,6 +1,6 @@
 export async function apiCall() {
   try {
-    const res = await fetch("http://127.0.0.1:9000/api");
+    const res = await fetch("http://localhost:9000/api");
     if (!res.ok) {
       throw new Error("Network response was not ok");
     }
@@ -10,5 +10,3 @@ export async function apiCall() {
     console.error("Failed to fetch:", error);
   }
 }
-
-apiCall();
