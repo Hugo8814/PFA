@@ -1,4 +1,4 @@
-import SubTitle from "./SubTitle";
+import SubTitle from "../../ui/SubTitle";
 
 function RecurringWiget() {
   return (
