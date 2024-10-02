@@ -51,6 +51,7 @@ const overviewSlice = createSlice({
 export const selectOverviewData = (state) => state.overview.data;
 export const selectOverviewStatus = (state) => state.overview.status;
 export const selectOverviewError = (state) => state.overview.error;
+export const getPotsData = (state) => state.overview.data.pots;
 
 // Step 5: Export the reducer
 export default overviewSlice.reducer;

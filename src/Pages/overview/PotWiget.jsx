@@ -1,7 +1,12 @@
 import SubTitle from "./SubTitle";
 import iconPot from "../../../Temp/assets/images/icon-pot.svg";
+import { useSelector } from "react-redux";
+import { getPotsData } from "./overviewSlice";
+import Pot from "../pots/Pot";
 
 function PotWiget() {
+  const data = useSelector(getPotsData);
+
   return (
     <div className="flex bg-white rounded-xl  w-full flex-col p-8 ">
       <SubTitle to="/pots">Pots</SubTitle>
@@ -21,14 +26,8 @@ function PotWiget() {
               <p className="text-3xl font-bold">$104</p>
             </div>
           </div>
+          <Pot />
 
-          <div className=" w-full flex ">
-            <span className=" h-[full] w-2 rounded-xl bg-blue-900 mr-6"></span>
-            <div>
-              <p className="text-gray-400 text-xl">car</p>
-              <p className="text-3xl font-bold">$38</p>
-            </div>
-          </div>
           <div className=" w-full flex ">
             <span className=" h-[full] w-2 rounded-xl bg-yellow-300 mr-6"></span>
             <div>

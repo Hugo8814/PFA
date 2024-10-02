@@ -1,4 +1,7 @@
-function transactionWiget() {
+import breadIcon from "../../../Temp/assets/images/avatars/savory-bites-bistro.jpg";
+import SubTitle from "./SubTitle";
+
+function TransactionWiget() {
   return (
     <div className="flex bg-white rounded-xl  flex-col p-8">
       <SubTitle to="/transactions">Transactions</SubTitle>
@@ -38,4 +41,4 @@ function transactionWiget() {
   );
 }
 
-export default transactionWiget;
+export default TransactionWiget;

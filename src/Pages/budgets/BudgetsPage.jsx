@@ -13,10 +13,10 @@ function BudgetsPage() {
       <div className="flex gap-8">
         <div className="flex   rounded-2xl flex-col gap-6 justify-between bg-white ">
           <div className="relative text-center px-36  py-14">
-            <p className="text-6xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
+            <div className="text-6xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
               $338
               <p className="text-gray-500 text-lg">of $845 limit</p>
-            </p>
+            </div>
             <BudgetChart />
           </div>
           <h3 className="text-4xl font-bold p-8">Spending Summary</h3>
