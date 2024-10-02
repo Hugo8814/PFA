@@ -6,7 +6,6 @@ import SubTitle from "../../ui/SubTitle";
 
 function PotWiget() {
   const total = useSelector(getPotsTotal);
-  console.log(total);
 
   return (
     <div className="flex bg-white rounded-xl  w-full flex-col p-8 ">

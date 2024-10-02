@@ -3,7 +3,6 @@ import { getPotsData } from "../overview/overviewSlice";
 
 function Pot() {
   const data = useSelector(getPotsData);
-  console.log(data);
 
   return (
     data &&
