@@ -1,5 +1,5 @@
 import breadIcon from "../../../Temp/assets/images/avatars/savory-bites-bistro.jpg";
-import SubTitle from "./SubTitle";
+import SubTitle from "../../ui/SubTitle";
 
 function TransactionWiget() {
   return (
