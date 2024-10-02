@@ -1,6 +1,6 @@
+import SubTitle from "../../ui/SubTitle";
 import BudgetChart from "../budgets/BudgetChart";
 import Pots from "../pots/pots";
-import SubTitle from "./SubTitle";
 
 function BugetsWiget() {
   return (
