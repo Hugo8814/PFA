@@ -9,6 +9,7 @@ export const fetchOverviewData = createAsyncThunk(
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
+    console.log(data);
     return data; // Return the entire API response
   }
 );
@@ -52,6 +53,7 @@ export const selectOverviewData = (state) => state.overview.data;
 export const selectOverviewStatus = (state) => state.overview.status;
 export const selectOverviewError = (state) => state.overview.error;
 export const getPotsData = (state) => state.overview.data.pots;
+export const getBugetData = (state) => state.overview.data.budgets;
 export const getPotsTotal = (state) =>
   state.overview.data.pots.reduce((total, item) => total + item.total, 0);
 

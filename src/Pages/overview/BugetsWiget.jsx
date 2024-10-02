@@ -1,8 +1,12 @@
+import { useSelector } from "react-redux";
 import SubTitle from "../../ui/SubTitle";
 import BudgetChart from "../budgets/BudgetChart";
 import Pots from "../pots/pots";
+import { getBugetData } from "./overviewSlice";
 
 function BugetsWiget() {
+  const data = useSelector(getBugetData);
+  console.log(data);
   return (
     <div className="flex bg-white rounded-md h-full w-full flex-col p-10">
       <SubTitle to="/budgets">Budgets</SubTitle>

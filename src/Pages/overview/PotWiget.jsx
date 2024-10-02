@@ -1,4 +1,4 @@
-import iconPot from "../../../Temp/assets/images/icon-pot.svg";
+import iconPot from "../../../assets/images/icon-pot.svg";
 import { useSelector } from "react-redux";
 import { getPotsTotal } from "./overviewSlice";
 import Pot from "../pots/Pot";

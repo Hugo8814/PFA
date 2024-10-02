@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import iconCaretRight from "../../Temp/assets/images/icon-caret-right.svg";
+import iconCaretRight from "../../assets/images/icon-caret-right.svg";
 
 function SubTitle({ children, to }) {
   return (

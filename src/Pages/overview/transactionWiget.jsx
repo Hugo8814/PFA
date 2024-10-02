@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
 
 import SubTitle from "../../ui/SubTitle";
+import { formatCurrency, formatDate } from "../../utils/helpers";
 
 function TransactionWiget() {
   const data = useSelector((state) => state.overview.data.transactions);
-  console.log(data[0]);
+
   return (
     <div className="flex bg-white rounded-xl  flex-col p-8">
       <SubTitle to="/transactions">Transactions</SubTitle>
@@ -17,11 +18,16 @@ function TransactionWiget() {
                 <img src={item.avatar} alt="" className="w-16 rounded-full" />
                 <p className="text-2xl font-bold">{item.name}</p>
               </div>
-              <div className="space-y-2">
-                <div className="text-2xl font-bold text-green-700">
-                  +$399.50
+              <div className="space-y-2 flex flex-col items-end">
+                <div
+                  className="text-2xl font-bold text-green-700"
+                  style={{ color: item.amount > 0 ? "green" : "red" }}
+                >
+                  {formatCurrency(item.amount)}
                 </div>
-                <div className="text-gray-500 text-xl">19 Jul 2021</div>
+                <div className="text-gray-500 text-xl">
+                  {formatDate(item.date)}
+                </div>
               </div>
             </div>
           ))

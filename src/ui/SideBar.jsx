@@ -1,9 +1,9 @@
-import logo from "../../Temp/assets/images/logo-large.svg";
-import houseLogo from "../../Temp/assets/images/icon-nav-overview.svg";
-import transactionsLogo from "../../Temp/assets/images/icon-nav-transactions.svg";
-import budgetLogo from "../../Temp/assets/images/icon-nav-budgets.svg";
-import recurringLogo from "../../Temp/assets/images/icon-nav-recurring-bills.svg";
-import potsLogo from "../../Temp/assets/images/icon-nav-pots.svg";
+import logo from "../../assets/images/logo-large.svg";
+import houseLogo from "../../assets/images/icon-nav-overview.svg";
+import transactionsLogo from "../../assets/images/icon-nav-transactions.svg";
+import budgetLogo from "../../assets/images/icon-nav-budgets.svg";
+import recurringLogo from "../../assets/images/icon-nav-recurring-bills.svg";
+import potsLogo from "../../assets/images/icon-nav-pots.svg";
 import NavBtn from "./navBtn";
 
 function SideBar() {

@@ -1,9 +1,9 @@
 import Header from "../../ui/Header";
-import breadIcon from "../../../Temp/assets/images/avatars/savory-bites-bistro.jpg";
-import downArrow from "../../../Temp/assets/images/icon-caret-down.svg";
-import iconCaretLeft from "../../../Temp/assets/images/icon-caret-left.svg";
-import iconCaretRight from "../../../Temp/assets/images/icon-caret-right.svg";
-import BillsIcon from "../../../Temp/assets/images/icon-recurring-bills.svg";
+import breadIcon from "../../../assets/images/avatars/savory-bites-bistro.jpg";
+import downArrow from "../../../assets/images/icon-caret-down.svg";
+import iconCaretLeft from "../../../assets/images/icon-caret-left.svg";
+import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
+import BillsIcon from "../../../assets/images/icon-recurring-bills.svg";
 
 function RecurringBillsPage() {
   //long day

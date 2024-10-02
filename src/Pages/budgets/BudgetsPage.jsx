@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Header from "../../ui/Header";
-import iconCaretRight from "../../../Temp/assets/images/icon-caret-right.svg";
-import icon from "../../../Temp/assets/images/avatars/elevate-education.jpg";
+import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
+import icon from "../../../assets/images/avatars/elevate-education.jpg";
 
 import BudgetChart from "./BudgetChart";
 
