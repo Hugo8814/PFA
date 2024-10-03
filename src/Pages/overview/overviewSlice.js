@@ -66,12 +66,21 @@ export const getBugetData = (state) => state.overview.data.budgets;
 export const getBugetTotal = (state) =>
   state.overview.data.budgets.reduce((total, item) => total + item.maximum, 0);
 
-const selectTransactions = (state) => state.overview.data.transactions;
+// Selector to safely access transactions
+export const selectTransactions = (state) =>
+  state.overview.data?.transactions || [];
 
 // Memoized selector to filter recurring transactions
 export const getRecurringData = createSelector(
-  [selectTransactions], // Input selector(s)
-  (transactions) => transactions.filter((item) => item.recurring) // Result function
+  [selectTransactions], // Input selector
+  (transactions) => transactions.filter((item) => item.recurring) // Filter for recurring items
+);
+
+// Memoized selector to calculate the total amount of recurring transactions
+export const getRecurringTotal = createSelector(
+  [getRecurringData], // Input from getRecurringData
+  (recurringTransactions) =>
+    recurringTransactions.reduce((total, item) => total + item.amount, 0) // Calculate total
 );
 
 // Step 5: Export the reducer

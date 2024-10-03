@@ -1,10 +1,13 @@
 import Header from "../../ui/Header";
-import breadIcon from "../../../assets/images/avatars/savory-bites-bistro.jpg";
+import { formatCurrency, formatDate } from "../../utils/helpers";
 import downArrow from "../../../assets/images/icon-caret-down.svg";
 import iconCaretLeft from "../../../assets/images/icon-caret-left.svg";
 import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
+import { useSelector } from "react-redux";
+import { selectTransactions } from "../overview/overviewSlice";
 
 function TransactionsPage() {
+  const data = useSelector(selectTransactions);
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
       <div>
@@ -64,46 +67,33 @@ function TransactionsPage() {
           </thead>
 
           <tbody>
-            <tr className="border-t ">
-              <td className="text-2xl font-normal flex items-center p-6">
-                <img src={breadIcon} className="w-14 rounded-full" alt="icon" />
-                <p className="pl-4 font-bold ">Car</p>
-              </td>
-              <td className="text-2xl font-normal text-gray-500">
-                Car payment
-              </td>
-              <td className="text-2xl font-normal text-gray-500">19/04/2021</td>
-              <td className="text-2xl  text-green-700 font-bold text-right">
-                + 68.53
-              </td>
-            </tr>
-
-            <tr className="border-t ">
-              <td className="text-2xl font-normal flex items-center p-6">
-                <img src={breadIcon} className="w-14 rounded-full" alt="icon" />
-                <p className="pl-4 font-bold ">Car</p>
-              </td>
-              <td className="text-2xl font-normal text-gray-500">
-                Car payment
-              </td>
-              <td className="text-2xl font-normal text-gray-500">19/04/2021</td>
-              <td className="text-2xl  text-green-700 font-bold text-right">
-                + 68.53
-              </td>
-            </tr>
-            <tr className="border-t ">
-              <td className="text-2xl font-normal flex items-center p-6">
-                <img src={breadIcon} className="w-14 rounded-full" alt="icon" />
-                <p className="pl-4 font-bold ">Car</p>
-              </td>
-              <td className="text-2xl font-normal text-gray-500">
-                Car payment
-              </td>
-              <td className="text-2xl font-normal text-gray-500">19/04/2021</td>
-              <td className="text-2xl  text-green-700 font-bold text-right">
-                + 68.53
-              </td>
-            </tr>
+            {data &&
+              data
+                .map((item, index) => (
+                  <tr key={index} className="border-t ">
+                    <td className="text-2xl font-normal flex items-center p-6">
+                      <img
+                        src={item.avatar}
+                        className="w-14 rounded-full"
+                        alt="icon"
+                      />
+                      <p className="pl-4 font-bold ">{item.name}</p>
+                    </td>
+                    <td className="text-2xl font-normal text-gray-500">
+                      {item.category}
+                    </td>
+                    <td className="text-2xl font-normal text-gray-500">
+                      {formatDate(item.date)}
+                    </td>
+                    <td
+                      style={{ color: item.amount < 0 ? "red" : "green" }}
+                      className="text-2xl  text-green-700 font-bold text-right"
+                    >
+                      {formatCurrency(item.amount)}
+                    </td>
+                  </tr>
+                ))
+                .slice(0, 7)}
           </tbody>
         </table>
 
