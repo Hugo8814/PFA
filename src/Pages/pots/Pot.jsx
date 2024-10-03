@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { getPotsData } from "../overview/overviewSlice";
+import { getPotsData } from "../pots/PotSlice";
 
 function Pot() {
   const data = useSelector(getPotsData);

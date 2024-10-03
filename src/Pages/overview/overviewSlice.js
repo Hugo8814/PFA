@@ -3,17 +3,22 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
-
+import { setPots } from "../pots/PotSlice";
 // Step 2: Create Async Thunk for Fetching Data
 export const fetchOverviewData = createAsyncThunk(
   "overview/fetchOverviewData",
-  async () => {
+  async (_, { dispatch }) => {
     const response = await fetch("http://127.0.0.1:9000/api");
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
-    console.log(data);
+    // Log the received data to ensure it's correct
+    console.log("Data received from API:", data);
+
+    // Dispatch setPots to populate pots data
+    dispatch(setPots(data.pots)); // Ensure you have pots data in the response
+
     return data; // Return the entire API response
   }
 );
@@ -36,7 +41,20 @@ const overviewSlice = createSlice({
     status: "idle", // to track the status of the API call
     error: null, // to track any errors that occur during the API call
   },
-  reducers: {},
+  reducers: {
+    setPotsData(state, action) {
+      state.data.pots = action.payload; // Set pots data
+    },
+    setBudgetsData(state, action) {
+      state.data.budgets = action.payload; // Set budgets data
+    },
+    setTransactionsData(state, action) {
+      state.data.transactions = action.payload; // Set transactions data
+    },
+    setRecurringBillsData(state, action) {
+      state.data.recurringBills = action.payload; // Set recurring bills data
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchOverviewData.pending, (state) => {
@@ -53,11 +71,16 @@ const overviewSlice = createSlice({
   },
 });
 
+export const {
+  setPotsData,
+  setBudgetsData,
+  setTransactionsData,
+  setRecurringBillsData,
+} = overviewSlice.actions;
+
 export const selectOverviewData = (state) => state.overview.data;
 export const selectOverviewStatus = (state) => state.overview.status;
 export const selectOverviewError = (state) => state.overview.error;
-
-export const getPotsData = (state) => state.overview.data.pots;
 
 export const getPotsTotal = (state) =>
   state.overview.data.pots.reduce((total, item) => total + item.total, 0);
