@@ -2,7 +2,7 @@ import Header from "../../ui/Header";
 import MoneyTabs from "./MoneyTabs";
 import PotWiget from "./PotWiget";
 import { useSelector } from "react-redux";
-import TransactionWiget from "./transactionWiget";
+import TransactionWiget from "./TransactionWiget";
 import BugetsWiget from "./BugetsWiget";
 import RecurringWiget from "./RecurringWiget";
 
