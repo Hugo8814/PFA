@@ -1,19 +1,13 @@
+/* eslint-disable react/prop-types */
 import { PureComponent } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 
-const data = [
-  { name: "Group A", value: 600 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-  { name: "Group E", value: 400 },
-];
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#900112"];
-
-export default class BudgetChart extends PureComponent {
+class BudgetChart extends PureComponent {
   render() {
+    const { data } = this.props; // Data passed from the parent component
+
     return (
-      <PieChart width={250} height={250} onMouseEnter={this.onPieEnter}>
+      <PieChart width={250} height={250}>
         <Pie
           data={data}
           cx={120}
@@ -26,10 +20,20 @@ export default class BudgetChart extends PureComponent {
           stroke="none"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={entry.theme} />
           ))}
         </Pie>
+        <circle
+          cx={125}
+          cy={125}
+          r={85} // Same as innerRadius to overlap the middle
+          fill="none"
+          stroke="rgba(255,255,255,0.2)" // White border
+          strokeWidth={30} // Thickness of the border
+        />
       </PieChart>
     );
   }
 }
+
+export default BudgetChart;

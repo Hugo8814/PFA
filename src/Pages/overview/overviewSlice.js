@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 
 // Step 2: Create Async Thunk for Fetching Data
 export const fetchOverviewData = createAsyncThunk(
@@ -52,10 +56,23 @@ const overviewSlice = createSlice({
 export const selectOverviewData = (state) => state.overview.data;
 export const selectOverviewStatus = (state) => state.overview.status;
 export const selectOverviewError = (state) => state.overview.error;
+
 export const getPotsData = (state) => state.overview.data.pots;
-export const getBugetData = (state) => state.overview.data.budgets;
+
 export const getPotsTotal = (state) =>
   state.overview.data.pots.reduce((total, item) => total + item.total, 0);
+
+export const getBugetData = (state) => state.overview.data.budgets;
+export const getBugetTotal = (state) =>
+  state.overview.data.budgets.reduce((total, item) => total + item.maximum, 0);
+
+const selectTransactions = (state) => state.overview.data.transactions;
+
+// Memoized selector to filter recurring transactions
+export const getRecurringData = createSelector(
+  [selectTransactions], // Input selector(s)
+  (transactions) => transactions.filter((item) => item.recurring) // Result function
+);
 
 // Step 5: Export the reducer
 export default overviewSlice.reducer;
