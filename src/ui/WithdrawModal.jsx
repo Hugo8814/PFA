@@ -1,26 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
-import { increasePot } from "../Pages/pots/PotSlice";
+import { decreasePot } from "../Pages/pots/PotSlice";
 import { setValue } from "./modalSlice";
 import { formatCurrency } from "../utils/helpers";
 
 function WithdrawModal() {
-  const { isOpen, content, value } = useSelector((state) => state.modal);
-
   const dispatch = useDispatch();
+  const { isWithdrawOpen, content, value } = useSelector(
+    (state) => state.modal
+  );
   if (content == null) return null;
+
   const { item } = content;
 
-  const amountLeft = item.target - item.total;
+  const amountLeft = item.total;
+  if (value === 0) {
+    dispatch(setValue(""));
+  }
 
-  if (!isOpen) return null;
+  if (!isWithdrawOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 ">
       <div className="bg-white p-16 rounded-[2rem] w-[30%] h-content flex flex-col gap-12">
         <div className=" flex justify-between items-center">
           <div className="text-5xl font-bold">
-            Add to &quot;{item.name}&quot;
+            Withdraw to &quot;{item.name}&quot;
           </div>
           <div onClick={() => dispatch(closeModal())} className="text-6xl ">
             &times;
@@ -36,22 +41,30 @@ function WithdrawModal() {
         <div className="flex justify-between items-center ">
           <div className="text-gray-500 text-2xl">New Amount</div>
           <div className="font-bold text-6xl">
-            {formatCurrency(value + item.total)}
+            {formatCurrency(value - item.total).slice(1)}
           </div>
         </div>
         <div className="flex justify-start items-center rounded-full h-6  bg-[#F8F4F0]">
           <span
-            style={{ width: `${(item.total / item.target) * 100}%` }}
+            style={{
+              width: `${
+                (item.total / item.target) * 100 - (value / item.target) * 100
+              }%`,
+            }}
             className=" bg-black h-full border-r-[#F8F4F0] border-r-2 rounded-l-full"
           ></span>
           <span
             style={{ width: `${(value / item.target) * 100}%` }}
-            className=" bg-green-700 h-full rounded-r-full"
+            className=" bg-red-800 h-full rounded-r-full"
           ></span>
         </div>
         <div className="flex justify-between items-center">
           <div className="text-2xl text-green-700 font-bold">
-            {(item.total / item.target) * 100 + (value / item.target) * 100}%
+            {(
+              (item.total / item.target) * 100 -
+              (value / item.target) * 100
+            ).toFixed(2)}
+            %
           </div>
           <div className=" text-2xl text-gray-500 font-semibold">
             Target of {formatCurrency(item.target)}
@@ -76,14 +89,14 @@ function WithdrawModal() {
             placeholder="Enter Amount"
             min={0}
             onKeyDown={(e) =>
-              (e.key === "-" || e.key === "e") && e.preventDefault()
+              (e.key === "-" || e.key === "+") && e.preventDefault()
             }
           />
         </div>
 
         <button
           onClick={() => {
-            dispatch(increasePot({ id: item.id, amount: value }));
+            dispatch(decreasePot({ id: item.id, amount: value }));
             dispatch(closeModal());
           }}
           className="flex justify-center items-center bg-black text-white text-3xl font-semibold p-6 rounded-xl"

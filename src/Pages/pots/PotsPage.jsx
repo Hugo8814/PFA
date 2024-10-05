@@ -65,7 +65,7 @@ function PotsPage() {
                 <button
                   onClick={() => {
                     dispatch(openAddModal({ item }));
-                  }} // Pass the correct payload
+                  }}
                   className="bg-[#F8F4F0]  text-2xl font-bold p-6 w-full rounded-xl"
                 >
                   + Add Money

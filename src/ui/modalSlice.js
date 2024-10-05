@@ -4,24 +4,26 @@ import { createSlice } from "@reduxjs/toolkit";
 const modalSlice = createSlice({
   name: "modal",
   initialState: {
-    isOpen: false,
+    isAddOpen: false,
+    isWithdrawOpen: false,
     content: null,
     value: "",
   },
 
   reducers: {
     openAddModal: (state, action) => {
-      state.isOpen = true;
+      state.isAddOpen = true;
       state.content = action.payload;
       state.value = "";
     },
     openWithdrawModal: (state, action) => {
-      state.isOpen = true;
+      state.isWithdrawOpen = true;
       state.content = action.payload;
       state.value = "";
     },
     closeModal: (state) => {
-      state.isOpen = false;
+      state.isAddOpen = false;
+      state.isWithdrawOpen = false;
       state.content = null;
     },
     setValue: (state, action) => {

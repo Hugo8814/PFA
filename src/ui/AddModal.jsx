@@ -5,7 +5,7 @@ import { setValue } from "./modalSlice";
 import { formatCurrency } from "../utils/helpers";
 
 function AddModal() {
-  const { isOpen, content, value } = useSelector((state) => state.modal);
+  const { isAddOpen, content, value } = useSelector((state) => state.modal);
 
   const dispatch = useDispatch();
   if (content == null) return null;
@@ -13,7 +13,7 @@ function AddModal() {
 
   const amountLeft = item.target - item.total;
 
-  if (!isOpen) return null;
+  if (!isAddOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 ">
@@ -51,7 +51,11 @@ function AddModal() {
         </div>
         <div className="flex justify-between items-center">
           <div className="text-2xl text-green-700 font-bold">
-            {(item.total / item.target) * 100 + (value / item.target) * 100}%
+            {(
+              (item.total / item.target) * 100 +
+              (value / item.target) * 100
+            ).toFixed(2)}
+            %
           </div>
           <div className=" text-2xl text-gray-500 font-semibold">
             Target of {formatCurrency(item.target)}
