@@ -1,28 +1,95 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "./addModalSlice";
+import { increasePot } from "../Pages/pots/PotSlice";
+import { setValue } from "./addModalSlice";
+import { formatCurrency } from "../utils/helpers";
 
 function AddModal() {
-  const { isOpen, content } = useSelector((state) => state.addModal);
+  const { isOpen, content, value } = useSelector((state) => state.addModal);
+
+  const dispatch = useDispatch();
+  if (content == null) return null;
+  const { item } = content;
+
+  const amountLeft = item.target - item.total;
+
   if (!isOpen) return null;
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 ">
-      <div className="bg-white p-16 rounded-[2rem] w-[30%] h-[50%] flex flex-col gap-12">
+      <div className="bg-white p-16 rounded-[2rem] w-[30%] h-content flex flex-col gap-12">
         <div className=" flex justify-between items-center">
-          <div className="text-5xl font-bold">Add to &quot;Temp-data&quot;</div>
-          <div className="text-6xl "> &times; </div>
+          <div className="text-5xl font-bold">
+            Add to &quot;{item.name}&quot;
+          </div>
+          <div onClick={() => dispatch(closeModal())} className="text-6xl ">
+            &times;
+          </div>
         </div>
+
         <div className="text-2xl">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
           nesciunt voluptates. Mollitia similique eos pariatur quae rerum
           facere.
         </div>
+
         <div className="flex justify-between items-center ">
           <div className="text-gray-500 text-2xl">New Amount</div>
-          <div className="font-bold text-6xl"> $559.00</div>
+          <div className="font-bold text-6xl">
+            {formatCurrency(value + item.total)}
+          </div>
         </div>
-        <span className="flex justify-start items-center rounded-full h-8  bg-[#F8F4F0]">
-          <span className="w-40 bg-black h-full border-r-[#F8F4F0] border-r-2 rounded-l-full"></span>
-          <span className="w-72 bg-green-700 h-full rounded-r-full"></span>
-        </span>
+        <div className="flex justify-start items-center rounded-full h-6  bg-[#F8F4F0]">
+          <span
+            style={{ width: `${(item.total / item.target) * 100}%` }}
+            className=" bg-black h-full border-r-[#F8F4F0] border-r-2 rounded-l-full"
+          ></span>
+          <span
+            style={{ width: `${(value / item.target) * 100}%` }}
+            className=" bg-green-700 h-full rounded-r-full"
+          ></span>
+        </div>
+        <div className="flex justify-between items-center">
+          <div className="text-2xl text-green-700 font-bold">
+            {(item.total / item.target) * 100 + (value / item.target) * 100}%
+          </div>
+          <div className=" text-2xl text-gray-500 font-semibold">
+            Target of {formatCurrency(item.target)}
+          </div>
+        </div>
+
+        <div className="flex items-center border rounded-2xl py-3 px-5 border-gray-900">
+          <span className="text-gray-500 text-2xl ">$</span>
+          <input
+            onChange={(e) => {
+              const enteredValue = Number(e.target.value);
+              if (enteredValue <= amountLeft) {
+                dispatch(setValue(enteredValue));
+              } else {
+                dispatch(setValue(amountLeft)); // If value exceeds, set to the max allowed amount
+              }
+            }}
+            value={value}
+            max={amountLeft}
+            type="number"
+            className="w-full foucus: outline-none border-none pr-37 pl-6 py-4 rounded-xl text-2xl"
+            placeholder="Enter Amount"
+            min={0}
+            onKeyDown={(e) =>
+              (e.key === "-" || e.key === "e") && e.preventDefault()
+            }
+          />
+        </div>
+
+        <button
+          onClick={() => {
+            dispatch(increasePot({ id: item.id, amount: value }));
+            dispatch(closeModal());
+          }}
+          className="flex justify-center items-center bg-black text-white text-3xl font-semibold p-6 rounded-xl"
+        >
+          Confirm Addition
+        </button>
       </div>
     </div>
   );

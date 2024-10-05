@@ -6,6 +6,7 @@ const addModalSlice = createSlice({
   initialState: {
     isOpen: false,
     content: null,
+    value: "",
   },
   reducers: {
     openModal: (state, action) => {
@@ -16,9 +17,13 @@ const addModalSlice = createSlice({
       state.isOpen = false;
       state.content = null;
     },
+    setValue: (state, action) => {
+      state.value = action.payload;
+      console.log("Set value: ", state.value);
+    },
   },
 });
 
-export const { openModal, closeModal } = addModalSlice.actions;
+export const { openModal, closeModal, setValue } = addModalSlice.actions;
 
 export default addModalSlice.reducer;

@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../ui/Header";
-import { getPotsData } from "./PotSlice";
+import { getPotsData, increasePot } from "./PotSlice";
 import { formatCurrency } from "../../utils/helpers";
-import { increasePot } from "./PotSlice"; // Adjust the path as necessary
 import AddModal from "../../ui/AddModal";
 import { openModal } from "../../ui/addModalSlice";
 
@@ -16,9 +15,9 @@ function PotsPage() {
       <Header title="Pots" btn={true} text="+Add New Pot" />
       <div className="grid grid-cols-3 gap-10">
         {data &&
-          data.map((item, id) => (
+          data.map((item, index) => (
             <div
-              key={id}
+              key={index}
               className="w-full bg-white rounded-2xl p-10 h-full flex flex-col gap-8"
             >
               <div className="flex justify-between p-2 w-full">
@@ -54,7 +53,7 @@ function PotsPage() {
 
               <div className="flex justify-between items-center">
                 <p className="text-2xl text-gray-500 p-2 font-semibold">
-                  %{((item.total / item.target) * 100).toFixed(2)}
+                  {((item.total / item.target) * 100).toFixed(2)}%
                 </p>
                 <p className="text-2xl p-2 ">
                   Target of {formatCurrency(item.target)}
@@ -64,15 +63,19 @@ function PotsPage() {
               <div className="flex  gap-6">
                 <button
                   onClick={() => {
-                    dispatch(increasePot({ id: item.id, amount: 5 }));
-                    dispatch(openModal("Money added successfully!"));
+                    dispatch(openModal({ item }));
                   }} // Pass the correct payload
                   className="bg-[#F8F4F0]  text-2xl font-bold p-6 w-full rounded-xl"
                 >
                   + Add Money
                 </button>
                 <AddModal />
-                <button className="bg-[#F8F4F0]  text-2xl font-bold p-6 w-full rounded-xl">
+                <button
+                  onClick={() => {
+                    dispatch(increasePot({ id: item.id, amount: 5 }));
+                  }}
+                  className="bg-[#F8F4F0]  text-2xl font-bold p-6 w-full rounded-xl"
+                >
                   Withdraw
                 </button>
               </div>

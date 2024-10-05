@@ -10,6 +10,7 @@ const potSlice = createSlice({
       if (pot) {
         pot.total += amount;
       }
+      console.log("Increased pot: ", pot.total);
     },
     setPots(state, action) {
       console.log("Setting pots: ", action.payload);
