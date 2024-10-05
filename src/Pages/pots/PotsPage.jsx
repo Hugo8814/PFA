@@ -3,10 +3,12 @@ import Header from "../../ui/Header";
 import { getPotsData } from "./PotSlice";
 import { formatCurrency } from "../../utils/helpers";
 import { increasePot } from "./PotSlice"; // Adjust the path as necessary
+import AddModal from "../../ui/AddModal";
+import { openModal } from "../../ui/addModalSlice";
 
 function PotsPage() {
   const data = useSelector(getPotsData);
-  console.log(data); // is coming out underfind
+
   const dispatch = useDispatch();
 
   return (
@@ -61,13 +63,15 @@ function PotsPage() {
 
               <div className="flex  gap-6">
                 <button
-                  onClick={() =>
-                    dispatch(increasePot({ id: item.id, amount: 5 }))
-                  } // Pass the correct payload
+                  onClick={() => {
+                    dispatch(increasePot({ id: item.id, amount: 5 }));
+                    dispatch(openModal("Money added successfully!"));
+                  }} // Pass the correct payload
                   className="bg-[#F8F4F0]  text-2xl font-bold p-6 w-full rounded-xl"
                 >
                   + Add Money
                 </button>
+                <AddModal />
                 <button className="bg-[#F8F4F0]  text-2xl font-bold p-6 w-full rounded-xl">
                   Withdraw
                 </button>
