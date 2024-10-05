@@ -4,6 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import { setPots } from "../pots/PotSlice";
+
 // Step 2: Create Async Thunk for Fetching Data
 export const fetchOverviewData = createAsyncThunk(
   "overview/fetchOverviewData",
@@ -16,8 +17,8 @@ export const fetchOverviewData = createAsyncThunk(
     // Log the received data to ensure it's correct
     console.log("Data received from API:", data);
 
-    // Dispatch setPots to populate pots data
-    dispatch(setPots(data.pots)); // Ensure you have pots data in the response
+    // Dispatch to populate  data slices
+    dispatch(setPots(data.pots));
 
     return data; // Return the entire API response
   }
