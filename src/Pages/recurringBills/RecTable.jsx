@@ -4,7 +4,7 @@ import { formatCurrency, formatDay } from "../../utils/helpers";
 function RecTable({ data }) {
   const today = new Date();
   const day = today.getDate();
-  const currentMonth = today.getMonth();
+  //const currentMonth = today.getMonth();
 
   return (
     <table>
@@ -30,23 +30,18 @@ function RecTable({ data }) {
           data.map((item, index) => {
             const itemDate = new Date(item.date); // Parse the item's date
             const billDay = itemDate.getDate();
-            const billMonth = itemDate.getMonth();
-            let statusColor = "blue"; // Default is gray (due but not soon)
+            //   const billMonth = itemDate.getMonth();
+            let statusColor = "red"; // Default is gray (due but not soon)
 
-            console.log(
-              `Today: ${today.toLocaleDateString()}, Bill Date: ${itemDate.toLocaleDateString()}`
-            );
+            if (billDay > day + 7) {
+              statusColor = "gray";
+            }
 
-            if (billMonth === currentMonth) {
-              if (billDay > day) {
-                // Bill is due soon (after today)
-                statusColor = "red";
-              } else if (billDay <= day) {
-                // Bill is past due
-                statusColor = "green";
-              }
-            } else if (billMonth < currentMonth) {
+            if (billDay <= day) {
               statusColor = "green";
+            }
+            if (billDay < 7 && day > 27) {
+              statusColor = "red";
             }
 
             return (
