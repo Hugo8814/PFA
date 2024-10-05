@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../ui/Header";
-import { getPotsData, increasePot } from "./PotSlice";
+import { getPotsData } from "./PotSlice";
 import { formatCurrency } from "../../utils/helpers";
 import AddModal from "../../ui/AddModal";
-import { openModal } from "../../ui/addModalSlice";
+import { openAddModal, openWithdrawModal } from "../../ui/modalSlice";
+import WithdrawModal from "../../ui/WithdrawModal";
 
 function PotsPage() {
   const data = useSelector(getPotsData);
@@ -55,7 +56,7 @@ function PotsPage() {
                 <p className="text-2xl text-gray-500 p-2 font-semibold">
                   {((item.total / item.target) * 100).toFixed(2)}%
                 </p>
-                <p className="text-2xl p-2 ">
+                <p className="text-2xl p-2  font-semibold text-gray-500">
                   Target of {formatCurrency(item.target)}
                 </p>
               </div>
@@ -63,7 +64,7 @@ function PotsPage() {
               <div className="flex  gap-6">
                 <button
                   onClick={() => {
-                    dispatch(openModal({ item }));
+                    dispatch(openAddModal({ item }));
                   }} // Pass the correct payload
                   className="bg-[#F8F4F0]  text-2xl font-bold p-6 w-full rounded-xl"
                 >
@@ -72,12 +73,13 @@ function PotsPage() {
                 <AddModal />
                 <button
                   onClick={() => {
-                    dispatch(increasePot({ id: item.id, amount: 5 }));
+                    dispatch(openWithdrawModal({ item }));
                   }}
                   className="bg-[#F8F4F0]  text-2xl font-bold p-6 w-full rounded-xl"
                 >
                   Withdraw
                 </button>
+                <WithdrawModal />
               </div>
             </div>
           ))}

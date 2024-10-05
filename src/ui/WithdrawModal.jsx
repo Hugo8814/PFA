@@ -4,7 +4,7 @@ import { increasePot } from "../Pages/pots/PotSlice";
 import { setValue } from "./modalSlice";
 import { formatCurrency } from "../utils/helpers";
 
-function AddModal() {
+function WithdrawModal() {
   const { isOpen, content, value } = useSelector((state) => state.modal);
 
   const dispatch = useDispatch();
@@ -88,11 +88,11 @@ function AddModal() {
           }}
           className="flex justify-center items-center bg-black text-white text-3xl font-semibold p-6 rounded-xl"
         >
-          Confirm Addition
+          Confirm Withdrawal
         </button>
       </div>
     </div>
   );
 }
 
-export default AddModal;
+export default WithdrawModal;
