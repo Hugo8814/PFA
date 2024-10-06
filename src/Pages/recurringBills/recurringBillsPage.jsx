@@ -9,9 +9,8 @@ import { useSelector } from "react-redux";
 import { getRecurringData } from "../overview/overviewSlice";
 
 function RecurringBillsPage() {
-  const data = useSelector(getRecurringData);
-  console.log(data);
-  //long day
+  const data = useSelector(getRecurringData); // Get recurring transactions
+
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
       <Header title="Recurring Bills" />

@@ -10,7 +10,6 @@ const potSlice = createSlice({
       if (pot) {
         pot.total += amount;
       }
-      console.log("Increased pot: ", pot.total);
     },
     decreasePot(state, action) {
       const { id, amount } = action.payload;
@@ -18,10 +17,8 @@ const potSlice = createSlice({
       if (pot) {
         pot.total -= amount;
       }
-      console.log("Decreased pot: ", pot.total);
     },
     setPots(state, action) {
-      console.log("Setting pots: ", action.payload);
       return action.payload; // Replace the entire array of pots directly
     },
   },
