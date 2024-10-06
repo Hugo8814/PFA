@@ -4,15 +4,22 @@ import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
 import icon from "../../../assets/images/avatars/elevate-education.jpg";
 
 import { useSelector } from "react-redux";
-import { getBugetData, getBugetTotal } from "../overview/overviewSlice";
+import {
+  getBugetDataOverview,
+  getBugetTotal,
+  selectTransactions,
+} from "../overview/overviewSlice";
 import { formatCurrency, formatDate } from "../../utils/helpers";
 import Summary from "./Summary";
+import { getBudgetData } from "./budgetSlice";
 
 function BudgetsPage() {
-  const transactions = useSelector((state) => state.transactions);
-  const budgetData = useSelector(getBugetData);
+  const transactions = useSelector(selectTransactions);
+  const budgetData = useSelector(getBugetDataOverview);
   const budgetTotal = useSelector(getBugetTotal);
+  const budgetTransactions = useSelector(getBudgetData);
 
+  console.log(budgetTransactions);
   const data = budgetData.map((item) => ({
     name: item.category, // Label for the pie slice
     value: item.maximum, // Value for the pie slice
