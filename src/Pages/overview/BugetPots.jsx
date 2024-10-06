@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { getBugetData } from "../overview/overviewSlice";
+import { getBugetDataOverview } from "../overview/overviewSlice";
 
 function Pot() {
-  const data = useSelector(getBugetData);
+  const data = useSelector(getBugetDataOverview);
 
   return (
     data &&

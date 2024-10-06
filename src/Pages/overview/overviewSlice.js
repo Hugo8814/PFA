@@ -4,7 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import { setPots } from "../pots/PotSlice";
-import { setBudget } from "../budgets/budgetSlice";
+import { setBudget, setTransactions } from "../budgets/budgetSlice";
 
 // Step 2: Create Async Thunk for Fetching Data
 export const fetchOverviewData = createAsyncThunk(
@@ -19,7 +19,8 @@ export const fetchOverviewData = createAsyncThunk(
     console.log("Data received from API:", data);
 
     // Dispatch to populate  data slices
-    dispatch(setBudget(data.transactions));
+    dispatch(setBudget(data.budgets));
+    dispatch(setTransactions(data.transactions));
     dispatch(setPots(data.pots));
 
     return data; // Return the entire API response
@@ -88,7 +89,7 @@ export const selectOverviewError = (state) => state.overview.error;
 export const getPotsTotal = (state) =>
   state.overview.data.pots.reduce((total, item) => total + item.total, 0);
 
-export const getBugetData = (state) => state.overview.data.budgets;
+export const getBugetDataOverview = (state) => state.overview.data.budgets;
 export const getBugetTotal = (state) =>
   state.overview.data.budgets.reduce((total, item) => total + item.maximum, 0);
 
