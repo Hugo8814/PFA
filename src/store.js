@@ -13,7 +13,7 @@ const store = configureStore({
     pots: potReducer,
     modal: modalReducer,
     recurring: recurringReducer,
-    budgets: budgetReducer,
+    budget: budgetReducer,
   },
 });
 
