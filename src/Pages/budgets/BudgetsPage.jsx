@@ -4,24 +4,21 @@ import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
 import icon from "../../../assets/images/avatars/elevate-education.jpg";
 
 import { useSelector } from "react-redux";
-import {
-  getBugetData,
-  getBugetTotal,
-  selectTransactions,
-} from "../overview/overviewSlice";
+import { getBugetData, getBugetTotal } from "../overview/overviewSlice";
 import { formatCurrency, formatDate } from "../../utils/helpers";
 import Summary from "./Summary";
 
 function BudgetsPage() {
-  const transactions = useSelector(selectTransactions);
+  const transactions = useSelector((state) => state.transactions);
   const budgetData = useSelector(getBugetData);
   const budgetTotal = useSelector(getBugetTotal);
+
   const data = budgetData.map((item) => ({
     name: item.category, // Label for the pie slice
     value: item.maximum, // Value for the pie slice
     theme: item.theme, // Color for the pie slice
   }));
-  console.log(budgetData);
+
   //for the git 3
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">

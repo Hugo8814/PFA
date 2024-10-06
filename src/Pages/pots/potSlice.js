@@ -19,6 +19,7 @@ const potSlice = createSlice({
       }
     },
     setPots(state, action) {
+      console.log("Set pots: ", action.payload);
       return action.payload; // Replace the entire array of pots directly
     },
   },

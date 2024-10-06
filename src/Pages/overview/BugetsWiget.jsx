@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
 import SubTitle from "../../ui/SubTitle";
 import BudgetChart from "../budgets/BudgetChart";
 
 import { getBugetData, getBugetTotal } from "./overviewSlice";
 import BugetPots from "./BugetPots";
 import { formatCurrency } from "../../utils/helpers";
+import { useSelector } from "react-redux";
 
 function BugetsWiget() {
   const budgetData = useSelector(getBugetData);
@@ -15,6 +15,7 @@ function BugetsWiget() {
     value: item.maximum, // Value for the pie slice
     theme: item.theme, // Color for the pie slice
   }));
+
   return (
     <div className="flex bg-white rounded-md h-content w-full flex-col p-10">
       <SubTitle to="/budgets">Budgets</SubTitle>
