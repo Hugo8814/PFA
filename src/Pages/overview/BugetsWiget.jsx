@@ -1,13 +1,13 @@
 import SubTitle from "../../ui/SubTitle";
 import BudgetChart from "../budgets/BudgetChart";
 
-import { getBugetData, getBugetTotal } from "./overviewSlice";
+import { getBugetDataOverview, getBugetTotal } from "./overviewSlice";
 import BugetPots from "./BugetPots";
 import { formatCurrency } from "../../utils/helpers";
 import { useSelector } from "react-redux";
 
 function BugetsWiget() {
-  const budgetData = useSelector(getBugetData);
+  const budgetData = useSelector(getBugetDataOverview);
   const budgetTotal = useSelector(getBugetTotal);
 
   const data = budgetData.map((item) => ({

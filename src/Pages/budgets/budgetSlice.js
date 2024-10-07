@@ -32,8 +32,7 @@ export const getBudgetData = createSelector(
 
         // Check if the transaction belongs to the current budget
         if (transactionID === updatedBudget.category) {
-          updatedBudget.spent += transactionItem.amount;
-          console.log(transactionItem);
+          updatedBudget.spent += Math.abs(transactionItem.amount);
         }
       });
 

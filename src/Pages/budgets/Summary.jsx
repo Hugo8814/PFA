@@ -27,7 +27,9 @@ function Summary({ data, budgetTotal, budgetData }) {
               <p className="text-gray-800 text-3xl ">{item.category}</p>
 
               <div className="flex items-baseline gap-2">
-                <p className="text-3xl font-bold">TEMP-DATA</p>
+                <p className="text-3xl font-bold">
+                  {formatCurrency(item.spent)}
+                </p>
                 <p className="text-gray-800 text-2xl">
                   of {formatCurrency(item.maximum)}
                 </p>

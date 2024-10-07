@@ -4,22 +4,18 @@ import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
 import icon from "../../../assets/images/avatars/elevate-education.jpg";
 
 import { useSelector } from "react-redux";
-import {
-  getBugetDataOverview,
-  getBugetTotal,
-  selectTransactions,
-} from "../overview/overviewSlice";
+import { getBugetTotal, selectTransactions } from "../overview/overviewSlice";
 import { formatCurrency, formatDate } from "../../utils/helpers";
 import Summary from "./Summary";
 import { getBudgetData } from "./budgetSlice";
 
 function BudgetsPage() {
   const transactions = useSelector(selectTransactions);
-  const budgetData = useSelector(getBugetDataOverview);
+  const budgetData = useSelector(getBudgetData);
   const budgetTotal = useSelector(getBugetTotal);
-  const budgetTransactions = useSelector(getBudgetData);
+  //const budgetTransactions = useSelector(getBudgetData);
 
-  console.log(budgetTransactions);
+  // console.log(budgetTransactions);
   const data = budgetData.map((item) => ({
     name: item.category, // Label for the pie slice
     value: item.maximum, // Value for the pie slice
@@ -63,8 +59,16 @@ function BudgetsPage() {
 
                 <div className="w-full bg-[#F8F4F0] h-12 rounded-md ">
                   <div
-                    // style={{ width: `${(item.current / item.maximum) * 100}%` }}
-                    style={{ backgroundColor: item.theme }}
+                    style={{
+                      width: `${
+                        (item.spent / item.maximum) * 100 < 100
+                          ? (item.spent / item.maximum) * 100
+                          : 100
+                      }%`,
+                      backgroundColor: `${
+                        item.maximum - item.spent > 0 ? item.theme : "red"
+                      }`,
+                    }}
                     className="w-2/3  h-12 rounded-md"
                   ></div>
                 </div>
@@ -76,8 +80,7 @@ function BudgetsPage() {
                   <div className="  w-full  px-6">
                     <p className="text-gray-500 text-2xl  ">Spent</p>
                     <p className="text-gray-800 text-2xl font-bold ">
-                      TEMP-DATA
-                      {/* {item.current} */}
+                      {formatCurrency(item.spent)}
                     </p>
                   </div>
 
@@ -85,8 +88,7 @@ function BudgetsPage() {
                     <p className="text-gray-500 text-2xl  ">Reamaining</p>
 
                     <p className="text-gray-800 text-2xl font-bold">
-                      TEMP-DATA
-                      {/* {item.maximum - $item.current`} */}
+                      {formatCurrency(item.maximum - item.spent)}
                     </p>
                   </div>
                 </div>
@@ -97,7 +99,7 @@ function BudgetsPage() {
                       to="/Transactions"
                       className="text-gray-500 text-2xl flex "
                     >
-                      See Details{" "}
+                      View All
                       <img
                         src={iconCaretRight}
                         alt="Right arrow"
@@ -106,46 +108,45 @@ function BudgetsPage() {
                     </Link>
                   </div>
 
-                  <div className="flex justify-between p-6">
-                    <div className="flex gap-4 items-center ">
-                      <img src={icon} alt="" className="w-16 rounded-full" />
-                      <p className="text-2xl font-bold">Car payment</p>
-                    </div>
-                    <div className="  text-end space-y-2">
-                      <div className="text-2xl font-bold text-green-700">
-                        +$399.50
-                      </div>
-                      <div className="text-gray-500 text-xl">19 Jul 2021</div>
-                    </div>
-                  </div>
                   {transactions &&
                     transactions
-                      .map((item, index) => (
-                        <div key={index} className="flex justify-between p-6">
-                          <div className="flex gap-4 items-center ">
-                            <img
-                              src={item.avatar}
-                              alt=""
-                              className="w-16 rounded-full"
-                            />
-                            <p className="text-2xl font-bold">{item.name}</p>
-                          </div>
-                          <div className="space-y-2 flex flex-col items-end">
-                            <div
-                              className="text-2xl font-bold text-green-700"
-                              style={{
-                                color: item.amount > 0 ? "green" : "red",
-                              }}
-                            >
-                              {formatCurrency(item.amount)}
+                      .filter(
+                        (transactionItem) =>
+                          transactionItem.category === item.category
+                      )
+                      .map((transactionItem, index) => {
+                        return (
+                          <div key={index} className="flex justify-between p-6">
+                            <div className="flex gap-4 items-center ">
+                              <img
+                                src={transactionItem.avatar}
+                                alt=""
+                                className="w-16 rounded-full"
+                              />
+                              <p className="text-2xl font-bold">
+                                {transactionItem.name}
+                              </p>
                             </div>
-                            <div className="text-gray-500 text-xl">
-                              {formatDate(item.date)}
+                            <div className="space-y-2 flex flex-col items-end">
+                              <div
+                                className="text-2xl font-bold text-green-700"
+                                style={{
+                                  color:
+                                    transactionItem.amount > 0
+                                      ? "green"
+                                      : "red",
+                                }}
+                              >
+                                {formatCurrency(transactionItem.amount)}
+                              </div>
+                              <div className="text-gray-500 text-xl">
+                                {formatDate(transactionItem.date)}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))
-                      .slice(0, 2)}
+                        );
+                      })
+                      .slice(0, 3)}
                 </div>
               </div>
             ))}
