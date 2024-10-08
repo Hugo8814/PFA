@@ -7,6 +7,7 @@ import modalReducer from "./ui/modalSlice";
 import recurringReducer from "./Pages/recurringBills/recurringSlice";
 import budgetReducer from "./Pages/budgets/budgetSlice";
 
+import transactionReducer from "./Pages/transactions/transactionSlice";
 const store = configureStore({
   reducer: {
     overview: overviewReducer,
@@ -14,6 +15,7 @@ const store = configureStore({
     modal: modalReducer,
     recurring: recurringReducer,
     budget: budgetReducer,
+    transactions: transactionReducer,
   },
 });
 

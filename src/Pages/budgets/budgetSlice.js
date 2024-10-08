@@ -7,7 +7,7 @@ const budgetSlice = createSlice({
     transactions: [],
   },
   reducers: {
-    setTransactions(state, action) {
+    setBudgetTransactions(state, action) {
       state.transactions = action.payload;
     },
     setBudget(state, action) {
@@ -41,6 +41,6 @@ export const getBudgetData = createSelector(
   }
 );
 
-export const { setBudget, setTransactions } = budgetSlice.actions;
+export const { setBudget, setBudgetTransactions } = budgetSlice.actions;
 
 export default budgetSlice.reducer;

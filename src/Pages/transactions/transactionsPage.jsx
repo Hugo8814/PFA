@@ -4,10 +4,23 @@ import downArrow from "../../../assets/images/icon-caret-down.svg";
 import iconCaretLeft from "../../../assets/images/icon-caret-left.svg";
 import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
 import { useSelector } from "react-redux";
-import { selectTransactions } from "../overview/overviewSlice";
+
+import { getTransactions } from "./transactionSlice";
+import { useState } from "react";
 
 function TransactionsPage() {
-  const data = useSelector(selectTransactions);
+  const transactions = useSelector(getTransactions);
+
+  const [searchTrem, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredTransactions = transactions.filter((transaction) =>
+    transaction.name.toLowerCase().includes(searchTrem.toLowerCase())
+  );
+
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
       <div>
@@ -21,6 +34,7 @@ function TransactionsPage() {
               type="text"
               placeholder="Search transactions"
               className="border-gray-500 border-[1px] pr-72 pl-6 py-4 rounded-xl text-2xl "
+              onChange={(e) => handleSearchChange(e)}
             />
           </div>
 
@@ -67,33 +81,31 @@ function TransactionsPage() {
           </thead>
 
           <tbody>
-            {data &&
-              data
-                .map((item, index) => (
-                  <tr key={index} className="border-t ">
-                    <td className="text-2xl font-normal flex items-center p-6">
-                      <img
-                        src={item.avatar}
-                        className="w-14 rounded-full"
-                        alt="icon"
-                      />
-                      <p className="pl-4 font-bold ">{item.name}</p>
-                    </td>
-                    <td className="text-2xl font-normal text-gray-500">
-                      {item.category}
-                    </td>
-                    <td className="text-2xl font-normal text-gray-500">
-                      {formatDate(item.date)}
-                    </td>
-                    <td
-                      style={{ color: item.amount < 0 ? "red" : "green" }}
-                      className="text-2xl  text-green-700 font-bold text-right"
-                    >
-                      {formatCurrency(item.amount)}
-                    </td>
-                  </tr>
-                ))
-                .slice(0, 7)}
+            {filteredTransactions &&
+              filteredTransactions.map((item, index) => (
+                <tr key={index} className="border-t ">
+                  <td className="text-2xl font-normal flex items-center p-6">
+                    <img
+                      src={item.avatar}
+                      className="w-14 rounded-full"
+                      alt="icon"
+                    />
+                    <p className="pl-4 font-bold ">{item.name}</p>
+                  </td>
+                  <td className="text-2xl font-normal text-gray-500">
+                    {item.category}
+                  </td>
+                  <td className="text-2xl font-normal text-gray-500">
+                    {formatDate(item.date)}
+                  </td>
+                  <td
+                    style={{ color: item.amount < 0 ? "red" : "green" }}
+                    className="text-2xl  text-green-700 font-bold text-right"
+                  >
+                    {formatCurrency(item.amount)}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 

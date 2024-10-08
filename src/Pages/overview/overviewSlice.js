@@ -4,7 +4,8 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import { setPots } from "../pots/PotSlice";
-import { setBudget, setTransactions } from "../budgets/budgetSlice";
+import { setBudget, setBudgetTransactions } from "../budgets/budgetSlice";
+import { setTransactions } from "../transactions/transactionSlice";
 
 // Step 2: Create Async Thunk for Fetching Data
 export const fetchOverviewData = createAsyncThunk(
@@ -20,6 +21,7 @@ export const fetchOverviewData = createAsyncThunk(
 
     // Dispatch to populate  data slices
     dispatch(setBudget(data.budgets));
+    dispatch(setBudgetTransactions(data.transactions));
     dispatch(setTransactions(data.transactions));
     dispatch(setPots(data.pots));
 
