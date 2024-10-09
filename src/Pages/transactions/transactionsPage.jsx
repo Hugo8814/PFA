@@ -39,37 +39,45 @@ function TransactionsPage() {
           </div>
 
           <div className="flex gap-12">
-            <div className="flex gap-6 items-center      relative">
+            <div className="flex gap-6 items-center      ">
               <p type="dropdown" className="text-2xl text-gray-600">
                 sort by
               </p>
+
+              <div
+                className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-10
+            text-2xl  justify-between"
+              >
+                Latest
+                <img src={downArrow} alt="" />
+              </div>
+            </div>
+            <div className="flex gap-6 items-center ">
+              <p className="text-2xl text-gray-600">Category</p>
+
               <div
                 className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-3
             text-2xl  justify-around"
               >
                 <select
                   className="bg-transparent focus: outline-none px-6 rounded-xl h-full flex items-center gap-3
-            text-2xl  justify-around  "
+            text-2xl  justify-around font-semibold  "
                 >
-                  Latest
-                  <option className="" value="recurring">
-                    Latest
+                  All Transactions
+                  <option className="line" value="recurring">
+                    All Transactions
                   </option>
-                  <option value="newest">Newest</option>
-                  <option value="oldest">Oldest</option>
-                  <option value="most-popular">Most Popular</option>
+                  <option value="oldest">Entertainment</option>
+                  <option value="most-popular">Bills</option>
+                  <option value="most-popular">Groceries</option>
+                  <option value="most-popular">Dining Out</option>
+                  <option value="most-popular">Transportation</option>
+                  <option value="most-popular">Personal Care</option>
+                  <option value="most-popular">Education</option>
+                  <option value="most-popular">Lifestyle</option>
+                  <option value="most-popular">General</option>
                 </select>
               </div>
-            </div>
-            <div className="flex gap-6 items-center ">
-              <p className="text-2xl text-gray-600">Category</p>
-              <button
-                className="border-gray-500 border-[1px] px-8 rounded-xl h-full flex items-center gap-6
-            text-2xl "
-              >
-                All Tansactions
-                <img src={downArrow} alt="downArrow" />
-              </button>
             </div>
           </div>
         </div>
