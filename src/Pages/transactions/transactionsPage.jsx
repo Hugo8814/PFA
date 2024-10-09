@@ -39,15 +39,27 @@ function TransactionsPage() {
           </div>
 
           <div className="flex gap-12">
-            <div className="flex gap-6 items-center ">
-              <p className="text-2xl text-gray-600">sort by</p>
-              <button
-                className="border-gray-500 border-[1px] px-8 rounded-xl h-full flex items-center gap-6
-            text-2xl "
+            <div className="flex gap-6 items-center      relative">
+              <p type="dropdown" className="text-2xl text-gray-600">
+                sort by
+              </p>
+              <div
+                className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-3
+            text-2xl  justify-around"
               >
-                Latest
-                <img src={downArrow} alt="downArrow" />
-              </button>
+                <select
+                  className="bg-transparent focus: outline-none px-6 rounded-xl h-full flex items-center gap-3
+            text-2xl  justify-around  "
+                >
+                  Latest
+                  <option className="" value="recurring">
+                    Latest
+                  </option>
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                  <option value="most-popular">Most Popular</option>
+                </select>
+              </div>
             </div>
             <div className="flex gap-6 items-center ">
               <p className="text-2xl text-gray-600">Category</p>
