@@ -10,8 +10,9 @@ import { useState } from "react";
 
 function TransactionsPage() {
   const transactions = useSelector(getTransactions);
-
   const [searchTrem, setSearchTerm] = useState("");
+  const [isdropdownOpen, setIsDropdownOpen] = useState(false);
+  const [sortBy, setSortBy] = useState("Latest");
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -20,6 +21,14 @@ function TransactionsPage() {
   const filteredTransactions = transactions.filter((transaction) =>
     transaction.name.toLowerCase().includes(searchTrem.toLowerCase())
   );
+
+  function handleDropdown() {
+    setIsDropdownOpen(!isdropdownOpen);
+  }
+  const handleSortBy = (sortOption) => {
+    setSortBy(sortOption); // Update the selected sort value
+    setIsDropdownOpen(false); // Close the dropdown after selection
+  };
 
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
@@ -43,28 +52,70 @@ function TransactionsPage() {
               <p type="dropdown" className="text-2xl text-gray-600">
                 sort by
               </p>
-
-              <div
-                className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-10
-            text-2xl  justify-between"
-              >
-                Latest
-                <img src={downArrow} alt="" />
+              <div className="h-full relative space-y-3 text-2xl">
+                <button
+                  onClick={() => handleDropdown()}
+                  className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-24  justify-between font-semibold"
+                >
+                  {sortBy}
+                  <img src={downArrow} alt="" />
+                </button>
+                {isdropdownOpen && (
+                  <div className="absolute w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px] ">
+                    <div
+                      onClick={() => handleSortBy("Latest")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Latest
+                    </div>
+                    <div
+                      onClick={() => handleSortBy("Oldest")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Oldest
+                    </div>
+                    <div
+                      onClick={() => handleSortBy("A to Z")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                      value="A to Z"
+                    >
+                      A to Z
+                    </div>
+                    <div
+                      onClick={() => handleSortBy("Z to A")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                      value="Z to A"
+                    >
+                      Z to A
+                    </div>
+                    <div
+                      onClick={() => handleSortBy("Highest")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                      value="Highest"
+                    >
+                      Highest
+                    </div>
+                    <div
+                      onClick={() => handleSortBy("Lowest")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                      value="Lowest"
+                    >
+                      Lowest
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex gap-6 items-center ">
               <p className="text-2xl text-gray-600">Category</p>
 
-              <div
-                className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-3
-            text-2xl  justify-around"
-              >
+              <div className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-10 text-2xl justify-between">
                 <select
                   className="bg-transparent focus: outline-none px-6 rounded-xl h-full flex items-center gap-3
             text-2xl  justify-around font-semibold  "
                 >
                   All Transactions
-                  <option className="line" value="recurring">
+                  <option className="" value="recurring">
                     All Transactions
                   </option>
                   <option value="oldest">Entertainment</option>
