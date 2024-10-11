@@ -12,7 +12,9 @@ function TransactionsPage() {
   const transactions = useSelector(getTransactions);
   const [searchTrem, setSearchTerm] = useState("");
   const [isdropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isdropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [sortBy, setSortBy] = useState("Latest");
+  const [category, setCategory] = useState("All Transactions");
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -25,10 +27,46 @@ function TransactionsPage() {
   function handleDropdown() {
     setIsDropdownOpen(!isdropdownOpen);
   }
+  function handleDropdown2() {
+    setIsDropdownOpen2(!isdropdownOpen2);
+  }
   const handleSortBy = (sortOption) => {
     setSortBy(sortOption); // Update the selected sort value
+
     setIsDropdownOpen(false); // Close the dropdown after selection
   };
+
+  const handleCategory = (category) => {
+    setCategory(category); // Update the selected sort value
+
+    setIsDropdownOpen2(false); // Close the dropdown after selection
+  };
+
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+
+    switch (sortBy) {
+      case "Latest":
+        return dateB - dateA;
+
+      case "Oldest":
+        return dateA - dateB;
+
+      case "Highest":
+        return b.amount - a.amount;
+
+      case "Lowest":
+        return a.amount - b.amount;
+      case "A to Z":
+        return a.name.localeCompare(b.name); // Sort by name A to Z
+      case "Z to A":
+        return b.name.localeCompare(a.name); // Sort by name Z to A
+
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
@@ -109,25 +147,85 @@ function TransactionsPage() {
             <div className="flex gap-6 items-center ">
               <p className="text-2xl text-gray-600">Category</p>
 
-              <div className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-10 text-2xl justify-between">
-                <select
-                  className="bg-transparent focus: outline-none px-6 rounded-xl h-full flex items-center gap-3
-            text-2xl  justify-around font-semibold  "
+              <div className="h-full relative space-y-3 text-2xl">
+                <button
+                  onClick={() => handleDropdown2()}
+                  className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-24  justify-between font-semibold"
                 >
-                  All Transactions
-                  <option className="" value="recurring">
-                    All Transactions
-                  </option>
-                  <option value="oldest">Entertainment</option>
-                  <option value="most-popular">Bills</option>
-                  <option value="most-popular">Groceries</option>
-                  <option value="most-popular">Dining Out</option>
-                  <option value="most-popular">Transportation</option>
-                  <option value="most-popular">Personal Care</option>
-                  <option value="most-popular">Education</option>
-                  <option value="most-popular">Lifestyle</option>
-                  <option value="most-popular">General</option>
-                </select>
+                  {category}
+                  <img src={downArrow} alt="" />
+                </button>
+                {isdropdownOpen2 && (
+                  <div className="absolute w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px] ">
+                    <div
+                      onClick={() => handleCategory("All Transactions")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      All Transactions
+                    </div>
+                    <div
+                      onClick={() => handleCategory("Entertainment")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Entertainment
+                    </div>
+                    <div
+                      onClick={() => handleCategory("Bills")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Bills
+                    </div>
+                    <div
+                      onClick={() => handleCategory("Groceries")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Groceries
+                    </div>
+                    <div
+                      onClick={() => handleCategory("Dining Out")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Dining Out
+                    </div>
+                    <div
+                      onClick={() => handleCategory("Transportation")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Transportation
+                    </div>
+
+                    <div
+                      onClick={() => handleCategory("Personal Care")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Personal Care
+                    </div>
+                    <div
+                      onClick={() => handleCategory("Education")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Education
+                    </div>
+                    <div
+                      onClick={() => handleCategory("Lifestyle")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Lifestyle
+                    </div>
+                    <div
+                      onClick={() => handleCategory("Shopping")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      Shopping
+                    </div>
+                    <div
+                      onClick={() => handleCategory("General")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                    >
+                      General
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -152,8 +250,8 @@ function TransactionsPage() {
           </thead>
 
           <tbody>
-            {filteredTransactions &&
-              filteredTransactions.map((item, index) => (
+            {sortedTransactions &&
+              sortedTransactions.map((item, index) => (
                 <tr key={index} className="border-t ">
                   <td className="text-2xl font-normal flex items-center p-6">
                     <img
