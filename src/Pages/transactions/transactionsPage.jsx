@@ -10,7 +10,7 @@ import { useState } from "react";
 
 function TransactionsPage() {
   const transactions = useSelector(getTransactions);
-  const [searchTrem, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [isdropdownOpen, setIsDropdownOpen] = useState(false);
   const [isdropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [sortBy, setSortBy] = useState("Latest");
@@ -21,7 +21,7 @@ function TransactionsPage() {
   };
 
   const filteredTransactions = transactions.filter((transaction) =>
-    transaction.name.toLowerCase().includes(searchTrem.toLowerCase())
+    transaction.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   function handleDropdown() {
@@ -36,13 +36,44 @@ function TransactionsPage() {
     setIsDropdownOpen(false); // Close the dropdown after selection
   };
 
-  const handleCategory = (category) => {
-    setCategory(category); // Update the selected sort value
+  const handleCategory = (categoryOption) => {
+    setCategory(categoryOption); // Update the selected sort value
 
     setIsDropdownOpen2(false); // Close the dropdown after selection
   };
+  const categoryTransactions = [...filteredTransactions].filter((a) => {
+    switch (category) {
+      case "All Transactions":
+        return a.category;
+      case "Bills":
+        return a.category === "Bills";
+      case "Groceries":
+        return a.category === "Groceries";
+      case "Entertainment":
+        return a.category === "Entertainment";
+      case "Transportation":
+        return a.category === "Transportation";
+      case "Food":
+        return a.category === "Food";
+      case "Personal Care":
+        return a.category === "Personal Care";
+      case "Dining Out":
+        return a.category === "Dining Out";
+      case "Education":
+        return a.category === "Education";
+      case "Lifestyle":
+        return a.category === "Lifestyle";
+      case "Shopping":
+        return a.category === "Shopping";
+      case "General":
+        return a.category === "General";
 
-  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+      default:
+        return 0;
+    }
+  });
+
+  const sortedTransactions = [...categoryTransactions].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
 
@@ -67,6 +98,30 @@ function TransactionsPage() {
         return 0;
     }
   });
+
+  ////////////////////////////////////////////
+  const [currentPage, setCurrentPage] = useState(1);
+  const perPage = 8;
+  const totalPages = Math.ceil(sortedTransactions.length / perPage);
+
+  const start = (currentPage - 1) * perPage;
+  const end = start + perPage;
+
+  function handleNextPage() {
+    if (currentPage >= totalPages) return;
+    setCurrentPage(currentPage + 1);
+  }
+
+  function handlePrevPage() {
+    if (currentPage <= 1) return;
+    setCurrentPage(currentPage - 1);
+  }
+
+  function handlePageClick(pageNumber) {
+    setCurrentPage(pageNumber);
+  }
+
+  ///////////////////////////////////////////
 
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
@@ -144,6 +199,7 @@ function TransactionsPage() {
                 )}
               </div>
             </div>
+
             <div className="flex gap-6 items-center ">
               <p className="text-2xl text-gray-600">Category</p>
 
@@ -251,7 +307,7 @@ function TransactionsPage() {
 
           <tbody>
             {sortedTransactions &&
-              sortedTransactions.map((item, index) => (
+              sortedTransactions.slice(start, end).map((item, index) => (
                 <tr key={index} className="border-t ">
                   <td className="text-2xl font-normal flex items-center p-6">
                     <img
@@ -279,16 +335,35 @@ function TransactionsPage() {
         </table>
 
         <div className="flex justify-between mt-14 items-center">
-          <button className="border-gray-500 border-[1px] py-4  px-6 rounded-xl h-full flex items-center gap-6 text-2xl">
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            className="border-gray-500 border-[1px] py-4  px-6 rounded-xl h-full flex items-center gap-6 text-2xl"
+          >
             <img src={iconCaretLeft} alt="" />
             Prev
           </button>
-          <div className=" flex justify-center items-center">
-            <button className="border-gray-500 bg-black  text-white font-bold border-[1px] py-3 px-5  rounded-xl h-[80%]   text-2xl flex items-center">
-              1
-            </button>
+          <div className="flex justify-center items-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageClick(index + 1)}
+                style={{
+                  backgroundColor:
+                    currentPage === index + 1 ? "black" : "white",
+                  color: currentPage === index + 1 ? "white" : "black",
+                }}
+                className="border-gray-500 border-[1px] py-3 px-5 rounded-xl h-[80%] mx-2 text-2xl flex items-center"
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
-          <button className="border-gray-500 border-[1px] py-4 px-6 rounded-xl h-full flex items-center gap-6 text-2xl">
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="border-gray-500 border-[1px] py-4 px-6 rounded-xl h-full flex items-center gap-6 text-2xl"
+          >
             Next
             <img src={iconCaretRight} alt="" />
           </button>

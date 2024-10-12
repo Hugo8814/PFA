@@ -1,15 +1,52 @@
 import Header from "../../ui/Header";
 
 import downArrow from "../../../assets/images/icon-caret-down.svg";
-import iconCaretLeft from "../../../assets/images/icon-caret-left.svg";
-import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
+
 import TotalBills from "./TotalBills";
 import RecTable from "./RecTable";
 import { useSelector } from "react-redux";
 import { getRecurringData } from "../overview/overviewSlice";
+import { useState } from "react";
 
 function RecurringBillsPage() {
   const data = useSelector(getRecurringData); // Get recurring transactions
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [isdropdownOpen, setIsdropdownOpen] = useState(false);
+  const [sortBy, setSortBy] = useState("Highest");
+
+  const filteredTransactions = data.filter((transaction) =>
+    transaction.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleDropdown = () => {
+    setIsdropdownOpen(!isdropdownOpen);
+  };
+
+  const handleSortBy = (sortOption) => {
+    setSortBy(sortOption); // Update the selected sort value
+
+    setIsdropdownOpen(false); // Close the dropdown after selection
+  };
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+    switch (sortBy) {
+      case "Highest":
+        return a.amount - b.amount;
+
+      case "Lowest":
+        return b.amount - a.amount;
+      case "A to Z":
+        return a.name.localeCompare(b.name); // Sort by name A to Z
+      case "Z to A":
+        return b.name.localeCompare(a.name); // Sort by name Z to A
+
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
@@ -24,39 +61,59 @@ function RecurringBillsPage() {
               <input
                 type="text"
                 placeholder="Search transactions"
-                className="border-gray-500 border-[1px] pr-37 pl-6 py-4 rounded-xl text-2xl "
+                className="border-gray-500 border-[1px] pr-72 pl-6 py-4 rounded-xl text-2xl "
+                onChange={(e) => handleSearchChange(e)}
               />
             </div>
-
-            <div className="flex gap-6 items-center ">
-              <p className="text-2xl text-gray-600">sort by</p>
-              <button
-                className="border-gray-500 border-[1px] px-8 rounded-xl h-full flex items-center gap-6
-            text-2xl"
-              >
-                Latest
-                <img src={downArrow} alt="downArrow" />
-              </button>
+            <div className="flex gap-6 items-center      ">
+              <p type="dropdown" className="text-2xl text-gray-600">
+                sort by
+              </p>
+              <div className="h-full relative space-y-3 text-2xl">
+                <button
+                  onClick={() => handleDropdown()}
+                  className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-24  justify-between font-semibold"
+                >
+                  {sortBy}
+                  <img src={downArrow} alt="" />
+                </button>
+                {isdropdownOpen && (
+                  <div className="absolute w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px] ">
+                    <div
+                      onClick={() => handleSortBy("A to Z")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                      value="A to Z"
+                    >
+                      A to Z
+                    </div>
+                    <div
+                      onClick={() => handleSortBy("Z to A")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                      value="Z to A"
+                    >
+                      Z to A
+                    </div>
+                    <div
+                      onClick={() => handleSortBy("Highest")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                      value="Highest"
+                    >
+                      Highest
+                    </div>
+                    <div
+                      onClick={() => handleSortBy("Lowest")}
+                      className="hover:bg-gray-200 pl-6 py-4"
+                      value="Lowest"
+                    >
+                      Lowest
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
-          <RecTable data={data} />
-
-          <div className="flex justify-between mt-14 items-center">
-            <button className="border-gray-500 border-[1px] py-4  px-6 rounded-xl h-full flex items-center gap-6 text-2xl">
-              <img src={iconCaretLeft} alt="" />
-              Prev
-            </button>
-            <div className=" flex justify-center items-center">
-              <button className="border-gray-500 bg-black  text-white font-bold border-[1px] py-3 px-5  rounded-xl h-[80%]   text-2xl flex items-center">
-                1
-              </button>
-            </div>
-            <button className="border-gray-500 border-[1px] py-4 px-6 rounded-xl h-full flex items-center gap-6 text-2xl">
-              Next
-              <img src={iconCaretRight} alt="" />
-            </button>
-          </div>
+          <RecTable data={sortedTransactions} perPage={8} />
         </div>
       </div>
     </div>
