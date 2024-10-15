@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
-import { increasePot } from "../Pages/pots/PotSlice";
+import { increasePot } from "../Pages/pots/potSlice";
 import { setValue } from "./modalSlice";
 import { formatCurrency } from "../utils/helpers";
 
@@ -10,7 +10,6 @@ function AddModal() {
   const dispatch = useDispatch();
   if (content == null) return null;
   const { item } = content;
-
   const amountLeft = item.target - item.total;
 
   if (!isAddOpen) return null;

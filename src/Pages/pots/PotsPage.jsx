@@ -1,25 +1,36 @@
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../ui/Header";
-import { getPotsData } from "./PotSlice";
+import { getPotsData } from "./potSlice";
 import { formatCurrency } from "../../utils/helpers";
 import AddModal from "../../ui/AddModal";
-import { openAddModal, openWithdrawModal } from "../../ui/modalSlice";
+import {
+  openAddModal,
+  openEditModal,
+  openWithdrawModal,
+} from "../../ui/modalSlice";
 import WithdrawModal from "../../ui/WithdrawModal";
+import EditModal from "../../ui/EditModal";
+import DeleteModal from "../../ui/DeleteModal";
+import AddNewPot from "../../ui/AddNewPot";
+import EditPotModal from "../../ui/EditPotModal";
 
 function PotsPage() {
   const data = useSelector(getPotsData);
-
   const dispatch = useDispatch();
+  const { isEditOpen, editItem, isDeleteOpen } = useSelector(
+    (state) => state.modal
+  );
 
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
       <Header title="Pots" btn={true} text="+Add New Pot" />
+
       <div className="grid grid-cols-3 gap-10">
         {data &&
           data.map((item, index) => (
             <div
               key={index}
-              className="w-full bg-white rounded-2xl p-10 h-full flex flex-col gap-8"
+              className="w-full bg-white rounded-2xl p-10 h-full flex flex-col gap-8 relative"
             >
               <div className="flex justify-between p-2 w-full">
                 <div className="flex gap-4 items-center">
@@ -29,9 +40,23 @@ function PotsPage() {
                   ></span>
                   <div className="text-4xl font-bold">{item.name}</div>
                 </div>
-                <button className="text-gray-900 text-4xl font-bold">
-                  ...
-                </button>
+                <div className="">
+                  <button
+                    onClick={() => {
+                      dispatch(openEditModal({ item }));
+                    }}
+                    className="text-gray-900 text-4xl font-bold "
+                  >
+                    ...
+                  </button>
+                  {isEditOpen && editItem === item && <EditModal item={item} />}
+                  {isEditOpen && editItem === item && (
+                    <EditPotModal item={item} />
+                  )}
+                  {isDeleteOpen && editItem === item && (
+                    <DeleteModal item={item} />
+                  )}
+                </div>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-2xl text-gray-500 p-2 font-semibold">
@@ -71,6 +96,9 @@ function PotsPage() {
                   + Add Money
                 </button>
                 <AddModal />
+                <AddNewPot item={data} editItem={editItem} />
+
+                <WithdrawModal />
                 <button
                   onClick={() => {
                     dispatch(openWithdrawModal({ item }));
@@ -79,7 +107,6 @@ function PotsPage() {
                 >
                   Withdraw
                 </button>
-                <WithdrawModal />
               </div>
             </div>
           ))}
