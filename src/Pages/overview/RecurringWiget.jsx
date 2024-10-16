@@ -1,13 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import SubTitle from "../../ui/SubTitle";
 import { useEffect } from "react";
-import { getRecurringData } from "./overviewSlice";
+
 import { formatCurrency } from "../../utils/helpers";
 
-import { setRecurringData } from "../recurringBills/recurringSlice";
+import { getReData, setRecurringData } from "../recurringBills/recurringSlice";
 
 function RecurringWiget() {
-  const data = useSelector(getRecurringData);
+  const data = useSelector(getReData);
+  const ReData = data.recurring;
+  console.log(ReData);
   const dispatch = useDispatch();
 
   const today = new Date();
@@ -26,8 +28,8 @@ function RecurringWiget() {
     let totalBills = 0; // Initialize total
 
     // Calculate totals based on data
-    if (Array.isArray(data)) {
-      data.forEach((item) => {
+    if (ReData) {
+      ReData.forEach((item) => {
         const itemDate = new Date(item.date);
         const billDay = itemDate.getDate();
         const billAmount = item.amount;
@@ -55,12 +57,12 @@ function RecurringWiget() {
         totalBills, // Include total in the dispatched data
       })
     );
-  }, [dispatch, data, day]);
+  }, [dispatch, ReData, day]);
   const { paidBills, totalUpcoming, dueSoon } = useSelector(
     (state) => state.recurring
   );
 
-  if (!data.length) {
+  if (!ReData.length) {
     // Show a loading or empty state when data is not yet available
     return <div>Loading recurring bills...</div>;
   }
