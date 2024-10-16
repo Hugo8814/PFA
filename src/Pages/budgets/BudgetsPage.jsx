@@ -1,18 +1,28 @@
 import { Link } from "react-router-dom";
 import Header from "../../ui/Header";
 import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
-import icon from "../../../assets/images/avatars/elevate-education.jpg";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getBugetTotal, selectTransactions } from "../overview/overviewSlice";
 import { formatCurrency, formatDate } from "../../utils/helpers";
 import Summary from "./Summary";
 import { getBudgetData } from "./budgetSlice";
+import AddNewBudget from "../../ui/AddNewBudget";
+import DeleteModal from "../../ui/DeleteModal";
+import EditModal from "../../ui/EditModal";
+import { openEditModal } from "../../ui/modalSlice";
+import EditBudgetModal from "../../ui/EditBudgetModal";
 
 function BudgetsPage() {
+  const dispatch = useDispatch();
+  const { isDeleteOpen, isEditOpen, editItem } = useSelector(
+    (state) => state.modal
+  );
+
   const transactions = useSelector(selectTransactions);
   const budgetData = useSelector(getBudgetData);
   const budgetTotal = useSelector(getBugetTotal);
+
   //const budgetTransactions = useSelector(getBudgetData);
 
   // console.log(budgetTransactions);
@@ -22,10 +32,9 @@ function BudgetsPage() {
     theme: item.theme, // Color for the pie slice
   }));
 
-  //for the git 3
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
-      <Header title="Budgets" btn={true} text="+Add New Budget" />
+      <Header title="Budgets" btn={true} text="+Add New Budget" budget={true} />
 
       <div className="flex gap-8">
         <Summary
@@ -33,12 +42,13 @@ function BudgetsPage() {
           data={data}
           budgetData={budgetData}
         />
+        <AddNewBudget />
         <div className="flex flex-col w-full gap-10">
           {budgetData &&
             budgetData.map((item, index) => (
               <div
                 key={index}
-                className="w-full bg-white rounded-2xl p-10 h-full flex flex-col gap-8"
+                className="w-full bg-white rounded-2xl p-10 h-full flex flex-col gap-8 relative"
               >
                 <div className="flex justify-between p-4 w-full">
                   <div className="flex gap-4 items-center">
@@ -48,9 +58,22 @@ function BudgetsPage() {
                     ></span>
                     <div className="text-4xl font-bold">{item.category}</div>
                   </div>
-                  <button className="text-gray-900 text-4xl font-bold">
+                  <button
+                    onClick={() => {
+                      dispatch(openEditModal({ item }));
+                    }}
+                    className="text-gray-900 text-4xl font-bold "
+                  >
                     ...
                   </button>
+                  {isEditOpen && editItem === item && <EditModal item={item} />}
+                  {isEditOpen && editItem === item && (
+                    <EditBudgetModal item={item} />
+                  )}
+
+                  {isDeleteOpen && editItem === item && (
+                    <DeleteModal item={item} budget={true} />
+                  )}
                 </div>
 
                 <p className="text-2xl p-4">

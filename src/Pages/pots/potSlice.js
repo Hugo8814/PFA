@@ -25,11 +25,10 @@ const potSlice = createSlice({
     setPots(state, action) {
       return action.payload; // Replace the entire array of pots directly
     },
-    AddPot(state, action) {
+    addPot(state, action) {
       state.push(action.payload);
     },
     updatePot(state, action) {
-      console.log("hi");
       const { id, name, target, theme } = action.payload;
       let pot = state.find((pot) => pot.id === id);
       if (pot) {
@@ -46,7 +45,7 @@ export const {
   setPots,
   decreasePot,
   deletePot,
-  AddPot,
+  addPot,
   updatePot,
 } = potSlice.actions; // Export actions
 

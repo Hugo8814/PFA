@@ -13,6 +13,25 @@ const budgetSlice = createSlice({
     setBudget(state, action) {
       state.budget = action.payload;
     },
+    addBuget(state, action) {
+      state.budget.push(action.payload);
+    },
+    updateBudget(state, action) {
+      const { id, category, maximum, theme } = action.payload;
+      let budget = state.budget.find((budget) => budget.id === id);
+      if (budget) {
+        budget.id = id;
+        budget.category = category;
+        budget.maximum = maximum;
+        budget.theme = theme;
+      }
+    },
+
+    deleteBudget(state, action) {
+      const { id } = action.payload;
+      console.log(id);
+      state.budget = state.budget.filter((budget) => budget.id !== id);
+    },
   },
 });
 
@@ -41,6 +60,12 @@ export const getBudgetData = createSelector(
   }
 );
 
-export const { setBudget, setBudgetTransactions } = budgetSlice.actions;
+export const {
+  setBudget,
+  setBudgetTransactions,
+  addBuget,
+  deleteBudget,
+  updateBudget,
+} = budgetSlice.actions;
 
 export default budgetSlice.reducer;

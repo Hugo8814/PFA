@@ -1,34 +1,32 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
-import { openDeleteModal, openEditPotModal } from "./modalSlice"; // Import the closeModal action
+import {
+  openDeleteModal,
+  openEditBudgetModal,
+  openEditPotModal,
+} from "./modalSlice"; // Import the closeModal action
 
-function EditModal({ item }) {
+function EditModal({ item, pot, budget }) {
   const { isEditOpen } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
+  function handleDispatch() {
+    dispatch(openEditPotModal({ item }));
 
-  // Function to handle backdrop clicks
-  //   const handleClose = () => {
-  //     dispatch(closeModal());
-  //   };
+    dispatch(openEditBudgetModal({ item }));
+  }
 
   if (!isEditOpen) return null;
 
   return (
     <div className="bg-[#ffffff] shadow-xl  right-6 w-content rounded-xl absolute text-3xl flex flex-col gap-6 items-start p-6 top-2 ">
+      <button onClick={handleDispatch}>Edit</button>
       <button
         onClick={() => {
-          dispatch(openEditPotModal({ item }));
-        }}
-      >
-        Edit Pot
-      </button>
-      <button
-        onClick={() => {
-          dispatch(openDeleteModal({ item }));
+          dispatch(openDeleteModal(item));
         }}
         className=" text-red-500 "
       >
-        Delete Pot
+        Delete
       </button>
     </div>
   );

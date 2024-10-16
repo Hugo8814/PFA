@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../ui/Header";
-import { getPotsData } from "./potSlice";
+import { getPotsData } from "./PotSlice";
 import { formatCurrency } from "../../utils/helpers";
 import AddModal from "../../ui/AddModal";
 import {
@@ -23,7 +23,7 @@ function PotsPage() {
 
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
-      <Header title="Pots" btn={true} text="+Add New Pot" />
+      <Header title="Pots" btn={true} text="+Add New Pot" pot={true} />
 
       <div className="grid grid-cols-3 gap-10">
         {data &&
@@ -40,7 +40,7 @@ function PotsPage() {
                   ></span>
                   <div className="text-4xl font-bold">{item.name}</div>
                 </div>
-                <div className="">
+                <div>
                   <button
                     onClick={() => {
                       dispatch(openEditModal({ item }));
@@ -51,10 +51,10 @@ function PotsPage() {
                   </button>
                   {isEditOpen && editItem === item && <EditModal item={item} />}
                   {isEditOpen && editItem === item && (
-                    <EditPotModal item={item} />
+                    <EditPotModal item={item} pot={true} />
                   )}
                   {isDeleteOpen && editItem === item && (
-                    <DeleteModal item={item} />
+                    <DeleteModal item={item} pot={true} />
                   )}
                 </div>
               </div>

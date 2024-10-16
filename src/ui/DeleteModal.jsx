@@ -2,8 +2,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
 import { deletePot } from "../Pages/pots/PotSlice";
+import { deleteBudget } from "../Pages/budgets/budgetSlice";
 
-function DeleteModal({ item }) {
+function DeleteModal({ item, budget, pot }) {
   const { isDeleteOpen } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 
@@ -15,7 +16,7 @@ function DeleteModal({ item }) {
       <div className="bg-white p-16 rounded-[2rem] w-[28%] h-content flex flex-col gap-14">
         <div className=" flex justify-between items-center">
           <div className="text-5xl font-bold">
-            Delete &quot;{item.name}&quot;
+            Delete &quot;{item.name || item.category}&quot;
           </div>
           <div onClick={() => dispatch(closeModal())} className="text-6xl ">
             &times;
@@ -28,8 +29,8 @@ function DeleteModal({ item }) {
         </div>
         <button
           onClick={() => {
-            dispatch(deletePot({ id }));
-            dispatch(closeModal());
+            if (pot) dispatch(deletePot({ id }));
+            if (budget) dispatch(deleteBudget({ id }));
           }}
           className="flex justify-center items-center bg-[#BE6C49] text-white text-3xl font-semibold p-6 rounded-xl"
         >

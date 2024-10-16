@@ -10,6 +10,9 @@ const modalSlice = createSlice({
     isDeleteOpen: false,
     isAddPotOpen: false,
     isEditPotOpen: false,
+    isEditBudgetOpen: false,
+    isAddBudgetOpen: false,
+    isAddTransactionOpen: false,
     editItem: null,
     content: null,
     value: "",
@@ -31,8 +34,11 @@ const modalSlice = createSlice({
       state.isWithdrawOpen = false;
       state.isEditOpen = false;
       state.isEditPotOpen = false;
+      state.isEditBudgetOpen = false;
       state.isDeleteOpen = false;
       state.isAddPotOpen = false;
+      state.isAddBudgetOpen = false;
+      state.isAddTransactionOpen = false;
       state.content = null;
     },
     openEditModal: (state, action) => {
@@ -43,11 +49,22 @@ const modalSlice = createSlice({
       state.isEditPotOpen = true;
       state.editItem = action.payload.item; // Set the specific item being edited
     },
+    openEditBudgetModal: (state, action) => {
+      state.isEditBudgetOpen = true;
+      state.editItem = action.payload.item; // Set the specific item being edited
+    },
+
     openDeleteModal: (state) => {
       state.isDeleteOpen = true;
     },
     openAddPotModal: (state) => {
       state.isAddPotOpen = true;
+    },
+    openAddBudgetModal: (state) => {
+      state.isAddBudgetOpen = true;
+    },
+    openAddTransaction: (state) => {
+      state.isAddTransactionOpen = true;
     },
 
     setValue: (state, action) => {
@@ -66,6 +83,8 @@ export const {
   openDeleteModal,
   openAddPotModal,
   openEditPotModal,
+  openAddBudgetModal,
+  openEditBudgetModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
