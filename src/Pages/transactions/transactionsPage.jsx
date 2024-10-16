@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 import { getTransactions } from "./transactionSlice";
 import { useState } from "react";
+import AddNewTransaction from "../../ui/AddNewTransaction";
 
 function TransactionsPage() {
   const transactions = useSelector(getTransactions);
@@ -133,7 +134,7 @@ function TransactionsPage() {
           transaction={true}
         />
       </div>
-
+      <AddNewTransaction />
       <div className="flex bg-white rounded-xl   p-14 flex-col">
         <div className="flex pb-10">
           <div className="flex mr-auto">

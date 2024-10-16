@@ -85,6 +85,7 @@ export const {
   openEditPotModal,
   openAddBudgetModal,
   openEditBudgetModal,
+  openAddTransaction,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

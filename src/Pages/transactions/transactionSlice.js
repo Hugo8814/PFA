@@ -11,9 +11,13 @@ const transactionSlice = createSlice({
     setTransactions(state, action) {
       state.transactions = action.payload;
     },
+    addTransaction(state, action) {
+      state.transactions.push(action.payload);
+    },
   },
 });
-export const { setTransactions } = transactionSlice.actions;
+export const { setTransactions, addTransaction } = transactionSlice.actions;
 
 export const getTransactions = (state) => state.transactions.transactions;
+
 export default transactionSlice.reducer;

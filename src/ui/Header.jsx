@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
 
-import { openAddPotModal, openAddBudgetModal } from "./modalSlice";
+import {
+  openAddPotModal,
+  openAddBudgetModal,
+  openAddTransaction,
+} from "./modalSlice";
 
 function Header({ title, btn, text, budget, pot, transaction }) {
   const dispatch = useDispatch();
@@ -17,7 +21,7 @@ function Header({ title, btn, text, budget, pot, transaction }) {
             } else if (pot) {
               dispatch(openAddPotModal());
             } else if (transaction) {
-              dispatch();
+              dispatch(openAddTransaction());
             }
           }}
           className="bg-black text-white text-3xl font-semibold p-6 rounded-xl"

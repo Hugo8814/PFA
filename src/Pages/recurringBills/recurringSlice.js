@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const recurringSlice = createSlice({
   name: "recurring",
   initialState: {
+    recurring: [],
     paid: 0,
     total: 0,
     due: 0,
@@ -19,10 +20,15 @@ const recurringSlice = createSlice({
       state.total = action.payload.total;
       state.due = action.payload.due;
     },
+    setRecurring(state, action) {
+      const payload = Array.isArray(action.payload) ? action.payload : [];
+      state.recurring = payload.filter((item) => item.recurring);
+      console.log("Set recurring: ", state.recurring);
+    },
   },
 });
 
-export const { setRecurringData } = recurringSlice.actions;
+export const { setRecurringData, setRecurring } = recurringSlice.actions;
 export const getReData = (state) => state.recurring;
 
 export default recurringSlice.reducer;
