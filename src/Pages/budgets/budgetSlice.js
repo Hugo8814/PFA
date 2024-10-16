@@ -14,7 +14,7 @@ const budgetSlice = createSlice({
       state.budget = action.payload;
     },
     addBuget(state, action) {
-      state.budget.push(action.payload);
+      state.budget = [...state.budget, action.payload];
     },
     updateBudget(state, action) {
       const { id, category, maximum, theme } = action.payload;
@@ -59,6 +59,10 @@ export const getBudgetData = createSelector(
     });
   }
 );
+
+export const getBudgetTotal = createSelector([getBudgetData], (budgetData) => {
+  return budgetData.reduce((total, item) => total + item.maximum, 0);
+});
 
 export const {
   setBudget,
