@@ -1,20 +1,29 @@
 import SubTitle from "../../ui/SubTitle";
 import BudgetChart from "../budgets/BudgetChart";
 
-import { getBugetDataOverview, getBugetTotal } from "./overviewSlice";
+import { getBugetTotal } from "./overviewSlice";
 import BugetPots from "./BugetPots";
 import { formatCurrency } from "../../utils/helpers";
 import { useSelector } from "react-redux";
+import { getBudgetData } from "../budgets/budgetSlice";
+import { useEffect, useMemo } from "react";
 
 function BugetsWiget() {
-  const budgetData = useSelector(getBugetDataOverview);
+  const budgetData = useSelector(getBudgetData);
   const budgetTotal = useSelector(getBugetTotal);
+  console.log(budgetData);
 
-  const data = budgetData.map((item) => ({
-    name: item.category, // Label for the pie slice
-    value: item.maximum, // Value for the pie slice
-    theme: item.theme, // Color for the pie slice
-  }));
+  useEffect(() => {
+    console.log("Budget data changed", budgetData);
+  }, [budgetData]); // Triggered whenever budgetData changes
+
+  const chartData = useMemo(() => {
+    return budgetData.map((item) => ({
+      name: item.category, // Label for the pie slice
+      value: item.maximum, // Value for the pie slice
+      theme: item.theme, // Color for the pie slice
+    }));
+  }, [budgetData]);
 
   return (
     <div className="flex bg-white rounded-md h-content w-full flex-col p-10">
@@ -28,11 +37,11 @@ function BugetsWiget() {
               of {formatCurrency(budgetTotal)} limit
             </p>
           </div>
-          <BudgetChart data={data} />
+          <BudgetChart data={chartData} />
         </div>
 
         <div className=" grid grid-cols-1 gird-rows-4 gap-4">
-          <BugetPots data={data} budget={true} />
+          <BugetPots data={budgetData} budget={true} />
         </div>
       </div>
     </div>
