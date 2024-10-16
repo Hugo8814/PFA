@@ -5,17 +5,22 @@ import downArrow from "../../../assets/images/icon-caret-down.svg";
 import TotalBills from "./TotalBills";
 import RecTable from "./RecTable";
 import { useSelector } from "react-redux";
-import { getRecurringData } from "../overview/overviewSlice";
+
 import { useState } from "react";
+import { getTransactions } from "../transactions/transactionSlice";
 
 function RecurringBillsPage() {
-  const data = useSelector(getRecurringData); // Get recurring transactions
+  const data = useSelector(getTransactions);
+
+  const RecurringData = [...data].filter((item) => item.recurring);
+  console.log(RecurringData);
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const [isdropdownOpen, setIsdropdownOpen] = useState(false);
   const [sortBy, setSortBy] = useState("Highest");
 
-  const filteredTransactions = data.filter((transaction) =>
+  const filteredTransactions = RecurringData.filter((transaction) =>
     transaction.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const handleSearchChange = (e) => {
