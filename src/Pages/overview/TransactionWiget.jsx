@@ -2,16 +2,21 @@ import { useSelector } from "react-redux";
 
 import SubTitle from "../../ui/SubTitle";
 import { formatCurrency, formatDate } from "../../utils/helpers";
+import { getTransactions } from "../transactions/transactionSlice";
 
 function TransactionWiget() {
-  const data = useSelector((state) => state.overview.data.transactions);
+  const data = useSelector(getTransactions);
+
+  const sortedData = [...data].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
 
   return (
     <div className="flex bg-white rounded-xl  flex-col p-8">
       <SubTitle to="/transactions">Transactions</SubTitle>
 
-      {data &&
-        data
+      {sortedData &&
+        sortedData
           .map((item, index) => (
             <div key={index} className="flex justify-between p-6">
               <div className="flex gap-4 items-center ">
