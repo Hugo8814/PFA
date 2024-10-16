@@ -6,6 +6,7 @@ import {
 import { setPots } from "../pots/PotSlice";
 import { setBudget, setBudgetTransactions } from "../budgets/budgetSlice";
 import { setTransactions } from "../transactions/transactionSlice";
+import { setRecurring } from "../recurringBills/recurringSlice";
 
 // Step 2: Create Async Thunk for Fetching Data
 export const fetchOverviewData = createAsyncThunk(
@@ -24,6 +25,7 @@ export const fetchOverviewData = createAsyncThunk(
     dispatch(setBudgetTransactions(data.transactions));
     dispatch(setTransactions(data.transactions));
     dispatch(setPots(data.pots));
+    dispatch(setRecurring(data.transactions));
 
     return data; // Return the entire API response
   }
