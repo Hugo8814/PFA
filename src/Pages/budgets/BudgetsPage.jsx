@@ -3,15 +3,15 @@ import Header from "../../ui/Header";
 import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getBugetTotal, selectTransactions } from "../overview/overviewSlice";
 import { formatCurrency, formatDate } from "../../utils/helpers";
 import Summary from "./Summary";
-import { getBudgetData } from "./budgetSlice";
+import { getBudgetData, getBudgetTotal } from "./budgetSlice";
 import AddNewBudget from "../../ui/AddNewBudget";
 import DeleteModal from "../../ui/DeleteModal";
 import EditModal from "../../ui/EditModal";
 import { openEditModal } from "../../ui/modalSlice";
 import EditBudgetModal from "../../ui/EditBudgetModal";
+import { getTransactions } from "../transactions/transactionSlice";
 
 function BudgetsPage() {
   const dispatch = useDispatch();
@@ -19,19 +19,18 @@ function BudgetsPage() {
     (state) => state.modal
   );
 
-  const transactions = useSelector(selectTransactions);
+  // Get the transactions, budget data, and total from the Redux store
+  const transactions = useSelector(getTransactions);
   const budgetData = useSelector(getBudgetData);
-  const budgetTotal = useSelector(getBugetTotal);
+  const budgetTotal = useSelector(getBudgetTotal);
 
-  //const budgetTransactions = useSelector(getBudgetData);
-
-  // console.log(budgetTransactions);
+  // Map budget data to the format needed for the Summary component
   const data = budgetData.map((item) => ({
-    name: item.category, // Label for the pie slice
-    value: item.maximum, // Value for the pie slice
-    theme: item.theme, // Color for the pie slice
+    name: item.category,
+    value: item.maximum,
+    theme: item.theme,
   }));
-
+  console.log(transactions);
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
       <Header title="Budgets" btn={true} text="+Add New Budget" budget={true} />
@@ -137,6 +136,7 @@ function BudgetsPage() {
                         (transactionItem) =>
                           transactionItem.category === item.category
                       )
+                      .sort((a, b) => new Date(b.date) - new Date(a.date))
                       .map((transactionItem, index) => {
                         return (
                           <div key={index} className="flex justify-between p-6">

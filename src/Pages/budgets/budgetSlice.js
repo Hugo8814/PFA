@@ -18,12 +18,15 @@ const budgetSlice = createSlice({
     },
     updateBudget(state, action) {
       const { id, category, maximum, theme } = action.payload;
-      let budget = state.budget.find((budget) => budget.id === id);
-      if (budget) {
-        budget.id = id;
-        budget.category = category;
-        budget.maximum = maximum;
-        budget.theme = theme;
+      const index = state.budget.findIndex((budget) => budget.id === id);
+      if (index !== -1) {
+        state.budget[index] = {
+          ...state.budget[index],
+          id,
+          category,
+          maximum,
+          theme,
+        };
       }
     },
 
