@@ -1,9 +1,32 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BillsIcon from "../../../assets/images/icon-recurring-bills.svg";
 import { formatCurrency } from "../../utils/helpers";
-import { getReData } from "./recurringSlice";
+import { getReData, setRecurringData } from "./recurringSlice";
+import { useEffect } from "react";
+import { getRecurringTransactions } from "../transactions/transactionSlice";
+import { computeBillTotals } from "../../utils/computeBills";
 
 function TotalBills() {
+  const data = useSelector(getReData);
+  const recurringTransactions = useSelector(getRecurringTransactions); // Fetch recurring transactions
+  const dispatch = useDispatch();
+  const today = new Date();
+  const day = today.getDate();
+
+  useEffect(() => {
+    // Combine recurring data from both slices inside useEffect
+    const ReData = [
+      ...(data.recurring || []),
+      ...(recurringTransactions || []),
+    ];
+
+    // Call the utility function to compute totals
+    const computedAmounts = computeBillTotals(ReData, day);
+
+    // Dispatch computed amounts and total
+    dispatch(setRecurringData(computedAmounts));
+  }, [dispatch, data.recurring, recurringTransactions, day]); // Include dependencies
+
   const { paidBills, totalUpcoming, dueSoon, paid, total, due } =
     useSelector(getReData);
   console.log(paidBills, totalUpcoming, dueSoon, paid, total);
