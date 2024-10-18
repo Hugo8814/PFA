@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createSelector,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setPots } from "../pots/PotSlice";
 import { setBudget, setBudgetTransactions } from "../budgets/budgetSlice";
 import { setTransactions } from "../transactions/transactionSlice";
@@ -41,28 +37,11 @@ const overviewSlice = createSlice({
         income: 0,
         expenses: 0,
       },
-      transactions: [],
-      recurringBills: [],
-      budgets: [],
-      pots: [],
     },
     status: "idle", // to track the status of the API call
     error: null, // to track any errors that occur during the API call
   },
-  reducers: {
-    setPotsData(state, action) {
-      state.data.pots = action.payload; // Set pots data
-    },
-    setBudgetsData(state, action) {
-      state.data.budgets = action.payload; // Set budgets data
-    },
-    setTransactionsData(state, action) {
-      state.data.transactions = action.payload; // Set transactions data
-    },
-    setRecurringBillsData(state, action) {
-      state.data.recurringBills = action.payload; // Set recurring bills data
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchOverviewData.pending, (state) => {
@@ -89,30 +68,6 @@ export const {
 export const selectOverviewData = (state) => state.overview.data;
 export const selectOverviewStatus = (state) => state.overview.status;
 export const selectOverviewError = (state) => state.overview.error;
-
-export const getPotsTotal = (state) =>
-  state.overview.data.pots.reduce((total, item) => total + item.total, 0);
-
-export const getBugetDataOverview = (state) => state.overview.data.budgets;
-export const getBugetTotal = (state) =>
-  state.overview.data.budgets.reduce((total, item) => total + item.maximum, 0);
-
-// Selector to safely access transactions
-export const selectTransactions = (state) =>
-  state.overview.data?.transactions || [];
-
-// Memoized selector to filter recurring transactions
-export const getRecurringData = createSelector(
-  [selectTransactions], // Input selector
-  (transactions) => transactions.filter((item) => item.recurring) // Filter for recurring items
-);
-
-// Memoized selector to calculate the total amount of recurring transactions
-export const getRecurringTotal = createSelector(
-  [getRecurringData], // Input from getRecurringData
-  (recurringTransactions) =>
-    recurringTransactions.reduce((total, item) => total + item.amount, 0) // Calculate total
-);
 
 // Step 5: Export the reducer
 export default overviewSlice.reducer;
