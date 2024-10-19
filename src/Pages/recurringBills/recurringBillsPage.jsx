@@ -13,7 +13,6 @@ function RecurringBillsPage() {
   const data = useSelector(getTransactions);
 
   const RecurringData = [...data].filter((item) => item.recurring);
-  console.log(RecurringData);
 
   const [searchTerm, setSearchTerm] = useState("");
 
