@@ -5,7 +5,10 @@ import downArrow from "../../assets/images/icon-caret-down.svg";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { addTransaction } from "../Pages/transactions/transactionSlice";
+import {
+  addRecurringTransaction,
+  addTransaction,
+} from "../Pages/transactions/transactionSlice";
 
 function AddNewTransaction() {
   const { isAddTransactionOpen } = useSelector((state) => state.modal);
@@ -46,17 +49,27 @@ function AddNewTransaction() {
       name: transactionName,
       category: selectedCategory,
       amount: Number(amount), // Ensure amount is a number
-      date: selectedDate, // Include the date
+      date: selectedDate.toISOString(), // Convert Date to a serializable string
       recurring: recurring,
       avatar: "./assets/images/avatars/elevate-education.jpg",
     };
+    // Check if `newData` is a plain object
+    console.log("newData is:", newData);
 
-    // Dispatch action to add transaction
+    // Dispatch the regular transaction
     dispatch(addTransaction(newData));
+
+    // Dispatch the recurring transaction if applicable
+    if (recurring) {
+      dispatch(addRecurringTransaction(newData)); // Dispatch the recurring transaction
+    }
+
+    // Reset form fields after submission
     setTransactionName("");
     setAmount(0);
     setSelectedCategory("");
     setSelectedDate(new Date());
+    setRecurring(false);
 
     dispatch(closeModal());
   }
@@ -96,7 +109,7 @@ function AddNewTransaction() {
             Transaction Date
           </div>
           <div className="flex items-center  rounded-2xl  relative bg-[#F6F6F6]">
-            <button
+            <div
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="w-full text-gray-500 flex items-center foucus: outline-none border-none rounded-xl text-2xl text-left"
             >
@@ -111,7 +124,7 @@ function AddNewTransaction() {
               />
 
               <img className="ml-auto p-5" src={downArrow} alt="" />
-            </button>
+            </div>
           </div>
         </div>
 
