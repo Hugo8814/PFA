@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const transactionSlice = createSlice({
   name: "transactions",
@@ -27,4 +27,35 @@ export const getTransactions = (state) => state.transactions.transactions;
 export const getRecurringTransactions = (state) =>
   state.transactions.recurringTransactions; // Selector for recurring transactions
 
+export const getTransactionsTotal = createSelector(
+  [getTransactions],
+  (transactions) => {
+    return transactions.reduce((total, item) => total + item.amount, 0);
+  }
+);
+export const getTransactionIncome = createSelector(
+  [getTransactions],
+  (transactions) => {
+    return transactions.reduce((total, item) => {
+      if (item.amount > 0) {
+        return total + item.amount;
+      } else {
+        return total;
+      }
+    }, 0);
+  }
+);
+
+export const getTransactionExpense = createSelector(
+  [getTransactions],
+  (transactions) => {
+    return transactions.reduce((total, item) => {
+      if (item.amount < 0) {
+        return total + item.amount;
+      } else {
+        return total;
+      }
+    }, 0);
+  }
+);
 export default transactionSlice.reducer;
