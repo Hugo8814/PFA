@@ -5,64 +5,33 @@ import { useEffect } from "react";
 import { formatCurrency } from "../../utils/helpers";
 
 import { getReData, setRecurringData } from "../recurringBills/recurringSlice";
+import { computeBillTotals } from "../../utils/computeBills";
+import { getRecurringTransactions } from "../transactions/transactionSlice";
 
 function RecurringWiget() {
   const data = useSelector(getReData);
-  const ReData = data.recurring;
-  console.log(ReData);
+  const recurringTransactions = useSelector(getRecurringTransactions); // Fetch recurring transactions
   const dispatch = useDispatch();
-
   const today = new Date();
   const day = today.getDate();
 
   useEffect(() => {
-    // Initialize amounts
-    let computedAmounts = {
-      paidBills: 0,
-      totalUpcoming: 0,
-      dueSoon: 0,
-      paid: 0,
-      total: 0,
-      due: 0,
-    };
-    let totalBills = 0; // Initialize total
+    // Combine recurring data from both slices inside useEffect
+    const ReData = [
+      ...(data.recurring || []),
+      ...(recurringTransactions || []),
+    ];
 
-    // Calculate totals based on data
-    if (ReData) {
-      ReData.forEach((item) => {
-        const itemDate = new Date(item.date);
-        const billDay = itemDate.getDate();
-        const billAmount = item.amount;
-
-        totalBills += billAmount; // Total amount
-
-        // Classify bills
-        if (billDay > day + 7) {
-          computedAmounts.total += 1;
-          computedAmounts.totalUpcoming += billAmount;
-        } else if (billDay <= day) {
-          computedAmounts.paid += 1;
-          computedAmounts.paidBills += billAmount;
-        } else {
-          computedAmounts.due += 1;
-          computedAmounts.dueSoon += billAmount;
-        }
-      });
-    }
+    // Call the utility function to compute totals
+    const computedAmounts = computeBillTotals(ReData, day);
 
     // Dispatch computed amounts and total
-    dispatch(
-      setRecurringData({
-        ...computedAmounts,
-        totalBills, // Include total in the dispatched data
-      })
-    );
-  }, [dispatch, ReData, day]);
-  const { paidBills, totalUpcoming, dueSoon } = useSelector(
-    (state) => state.recurring
-  );
+    dispatch(setRecurringData(computedAmounts));
+  }, [dispatch, data.recurring, recurringTransactions, day]); // Include dependencies
 
-  if (!ReData.length) {
+  const { paidBills, totalUpcoming, dueSoon } = useSelector(getReData);
+
+  if (!data) {
     // Show a loading or empty state when data is not yet available
     return <div>Loading recurring bills...</div>;
   }

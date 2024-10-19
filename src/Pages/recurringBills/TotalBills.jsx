@@ -29,7 +29,6 @@ function TotalBills() {
 
   const { paidBills, totalUpcoming, dueSoon, paid, total, due } =
     useSelector(getReData);
-  console.log(paidBills, totalUpcoming, dueSoon, paid, total);
 
   return (
     <div className="w-[35%] space-y-10">

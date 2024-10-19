@@ -1,15 +1,12 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { getTransactions } from "../transactions/transactionSlice"; // Import the transactions selector
 
 const budgetSlice = createSlice({
   name: "budget",
   initialState: {
     budget: [],
-    transactions: [],
   },
   reducers: {
-    setBudgetTransactions(state, action) {
-      state.transactions = action.payload;
-    },
     setBudget(state, action) {
       state.budget = action.payload;
     },
@@ -29,31 +26,27 @@ const budgetSlice = createSlice({
         };
       }
     },
-
     deleteBudget(state, action) {
       const { id } = action.payload;
-      console.log(id);
+
       state.budget = state.budget.filter((budget) => budget.id !== id);
     },
   },
 });
 
-// Selector to get budgets and transactions
+// Selector to get budgets
 const selectBudgets = (state) => state.budget.budget || [];
-const selectTransactions = (state) => state.budget.transactions || [];
 
-// Memoized selector to calculate spent amounts for each budget item
+// Memoized selector to calculate spent amounts for each budget item based on transactions from the transactionSlice
 export const getBudgetData = createSelector(
-  [selectBudgets, selectTransactions],
+  [selectBudgets, getTransactions], // Use the getTransactions selector from the transactionSlice
   (budgets, transactions) => {
     return budgets.map((budgetItem) => {
       const updatedBudget = { ...budgetItem, spent: 0 };
 
+      // Calculate total spent for the current budget
       transactions.forEach((transactionItem) => {
-        const transactionID = transactionItem.category;
-
-        // Check if the transaction belongs to the current budget
-        if (transactionID === updatedBudget.category) {
+        if (transactionItem.category === updatedBudget.category) {
           updatedBudget.spent += Math.abs(transactionItem.amount);
         }
       });
@@ -63,16 +56,19 @@ export const getBudgetData = createSelector(
   }
 );
 
+// Selector to calculate the total maximum budget
 export const getBudgetTotal = createSelector([getBudgetData], (budgetData) => {
-  return budgetData.reduce((total, item) => total + item.maximum, 0);
+  return budgetData.reduce((total, item) => total + Number(item.maximum), 0);
 });
 
-export const {
-  setBudget,
-  setBudgetTransactions,
-  addBuget,
-  deleteBudget,
-  updateBudget,
-} = budgetSlice.actions;
+// Selector to calculate the total spent budget
+export const getBudgetSpent = createSelector([getBudgetData], (budgetData) => {
+  return budgetData.reduce((total, item) => total + item.spent, 0);
+});
 
+// Export the reducer actions
+export const { setBudget, addBuget, deleteBudget, updateBudget } =
+  budgetSlice.actions;
+
+// Export the budget reducer as default
 export default budgetSlice.reducer;
