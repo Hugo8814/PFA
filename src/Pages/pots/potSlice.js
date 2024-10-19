@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const potSlice = createSlice({
   name: "pots",
@@ -50,5 +50,9 @@ export const {
 } = potSlice.actions; // Export actions
 
 export const getPotsData = (state) => state.pots;
+
+export const getPotTotal = createSelector([getPotsData], (pots) =>
+  pots.reduce((total, pot) => total + pot.total, 0)
+);
 
 export default potSlice.reducer;
