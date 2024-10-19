@@ -23,7 +23,6 @@ const recurringSlice = createSlice({
     setRecurring(state, action) {
       const payload = Array.isArray(action.payload) ? action.payload : [];
       state.recurring = payload.filter((item) => item.recurring);
-      console.log("Set recurring: ", state.recurring);
     },
   },
 });

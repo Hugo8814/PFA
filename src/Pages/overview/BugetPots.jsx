@@ -1,5 +1,4 @@
 function Pot({ data }) {
-  console.log(data);
   return (
     data &&
     data
