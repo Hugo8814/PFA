@@ -3,11 +3,13 @@ import { formatCurrency } from "../../utils/helpers";
 import BudgetChart from "./BudgetChart";
 
 function Summary({ data, budgetTotal, budgetData }) {
+  const spentTotal = budgetData.reduce((total, item) => total + item.spent, 0);
+
   return (
     <div className="flex rounded-2xl flex-col gap-6 h-fit bg-white  ">
       <div className="relative text-center px-40  py-14 ">
-        <div className="text-6xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
-          $338
+        <div className="text-5xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
+          ${spentTotal}
           <p className="text-gray-500 text-lg">
             of {formatCurrency(budgetTotal)} limit
           </p>

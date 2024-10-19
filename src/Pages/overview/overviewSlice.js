@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setPots } from "../pots/PotSlice";
-import { setBudget, setBudgetTransactions } from "../budgets/budgetSlice";
+import { setBudget } from "../budgets/budgetSlice";
 import { setTransactions } from "../transactions/transactionSlice";
 import { setRecurring } from "../recurringBills/recurringSlice";
 
@@ -18,7 +18,7 @@ export const fetchOverviewData = createAsyncThunk(
 
     // Dispatch to populate  data slices
     dispatch(setBudget(data.budgets));
-    dispatch(setBudgetTransactions(data.transactions));
+
     dispatch(setTransactions(data.transactions));
     dispatch(setPots(data.pots));
     dispatch(setRecurring(data.transactions));

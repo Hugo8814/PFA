@@ -1,26 +1,21 @@
 import SubTitle from "../../ui/SubTitle";
 import BudgetChart from "../budgets/BudgetChart";
 
-import { getBugetTotal } from "./overviewSlice";
 import BugetPots from "./BugetPots";
 import { formatCurrency } from "../../utils/helpers";
 import { useSelector } from "react-redux";
-import { getBudgetData } from "../budgets/budgetSlice";
+import { getBudgetData, getBudgetTotal } from "../budgets/budgetSlice";
 import { useEffect, useMemo } from "react";
 
 function BugetsWiget() {
   const budgetData = useSelector(getBudgetData);
-  const budgetTotal = useSelector(getBugetTotal);
-  console.log(budgetData);
-
-  useEffect(() => {
-    console.log("Budget data changed", budgetData);
-  }, [budgetData]); // Triggered whenever budgetData changes
+  const budgetTotal = useSelector(getBudgetTotal);
+  const spentTotal = budgetData.reduce((total, item) => total + item.spent, 0);
 
   const chartData = useMemo(() => {
     return budgetData.map((item) => ({
       name: item.category, // Label for the pie slice
-      value: item.maximum, // Value for the pie slice
+      value: Number(item.maximum), // Value for the pie slice
       theme: item.theme, // Color for the pie slice
     }));
   }, [budgetData]);
@@ -31,8 +26,8 @@ function BugetsWiget() {
 
       <div className="flex gap-6 justify-between ">
         <div className="ml-[20%] relative text-center">
-          <div className="text-6xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
-            $338
+          <div className="text-5xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
+            ${spentTotal}
             <p className="text-gray-500 text-lg">
               of {formatCurrency(budgetTotal)} limit
             </p>
