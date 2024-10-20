@@ -5,7 +5,7 @@ import BugetPots from "./BugetPots";
 import { formatCurrency } from "../../utils/helpers";
 import { useSelector } from "react-redux";
 import { getBudgetData, getBudgetTotal } from "../budgets/budgetSlice";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 function BugetsWiget() {
   const budgetData = useSelector(getBudgetData);

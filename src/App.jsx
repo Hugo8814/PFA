@@ -1,36 +1,39 @@
-import OverviewPage from "./Pages/overview/overviewPage";
+import OverviewPage from "./Pages/overview/OverviewPage";
 import PotsPage from "./Pages/pots/potsPage";
 import RecurringBillsPage from "./Pages/recurringBills/recurringBillsPage";
 import TransactionsPage from "./Pages/transactions/transactionsPage";
 import BudgetsPage from "./Pages/budgets/BudgetsPage";
+import LoginPage from "./Pages/login/LoginPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/", // Now this is the login page
+    element: <LoginPage />,
+  },
+  {
+    path: "/app", // Main app routes will be under /app
     element: <AppLayout />,
-    // errorElement: <Error />,
-
     children: [
       {
-        path: "/Overview",
+        path: "Overview",
         element: <OverviewPage />,
       },
       {
-        path: "/Transactions",
+        path: "Transactions",
         element: <TransactionsPage />,
       },
       {
-        path: "/Budgets",
+        path: "Budgets",
         element: <BudgetsPage />,
       },
       {
-        path: "/Pots",
+        path: "Pots",
         element: <PotsPage />,
       },
       {
-        path: "/RecurringBills",
+        path: "RecurringBills",
         element: <RecurringBillsPage />,
       },
     ],
