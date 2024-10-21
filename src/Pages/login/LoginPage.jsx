@@ -1,4 +1,6 @@
 import { useState } from "react";
+import img from "../../../assets/images/illustration-authentication.svg";
+import logo from "../../../assets/images/logo-large.svg";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -35,7 +37,20 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center p-14 h-screen bg-[#F8F4F0]">
+      <div className="h-full  relative">
+        <img src={img} alt="picture" className="w-full h-full rounded-2xl" />
+        <div className="absolute top-14 left-12 flex flex-col justify-between">
+          <div>
+            <img src={logo} alt="logo" />
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-white">
+              Keep track of your money and save for your future
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
