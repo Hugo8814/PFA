@@ -4,6 +4,7 @@ import { useState } from "react";
 import downArrow from "../../assets/images/icon-caret-down.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { fetchOverviewData } from "../Pages/overview/overviewSlice";
 
 function AddNewTransaction() {
   const { isAddTransactionOpen } = useSelector((state) => state.modal);
@@ -69,6 +70,7 @@ function AddNewTransaction() {
       category: selectedCategory,
       date: selectedDate,
       recurring: recurring,
+      avatar: "../../assets/images/avatars/spark-electric-solutions.jpg",
       userId: payload.userId, // Ensure this is correctly set
     };
 
@@ -91,6 +93,10 @@ function AddNewTransaction() {
 
       const result = await response.json();
       console.log("Transaction submitted:", result);
+
+      // Re-fetch overview data to update transactions
+      dispatch(fetchOverviewData()); // Fetch updated overview data
+
       // Optionally, reset form or close modal here
       dispatch(closeModal());
     } catch (error) {
@@ -140,6 +146,7 @@ function AddNewTransaction() {
               dateFormat="MMMM d, yyyy"
               className="w-full focus:outline-none bg-inherit border-none pr-96 pl-6 py-6 rounded-xl text-[1.7rem]"
               withPortal
+              calendarClassName="scale-150"
             />
             <img className="ml-auto p-5" src={downArrow} alt="" />
           </div>
@@ -156,7 +163,7 @@ function AddNewTransaction() {
             </button>
 
             {isDropdownOpen2 && (
-              <div className="absolute left-0 top-[6rem] w-full bg-white rounded-xl z-10 border-gray-500 border-[1px]">
+              <div className="absolute left-0 top-[6rem] w-full bg-white text-2xl rounded-xl z-10 border-gray-500 border-[1px]">
                 <div className="overflow-y-scroll h-[20rem]">
                   {categories.map((category, index) => (
                     <div

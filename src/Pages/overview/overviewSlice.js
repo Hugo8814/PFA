@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setPots } from "../pots/PotSlice";
+import { setPots } from "../pots/potSlice";
 import { setBudget } from "../budgets/budgetSlice";
 import { setTransactions } from "../transactions/transactionSlice";
 import { setRecurring } from "../recurringBills/recurringSlice";
@@ -13,7 +13,7 @@ export const fetchOverviewData = createAsyncThunk(
     const token = selectAuthToken(state);
 
     if (!token) {
-      throw new Error("Token is not available");
+      throw new Error("Token is not available from OverviewSlice"); //this is getting triggerd
     }
 
     const response = await fetch("http://127.0.0.1:9000/api", {

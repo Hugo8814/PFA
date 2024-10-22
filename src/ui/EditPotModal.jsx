@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import downArrow from "../../assets/images/icon-caret-down.svg";
 import { closeModal } from "./modalSlice";
-import { updatePot } from "../Pages/pots/PotSlice";
+import { updatePot } from "../Pages/pots/potSlice";
 
 function EditPotModal({ item }) {
   console.log(item);

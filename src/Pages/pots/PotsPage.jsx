@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../ui/Header";
-import { getPotsData } from "./PotSlice";
+import { getPotsData } from "./potSlice";
 import { formatCurrency } from "../../utils/helpers";
 import AddModal from "../../ui/AddModal";
 import {

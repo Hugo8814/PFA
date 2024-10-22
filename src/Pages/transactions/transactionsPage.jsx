@@ -17,12 +17,20 @@ function TransactionsPage() {
   const [sortBy, setSortBy] = useState("Latest");
   const [category, setCategory] = useState("All Transactions");
 
+  ////
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const perPage = 8;
+
+  const start = (currentPage - 1) * perPage;
+  const end = start + perPage;
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-  if (transactions.length === 0) return;
+
   const filteredTransactions = transactions.filter((transaction) =>
-    transaction.name.toLowerCase().includes(searchTerm.toLowerCase())
+    transaction.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   function handleDropdown() {
@@ -99,14 +107,10 @@ function TransactionsPage() {
         return 0;
     }
   });
-
-  ////////////////////////////////////////////
-  const [currentPage, setCurrentPage] = useState(1);
-  const perPage = 8;
+  // Now, calculate totalPages after sortedTransactions is initialized
   const totalPages = Math.ceil(sortedTransactions.length / perPage);
 
-  const start = (currentPage - 1) * perPage;
-  const end = start + perPage;
+  ////////////////////////////////////////////
 
   function handleNextPage() {
     if (currentPage >= totalPages) return;

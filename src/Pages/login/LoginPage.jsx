@@ -4,12 +4,15 @@ import logo from "../../../assets/images/logo-large.svg";
 import { Link } from "react-router-dom"; // Import useNavigate
 import { useDispatch } from "react-redux";
 import { setAuthToken } from "../../../backend/data/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,10 +27,11 @@ function LoginPage() {
 
       const data = await response.json();
 
+      // Inside handleSubmit after successful login:
       if (response.ok) {
         localStorage.setItem("token", data.token); // Store token in localStorage
         dispatch(setAuthToken(data.token)); // Dispatch action to set token in Redux
-        window.location.href = "/app/Overview"; // Redirect after successful login
+        navigate("/app/Overview"); // Redirect using useNavigate
       } else {
         setError(data.error); // Handle error from server
       }

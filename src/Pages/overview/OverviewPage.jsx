@@ -10,7 +10,7 @@ import {
   getTransactionExpense,
   getTransactionIncome,
 } from "../transactions/transactionSlice";
-import { getPotTotal } from "../pots/PotSlice";
+import { getPotTotal } from "../pots/potSlice";
 import { getReData } from "../recurringBills/recurringSlice";
 import { useEffect } from "react";
 

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import Pot from "../pots/Pot";
 import SubTitle from "../../ui/SubTitle";
-import { getPotsData } from "../pots/PotSlice";
+import { getPotsData } from "../pots/potSlice";
 
 function PotWiget() {
   const total = useSelector(getPotsData).reduce(

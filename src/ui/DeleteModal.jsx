@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
-import { deletePot } from "../Pages/pots/PotSlice";
+import { deletePot } from "../Pages/pots/potSlice";
 import { deleteBudget } from "../Pages/budgets/budgetSlice";
 
 function DeleteModal({ item, budget, pot }) {

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
 import { useState } from "react";
 import downArrow from "../../assets/images/icon-caret-down.svg";
-import { addPot } from "../Pages/pots/PotSlice";
+import { addPot } from "../Pages/pots/potSlice";
 
 function AddNewPot() {
   const { isAddPotOpen } = useSelector((state) => state.modal);
