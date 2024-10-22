@@ -6,6 +6,7 @@ import potReducer from "./Pages/pots/PotSlice";
 import modalReducer from "./ui/modalSlice";
 import recurringReducer from "./Pages/recurringBills/recurringSlice";
 import budgetReducer from "./Pages/budgets/budgetSlice";
+import authReducer from "../backend/data/authSlice";
 
 import transactionReducer from "./Pages/transactions/transactionSlice";
 const store = configureStore({
@@ -16,6 +17,7 @@ const store = configureStore({
     recurring: recurringReducer,
     budget: budgetReducer,
     transactions: transactionReducer,
+    auth: authReducer,
   },
 });
 

@@ -20,7 +20,7 @@ function TransactionsPage() {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
+  if (transactions.length === 0) return;
   const filteredTransactions = transactions.filter((transaction) =>
     transaction.name.toLowerCase().includes(searchTerm.toLowerCase())
   );

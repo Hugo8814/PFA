@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
-import { decreasePot } from "../Pages/pots/PotSlice";
+import { decreasePot } from "../Pages/pots/potSlice";
 import { setValue } from "./modalSlice";
 import { formatCurrency } from "../utils/helpers";
 

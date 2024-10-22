@@ -3,71 +3,69 @@ import { setPots } from "../pots/PotSlice";
 import { setBudget } from "../budgets/budgetSlice";
 import { setTransactions } from "../transactions/transactionSlice";
 import { setRecurring } from "../recurringBills/recurringSlice";
+import { selectAuthToken } from "../../../backend/data/authSlice"; // Import your token selector
 
-// Step 2: Create Async Thunk for Fetching Data
+// Create Async Thunk for Fetching Data
 export const fetchOverviewData = createAsyncThunk(
   "overview/fetchOverviewData",
-  async (_, { dispatch }) => {
-    const response = await fetch("http://127.0.0.1:9000/api");
+  async (_, { dispatch, getState }) => {
+    const state = getState();
+    const token = selectAuthToken(state);
+
+    if (!token) {
+      throw new Error("Token is not available");
+    }
+
+    const response = await fetch("http://127.0.0.1:9000/api", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
+
     const data = await response.json();
-    // Log the received data to ensure it's correct
     console.log("Data received from API:", data);
-
-    // Dispatch to populate  data slices
     dispatch(setBudget(data.budgets));
-
     dispatch(setTransactions(data.transactions));
     dispatch(setPots(data.pots));
     dispatch(setRecurring(data.transactions));
 
-    return data; // Return the entire API response
+    return data;
   }
 );
 
-// Step 3: Create Slice
+// Create Slice
 const overviewSlice = createSlice({
   name: "overview",
   initialState: {
-    data: {
-      balance: {
-        current: 0,
-        income: 0,
-        expenses: 0,
-      },
-    },
-    status: "idle", // to track the status of the API call
-    error: null, // to track any errors that occur during the API call
+    data: {},
+    status: "idle",
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchOverviewData.pending, (state) => {
-        state.status = "loading"; // Set loading state
+        state.status = "loading";
       })
       .addCase(fetchOverviewData.fulfilled, (state, action) => {
-        state.status = "succeeded"; // Set succeeded state
-        state.data = action.payload; // Store the API response in the state
+        state.status = "succeeded";
+        state.data = action.payload;
       })
       .addCase(fetchOverviewData.rejected, (state, action) => {
-        state.status = "failed"; // Set failed state
-        state.error = action.error.message; // Store error message
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
-
-export const {
-  setPotsData,
-  setBudgetsData,
-  setTransactionsData,
-  setRecurringBillsData,
-} = overviewSlice.actions;
 
 export const selectOverviewData = (state) => state.overview.data;
 export const selectOverviewStatus = (state) => state.overview.status;
 export const selectOverviewError = (state) => state.overview.error;
 
-// Step 5: Export the reducer
 export default overviewSlice.reducer;

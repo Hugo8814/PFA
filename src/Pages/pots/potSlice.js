@@ -2,18 +2,18 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const potSlice = createSlice({
   name: "pots",
-  initialState: [], // Just store an array directly, not an object with `pots` inside
+  initialState: [],
   reducers: {
     increasePot(state, action) {
       const { id, amount } = action.payload;
-      const pot = state.find((pot) => pot.id === id); // Update directly on the array
+      const pot = state.find((pot) => pot.id === id);
       if (pot) {
         pot.total += amount;
       }
     },
     decreasePot(state, action) {
       const { id, amount } = action.payload;
-      const pot = state.find((pot) => pot.id === id); // Update directly on the array
+      const pot = state.find((pot) => pot.id === id);
       if (pot) {
         pot.total -= amount;
       }
@@ -23,7 +23,7 @@ const potSlice = createSlice({
       return state.filter((pot) => pot.id !== id);
     },
     setPots(state, action) {
-      return action.payload; // Replace the entire array of pots directly
+      return action.payload;
     },
     addPot(state, action) {
       state.push(action.payload);
@@ -47,7 +47,7 @@ export const {
   deletePot,
   addPot,
   updatePot,
-} = potSlice.actions; // Export actions
+} = potSlice.actions;
 
 export const getPotsData = (state) => state.pots;
 

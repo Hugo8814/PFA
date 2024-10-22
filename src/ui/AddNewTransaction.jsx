@@ -3,12 +3,7 @@ import { closeModal } from "./modalSlice";
 import { useState } from "react";
 import downArrow from "../../assets/images/icon-caret-down.svg";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  addRecurringTransaction,
-  addTransaction,
-} from "../Pages/transactions/transactionSlice";
 
 function AddNewTransaction() {
   const { isAddTransactionOpen } = useSelector((state) => state.modal);
@@ -16,15 +11,13 @@ function AddNewTransaction() {
 
   const [transactionName, setTransactionName] = useState("");
   const [amount, setAmount] = useState(0);
-
-  const [selectedCategory, setSelectedCategory] = useState(""); // Default color
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
-  const maxLength = 20; // Set the maximum character length
-  const charactersLeft = maxLength - transactionName.length; // Calculate remaining characters
+  const maxLength = 20;
+  const charactersLeft = maxLength - transactionName.length;
   const [selectedDate, setSelectedDate] = useState(new Date());
-
   const [recurring, setRecurring] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // Added error message state
 
   const categories = [
     "Entertainment",
@@ -38,41 +31,73 @@ function AddNewTransaction() {
     "Shopping",
     "General",
   ];
-  function handleSubmit() {
-    if (!transactionName || !amount || !selectedCategory) {
-      alert("Please fill in all fields.");
+
+  const decodeToken = (token) => {
+    try {
+      return JSON.parse(atob(token.split(".")[1])); // Decode the token payload
+    } catch (e) {
+      console.error("Failed to decode token:", e);
+      return null; // Return null if decoding fails
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setErrorMessage("No token found. Please log in.");
+      console.error("No token found");
       return;
     }
 
-    const newData = {
-      id: Date.now(),
-      name: transactionName,
-      category: selectedCategory,
-      amount: Number(amount), // Ensure amount is a number
-      date: selectedDate.toISOString(), // Convert Date to a serializable string
-      recurring: recurring,
-      avatar: "./assets/images/avatars/elevate-education.jpg",
-    };
-    // Check if `newData` is a plain object
-    console.log("newData is:", newData);
+    const payload = decodeToken(token); // Decode the token to get the payload
 
-    // Dispatch the regular transaction
-    dispatch(addTransaction(newData));
+    console.log("Decoded payload:", payload); // Debugging line
 
-    // Dispatch the recurring transaction if applicable
-    if (recurring) {
-      dispatch(addRecurringTransaction(newData)); // Dispatch the recurring transaction
+    // Ensure you're using userId here
+    if (!payload || !payload.userId) {
+      setErrorMessage("Invalid token. User ID not found.");
+      console.error("Invalid token");
+      return;
     }
 
-    // Reset form fields after submission
-    setTransactionName("");
-    setAmount(0);
-    setSelectedCategory("");
-    setSelectedDate(new Date());
-    setRecurring(false);
+    const transactionData = {
+      id: Date.now(), // Use a unique ID or implement an ID generation strategy
+      name: transactionName,
+      amount: parseFloat(amount), // Ensure amount is a number
+      category: selectedCategory,
+      date: selectedDate,
+      recurring: recurring,
+      userId: payload.userId, // Ensure this is correctly set
+    };
 
-    dispatch(closeModal());
-  }
+    console.log("Transaction data to send:", transactionData); // Debugging line
+
+    // Proceed with sending transaction data to the API
+    try {
+      const response = await fetch("http://127.0.0.1:9000/api/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the token
+        },
+        body: JSON.stringify(transactionData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit transaction: " + response.statusText);
+      }
+
+      const result = await response.json();
+      console.log("Transaction submitted:", result);
+      // Optionally, reset form or close modal here
+      dispatch(closeModal());
+    } catch (error) {
+      setErrorMessage("Error submitting transaction: " + error.message);
+      console.error("Error submitting transaction:", error);
+    }
+  };
 
   if (!isAddTransactionOpen) return null;
 
@@ -85,7 +110,8 @@ function AddNewTransaction() {
             &times;
           </div>
         </div>
-
+        {errorMessage && <div className="text-red-500">{errorMessage}</div>}{" "}
+        {/* Display error message */}
         <div>
           <div className="text-gray-500 text-2xl  font-semibold">
             Transaction Name
@@ -95,7 +121,7 @@ function AddNewTransaction() {
               onChange={(e) => setTransactionName(e.target.value)}
               type="text"
               maxLength={20}
-              className="w-full foucus: outline-none border-none pr-37 pl-6 py-2 rounded-xl text-3xl"
+              className="w-full outline-none border-none pr-37 pl-6 py-2 rounded-xl text-3xl"
               placeholder="e.g Rainy Days"
             />
           </div>
@@ -103,68 +129,52 @@ function AddNewTransaction() {
             {charactersLeft} Letters Left
           </div>
         </div>
-
         <div className="">
           <div className="text-gray-500 text-2xl font-semibold  ">
             Transaction Date
           </div>
           <div className="flex items-center  rounded-2xl  relative bg-[#F6F6F6]">
-            <div
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full text-gray-500 flex items-center foucus: outline-none border-none rounded-xl text-2xl text-left"
-            >
-              <DatePicker
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                dateFormat="MMMM d, yyyy"
-                dropdownMode="select"
-                className="w-full focus:outline-none bg-inherit border-none pr-96 pl-6 py-6 rounded-xl text-[1.7rem]"
-                calendarClassName="scale-150"
-                withPortal
-              />
-
-              <img className="ml-auto p-5" src={downArrow} alt="" />
-            </div>
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              dateFormat="MMMM d, yyyy"
+              className="w-full focus:outline-none bg-inherit border-none pr-96 pl-6 py-6 rounded-xl text-[1.7rem]"
+              withPortal
+            />
+            <img className="ml-auto p-5" src={downArrow} alt="" />
           </div>
         </div>
-
         <div>
           <div className="text-gray-500 text-2xl font-semibold ">Category</div>
           <div className="flex items-center border rounded-2xl py-3 px-5 border-gray-900 relative">
             <button
               onClick={() => setIsDropdownOpen2(!isDropdownOpen2)}
-              className="w-full text-gray-500 flex items-center foucus: outline-none border-none pr-37 pl-6 py-3 rounded-xl text-2xl text- "
+              className="w-full text-gray-500 flex items-center outline-none border-none pr-37 pl-6 py-3 rounded-xl text-2xl"
             >
               {selectedCategory || "Select Category"}
               <img className="ml-auto" src={downArrow} alt="" />
             </button>
 
             {isDropdownOpen2 && (
-              <div className="h-full space-y-3 text-2xl">
-                {isDropdownOpen2 && (
-                  <div className="absolute left-0 top-[6rem]  w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px]  ">
-                    <div className="overflow-y-scroll h-[20rem]">
-                      {categories.map((category, index) => (
-                        <div
-                          key={index}
-                          onClick={() => {
-                            setSelectedCategory(category);
-
-                            setIsDropdownOpen2(!isDropdownOpen2);
-                          }}
-                          className="hover:bg-gray-200 pl-6 py-4 flex gap-5 cursor-pointer"
-                        >
-                          {category}
-                        </div>
-                      ))}
+              <div className="absolute left-0 top-[6rem] w-full bg-white rounded-xl z-10 border-gray-500 border-[1px]">
+                <div className="overflow-y-scroll h-[20rem]">
+                  {categories.map((category, index) => (
+                    <div
+                      key={index}
+                      onClick={() => {
+                        setSelectedCategory(category);
+                        setIsDropdownOpen2(false); // Close dropdown
+                      }}
+                      className="hover:bg-gray-200 pl-6 py-4 flex gap-5 cursor-pointer"
+                    >
+                      {category}
                     </div>
-                  </div>
-                )}
+                  ))}
+                </div>
               </div>
             )}
           </div>
         </div>
-
         <div>
           <div className="text-gray-500 text-2xl font-semibold ">Amount</div>
           <div className="flex items-center border rounded-2xl py-3 px-5 border-gray-900">
@@ -173,12 +183,12 @@ function AddNewTransaction() {
               onChange={(e) => setAmount(e.target.value)}
               type="number"
               value={amount}
-              className="w-full foucus: outline-none border-none pr-37 pl-6 py-3 rounded-xl text-2xl"
+              className="w-full outline-none border-none pr-37 pl-6 py-3 rounded-xl text-2xl"
               placeholder="e.g $2000"
             />
           </div>
         </div>
-        <div className="text-gray-500 text-3xl font-semibold  flex items-center">
+        <div className="text-gray-500 text-3xl font-semibold flex items-center">
           Recurring
           <input
             onChange={(e) => setRecurring(e.target.checked)}
@@ -186,11 +196,8 @@ function AddNewTransaction() {
             className="ml-5 mt-2 "
           />
         </div>
-
         <button
-          onClick={() => {
-            handleSubmit();
-          }}
+          onClick={handleSubmit}
           className="flex justify-center items-center bg-black text-white text-3xl font-semibold p-6 rounded-xl"
         >
           Confirm Addition
