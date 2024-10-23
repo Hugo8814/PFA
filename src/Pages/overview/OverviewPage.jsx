@@ -43,7 +43,7 @@ function OverviewPage() {
       }
     } else {
       console.log("No token found. Redirecting to login...");
-      window.location.href = "/login"; // Redirect if no token
+      window.location.href = "/"; // Redirect if no token
     }
   }, [token, dispatch]); // Add dispatch to dependencies
 

@@ -3,17 +3,18 @@ import { setPots } from "../pots/potSlice";
 import { setBudget } from "../budgets/budgetSlice";
 import { setTransactions } from "../transactions/transactionSlice";
 import { setRecurring } from "../recurringBills/recurringSlice";
-import { selectAuthToken } from "../../../backend/data/authSlice"; // Import your token selector
+//import { selectAuthToken } from "../../../backend/data/authSlice"; // Import your token selector
 
 // Create Async Thunk for Fetching Data
 export const fetchOverviewData = createAsyncThunk(
   "overview/fetchOverviewData",
-  async (_, { dispatch, getState }) => {
-    const state = getState();
-    const token = selectAuthToken(state);
+  async (_, { dispatch }) => {
+    // const state = getState();
+    // const token = selectAuthToken(state);
+    const token = localStorage.getItem("token");
 
     if (!token) {
-      throw new Error("Token is not available from OverviewSlice"); //this is getting triggerd
+      throw new Error("Token is not available ");
     }
 
     const response = await fetch("http://127.0.0.1:9000/api", {
@@ -24,11 +25,13 @@ export const fetchOverviewData = createAsyncThunk(
       },
     });
 
+    const responseBody = await response.clone().text();
+
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error("Network response was not ok: " + responseBody);
     }
 
-    const data = await response.json();
+    const data = JSON.parse(responseBody);
     console.log("Data received from API:", data);
     dispatch(setBudget(data.budgets));
     dispatch(setTransactions(data.transactions));

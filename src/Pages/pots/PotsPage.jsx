@@ -24,6 +24,9 @@ function PotsPage() {
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
       <Header title="Pots" btn={true} text="+Add New Pot" pot={true} />
+      <AddModal />
+      <AddNewPot />
+      <WithdrawModal />
 
       <div className="grid grid-cols-3 gap-10">
         {data &&
@@ -95,10 +98,7 @@ function PotsPage() {
                 >
                   + Add Money
                 </button>
-                <AddModal />
-                <AddNewPot item={data} editItem={editItem} />
 
-                <WithdrawModal />
                 <button
                   onClick={() => {
                     dispatch(openWithdrawModal({ item }));

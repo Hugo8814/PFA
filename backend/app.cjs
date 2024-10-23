@@ -5,7 +5,9 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const Transaction = require("./data/Transaction.cjs"); // Ensure this path is correct
+const Transaction = require("./data/Transaction.cjs");
+
+const Pot = require("./data/Pot.cjs");
 
 const app = express();
 const port = 9000;
@@ -108,6 +110,63 @@ app.post("/api/transactions", authenticateToken, async (req, res) => {
   }
 });
 
+// Endpoint to handle new pots
+app.post("/api/pots", authenticateToken, async (req, res) => {
+  const newPot = new Pot({
+    ...req.body,
+    userId: req.user.userId, // Ensure this is correct
+  });
+  try {
+    const savedPot = await newPot.save();
+    res.status(201).json(savedPot);
+  } catch (error) {
+    console.error("Error saving pot:", error);
+    res.status(500).json({ error: "Failed to save pot" });
+  }
+});
+// DELETE endpoint to remove a pot by ID
+app.delete("/api/pots/:id", authenticateToken, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Attempt to delete the pot
+    const deletedPot = await Pot.findByIdAndDelete(id);
+    // Check if the pot was found and deleted
+    if (!deletedPot) {
+      return res.status(404).json({ message: "Pot not found" });
+    }
+    res.status(200).json({ message: "Pot deleted successfully", deletedPot });
+  } catch (error) {
+    console.error("Error deleting pot:", error);
+    res.status(500).json({ error: "Failed to delete pot" });
+  }
+});
+
+// PUT endpoint to update a pot by ID
+
+// PUT endpoint to update a pot by ID
+app.put("/api/pots/:id", authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body; // Get the updated data from the request body
+
+  try {
+    // Attempt to find the pot by ID and update it
+    const updatedPot = await Pot.findByIdAndUpdate(id, updatedData, {
+      new: true, // Return the modified document rather than the original
+      runValidators: true, // Validate the updated data against the schema
+    });
+
+    // Check if the pot was found and updated
+    if (!updatedPot) {
+      return res.status(404).json({ message: "Pot not found" });
+    }
+    res.status(200).json(updatedPot); // Respond with the updated pot
+  } catch (error) {
+    console.error("Error updating pot:", error);
+    res.status(500).json({ error: "Failed to update pot" });
+  }
+});
+
 // GET endpoint to retrieve all transactions
 app.get("/api/transactions", authenticateToken, async (req, res) => {
   // Ensure authentication is applied
@@ -125,12 +184,13 @@ app.get("/api", authenticateToken, async (req, res) => {
   try {
     // Fetch user-specific transactions
     const transactions = await Transaction.find({ userId: req.user.userId });
+    const pots = await Pot.find({ userId: req.user.userId });
 
     const response = {
       balance: {}, // Calculate or fetch user balance as needed
       transactions: transactions,
       budgets: [], // Fetch user budgets if necessary
-      pots: [], // Fetch user pots if necessary
+      pots: pots, // Fetch user pots if necessary
     };
 
     res.json(response);

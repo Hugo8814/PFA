@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
-import { increasePot } from "../Pages/pots/potSlice";
 import { setValue } from "./modalSlice";
 import { formatCurrency } from "../utils/helpers";
+import { updatePot } from "../Pages/pots/potSlice";
 
 function AddModal() {
   const { isAddOpen, content, value } = useSelector((state) => state.modal);
@@ -11,6 +11,12 @@ function AddModal() {
   if (content == null) return null;
   const { item } = content;
   const amountLeft = item.target - item.total;
+
+  function handleAdd() {
+    dispatch(updatePot({ id: item._id, total: value }));
+    dispatch(closeModal());
+    console.log("idk");
+  }
 
   if (!isAddOpen) return null;
 
@@ -86,8 +92,7 @@ function AddModal() {
 
         <button
           onClick={() => {
-            dispatch(increasePot({ id: item.id, amount: value }));
-            dispatch(closeModal());
+            handleAdd();
           }}
           className="flex justify-center items-center bg-black text-white text-3xl font-semibold p-6 rounded-xl"
         >
