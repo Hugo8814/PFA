@@ -64,24 +64,24 @@ const potSlice = createSlice({
     error: null,
   },
   reducers: {
-    increasePot(state, action) {
-      const { id, amount } = action.payload;
-      const pot = state.pots.find((pot) => pot.id === id);
-      if (pot) {
-        pot.total += amount;
-      }
-    },
-    decreasePot(state, action) {
-      const { id, amount } = action.payload;
-      const pot = state.pots.find((pot) => pot.id === id);
-      if (pot) {
-        pot.total -= amount;
-      }
-    },
-    deletePot(state, action) {
-      const { id } = action.payload;
-      return { ...state, pots: state.pots.filter((pot) => pot.id !== id) };
-    },
+    //   increasePot(state, action) {
+    //     const { id, amount } = action.payload;
+    //     const pot = state.pots.find((pot) => pot.id === id);
+    //     if (pot) {
+    //       pot.total += amount;
+    //     }
+    //   },
+    //   decreasePot(state, action) {
+    //     const { id, amount } = action.payload;
+    //     const pot = state.pots.find((pot) => pot.id === id);
+    //     if (pot) {
+    //       pot.total -= amount;
+    //     }
+    //   },
+    //   deletePot(state, action) {
+    //     const { id } = action.payload;
+    //     return { ...state, pots: state.pots.filter((pot) => pot.id !== id) };
+    //   },
     setPots(state, action) {
       state.pots = action.payload;
     },

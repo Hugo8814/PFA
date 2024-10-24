@@ -33,7 +33,7 @@ function EditPotModal({ item }) {
 
   function handleSubmit() {
     const editPot = {
-      id: item.id,
+      id: item._id,
       name: potName || item.name,
       theme: selectedColorHex,
       target: targetAmount || item.target,
@@ -42,6 +42,7 @@ function EditPotModal({ item }) {
 
     dispatch(updatePot(editPot));
     dispatch(closeModal());
+    console.log("Pot successfully updated");
   }
   if (!isEditPotOpen) return null;
 

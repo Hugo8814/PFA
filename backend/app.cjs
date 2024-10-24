@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const Transaction = require("./data/Transaction.cjs");
 
 const Pot = require("./data/Pot.cjs");
+const Budget = require("./data/Budget.cjs");
 
 const app = express();
 const port = 9000;
@@ -71,6 +72,44 @@ app.post("/auth/login", async (req, res) => {
   }
 });
 
+// User registration
+app.post("/auth/register", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Check if the username is already taken
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ error: "Username already taken" });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new User({
+      username,
+      password: hashedPassword,
+    });
+
+    // Save the user to the database
+    await newUser.save();
+
+    // Optionally generate a token for the new user
+    const token = jwt.sign(
+      { userId: newUser._id, username: newUser.username },
+      process.env.SECRET_KEY,
+      { expiresIn: "2h" }
+    );
+
+    // Respond with success message and token
+    res.status(201).json({ message: "User registered successfully", token });
+  } catch (err) {
+    console.error("Registration error:", err);
+    res.status(500).json({ error: "Failed to register user" });
+  }
+});
+
 // Middleware to verify JWT token
 function authenticateToken(req, res, next) {
   const token = req.headers["authorization"]?.split(" ")[1];
@@ -124,6 +163,27 @@ app.post("/api/pots", authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Failed to save pot" });
   }
 });
+// Endpoint to handle new Budget
+app.post("/api/budgets", authenticateToken, async (req, res) => {
+  console.log("Received new budget data:", req.body);
+
+  const newBudget = new Budget({
+    ...req.body,
+    userId: req.user.userId, // Ensure this is correctly setting the user ID from the token
+  });
+
+  try {
+    // Try to save the budget to the database
+    const savedBudget = await newBudget.save();
+    console.log("Budget saved successfully:", savedBudget);
+    res.status(201).json(savedBudget);
+  } catch (error) {
+    // Log the error in detail
+    console.error("Error saving budget:", error.message);
+    res.status(500).json({ error: "Failed to save budget" });
+  }
+});
+
 // DELETE endpoint to remove a pot by ID
 app.delete("/api/pots/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
@@ -139,6 +199,20 @@ app.delete("/api/pots/:id", authenticateToken, async (req, res) => {
   } catch (error) {
     console.error("Error deleting pot:", error);
     res.status(500).json({ error: "Failed to delete pot" });
+  }
+});
+//Delete endpoint to remove to pot by ID
+app.delete("/api/budgets/:id", authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedBudget = await Budget.findByIdAndDelete(id);
+    if (!deletedBudget) {
+      return res.status(404).json({ message: "Budget not found" });
+    }
+    res.status(200).json({ message: "Budget deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting Budget:", error);
+    res.status(500).json({ error: "Failed to delete Budget" });
   }
 });
 
@@ -167,6 +241,27 @@ app.put("/api/pots/:id", authenticateToken, async (req, res) => {
   }
 });
 
+app.put("/api/budgets/:id", authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body; // This should contain the fields you want to update
+
+  try {
+    const updatedBudget = await Budget.findByIdAndUpdate(id, updateData, {
+      new: true, // Return the updated document
+      runValidators: true, // Validate the updated fields
+    });
+
+    if (!updatedBudget) {
+      return res.status(404).json({ message: "Budget not found" });
+    }
+
+    res.status(200).json(updatedBudget);
+  } catch (error) {
+    console.error("Error updating budget:", error);
+    res.status(500).json({ error: "Failed to update budget" });
+  }
+});
+
 // GET endpoint to retrieve all transactions
 app.get("/api/transactions", authenticateToken, async (req, res) => {
   // Ensure authentication is applied
@@ -185,11 +280,12 @@ app.get("/api", authenticateToken, async (req, res) => {
     // Fetch user-specific transactions
     const transactions = await Transaction.find({ userId: req.user.userId });
     const pots = await Pot.find({ userId: req.user.userId });
+    const budgets = await Budget.find({ userId: req.user.userId });
 
     const response = {
       balance: {}, // Calculate or fetch user balance as needed
       transactions: transactions,
-      budgets: [], // Fetch user budgets if necessary
+      budgets: budgets, // Fetch user budgets if necessary
       pots: pots, // Fetch user pots if necessary
     };
 

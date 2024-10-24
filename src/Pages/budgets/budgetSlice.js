@@ -1,5 +1,77 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createSelector,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
 import { getTransactions } from "../transactions/transactionSlice"; // Import the transactions selector
+
+export const addBudget = createAsyncThunk(
+  "budget/addPot",
+  async (newBudget) => {
+    console.log(newBudget);
+
+    const response = await fetch("http://127.0.0.1:9000/api/budgets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(newBudget),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add pot");
+    }
+
+    return response.json(); // Return the added pot data
+  }
+);
+
+// export const updateBudget = createAsyncThunk(
+
+//   "budget/updateBudget",
+//   async (updatedBudget) => {
+//     console.log(updatedBudget);
+//     const response = await fetch(
+//       `http://127.0.0.1:9000/api/budgets/${updatedBudget.id}`,
+//       {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${localStorage.getItem("token")}`,
+//         },
+//         body: JSON.stringify(updatedBudget),
+//       }
+//     );
+//     if (!response.ok) {
+//       throw new Error("Failed to update pot");
+//     }
+
+//     return response.json(); // Return the updated pot data
+//   }
+// );
+export const updateBudget = createAsyncThunk(
+  "budget/updateBudget",
+  async (updatedBudget) => {
+    console.log("Updating Budget:", updatedBudget);
+    const response = await fetch(
+      `http://127.0.0.1:9000/api/budgets/${updatedBudget.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(updatedBudget),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to update budget"); // Better error message
+    }
+
+    return response.json(); // Return the updated budget data
+  }
+);
 
 const budgetSlice = createSlice({
   name: "budget",
@@ -10,27 +82,29 @@ const budgetSlice = createSlice({
     setBudget(state, action) {
       state.budget = action.payload;
     },
-    addBuget(state, action) {
+    addBudget(state, action) {
       state.budget = [...state.budget, action.payload];
     },
-    updateBudget(state, action) {
-      const { id, category, maximum, theme } = action.payload;
-      const index = state.budget.findIndex((budget) => budget.id === id);
-      if (index !== -1) {
-        state.budget[index] = {
-          ...state.budget[index],
-          id,
-          category,
-          maximum,
-          theme,
-        };
-      }
-    },
+
     deleteBudget(state, action) {
       const { id } = action.payload;
 
       state.budget = state.budget.filter((budget) => budget.id !== id);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(addBudget.fulfilled, (state, action) => {
+      state.budget = [...state.budget, action.payload];
+    });
+
+    builder.addCase(updateBudget.fulfilled, (state, action) => {
+      const index = state.budget.findIndex(
+        (budget) => budget.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.budget[index] = action.payload;
+      }
+    });
   },
 });
 
@@ -67,8 +141,7 @@ export const getBudgetSpent = createSelector([getBudgetData], (budgetData) => {
 });
 
 // Export the reducer actions
-export const { setBudget, addBuget, deleteBudget, updateBudget } =
-  budgetSlice.actions;
+export const { setBudget, addBuget, deleteBudget } = budgetSlice.actions;
 
 // Export the budget reducer as default
 export default budgetSlice.reducer;

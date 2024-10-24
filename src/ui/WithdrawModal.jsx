@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
-import { decreasePot } from "../Pages/pots/potSlice";
+import { decreasePot, updatePot } from "../Pages/pots/potSlice";
 import { setValue } from "./modalSlice";
 import { formatCurrency } from "../utils/helpers";
 
@@ -16,6 +16,12 @@ function WithdrawModal() {
   const amountLeft = item.total;
   if (value === 0) {
     dispatch(setValue(""));
+  }
+
+  function handleWithdraw() {
+    dispatch(updatePot({ id: item._id, total: item.total - value }));
+    dispatch(closeModal());
+    console.log("Pot successfully updated");
   }
 
   if (!isWithdrawOpen) return null;
@@ -96,8 +102,7 @@ function WithdrawModal() {
 
         <button
           onClick={() => {
-            dispatch(decreasePot({ id: item.id, amount: value }));
-            dispatch(closeModal());
+            handleWithdraw();
           }}
           className="flex justify-center items-center bg-black text-white text-3xl font-semibold p-6 rounded-xl"
         >

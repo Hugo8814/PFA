@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "./modalSlice";
 import { useState } from "react";
 import downArrow from "../../assets/images/icon-caret-down.svg";
-
 import { updateBudget } from "../Pages/budgets/budgetSlice";
+
 function EditBugetModal({ item }) {
   const { isEditBudgetOpen } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
@@ -42,13 +42,14 @@ function EditBugetModal({ item }) {
 
   function handleSubmit() {
     const newData = {
-      id: item.id,
+      id: item._id,
       category: selectedCategory || item.category,
       maximum: maxAmount || item.maximum,
       theme: selectedColorHex || item.theme,
     };
     // Dispatch the action to add a pot
     dispatch(updateBudget(newData));
+    console.log("Budget successfully updated");
 
     dispatch(closeModal());
   }

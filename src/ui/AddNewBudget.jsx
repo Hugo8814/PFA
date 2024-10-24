@@ -3,7 +3,7 @@ import { closeModal } from "./modalSlice";
 import { useState } from "react";
 import downArrow from "../../assets/images/icon-caret-down.svg";
 
-import { addBuget } from "../Pages/budgets/budgetSlice";
+import { addBudget } from "../Pages/budgets/budgetSlice";
 
 function AddNewBudget() {
   const { isAddBudgetOpen } = useSelector((state) => state.modal);
@@ -15,6 +15,7 @@ function AddNewBudget() {
   const [selectedCategory, setSelectedCategory] = useState(""); // Default color
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // Error message state
 
   const colors = [
     { color: "#277C78", name: "Green" },
@@ -40,17 +41,37 @@ function AddNewBudget() {
     "General",
   ];
 
+  const decodeToken = (token) => {
+    try {
+      return JSON.parse(atob(token.split(".")[1])); // Decode the token payload
+    } catch (e) {
+      console.error("Failed to decode token:", e);
+      return null; // Return null if decoding fails
+    }
+  };
+
   function handleSubmit() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setErrorMessage("No token found. Please log in.");
+      return;
+    }
+
+    const payload = decodeToken(token); // Decode the token to get the payload
+    console.log("Decoded payload:", payload); // Debugging line
+
     const newData = {
       id: Date.now(),
       category: selectedCategory,
-      maximum: maxAmount,
+      maximum: Number(maxAmount),
       theme: selectedColorHex,
+      userId: payload.userId,
     };
     // Dispatch the action to add a pot
-    dispatch(addBuget(newData));
-
+    dispatch(addBudget(newData));
     dispatch(closeModal());
+
+    console.log("Budget successfully added");
   }
 
   if (!isAddBudgetOpen) return null;
@@ -63,11 +84,7 @@ function AddNewBudget() {
             &times;
           </div>
         </div>
-        <div className="text-2xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-          nesciunt voluptates. Mollitia similique eos pariatur quae rerum
-          facere.
-        </div>
+        {errorMessage && <div className="text-red-500">{errorMessage}</div>}
         <div className="">
           <div className="text-gray-500 text-2xl font-semibold ">Category</div>
           <div className="flex items-center border rounded-2xl py-3 px-5 border-gray-900 relative">

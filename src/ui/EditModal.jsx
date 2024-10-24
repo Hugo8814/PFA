@@ -6,7 +6,7 @@ import {
   openEditPotModal,
 } from "./modalSlice"; // Import the closeModal action
 
-function EditModal({ item, pot, budget }) {
+function EditModal({ item }) {
   const { isEditOpen } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   function handleDispatch() {

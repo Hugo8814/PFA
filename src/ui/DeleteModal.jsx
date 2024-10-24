@@ -17,7 +17,16 @@ function DeleteModal({ item, budget, pot }) {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:9000/api/pots/${id}`, {
+      let url = "";
+
+      // Determine which API endpoint to use based on pot or budget
+      if (pot) {
+        url = `http://127.0.0.1:9000/api/pots/${id}`;
+      } else if (budget) {
+        url = `http://127.0.0.1:9000/api/budgets/${id}`;
+      }
+
+      const response = await fetch(url, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -26,10 +35,12 @@ function DeleteModal({ item, budget, pot }) {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete item: " + response.statusText);
+        throw new Error(
+          `Failed to delete ${pot ? "pot" : "budget"}: ${response.statusText}`
+        );
       }
 
-      console.log("Pot deleted successfully");
+      console.log(`${pot ? "Pot" : "Budget"} deleted successfully`);
 
       // Fetch updated overview data after successful deletion
       dispatch(fetchOverviewData());
@@ -37,10 +48,13 @@ function DeleteModal({ item, budget, pot }) {
       // Close the modal after successful deletion
       dispatch(closeModal());
     } catch (error) {
-      console.error("Error deleting item:", error);
-      alert("Failed to delete the item. Please try again.");
+      console.error(`Error deleting ${pot ? "pot" : "budget"}:`, error);
+      alert(
+        `Failed to delete the ${pot ? "pot" : "budget"}. Please try again.`
+      );
     }
   };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
       <div className="bg-white p-16 rounded-[2rem] w-[28%] h-content flex flex-col gap-14">

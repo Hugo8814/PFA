@@ -1,16 +1,20 @@
 import { useState } from "react";
 import img from "../../../assets/images/illustration-authentication.svg";
 import logo from "../../../assets/images/logo-large.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading state
 
     // API call for registration
     try {
@@ -25,14 +29,15 @@ function SignUp() {
       const data = await response.json();
 
       if (response.ok) {
-        // Redirect to login page or main app page after successful signup
-        window.location.href = "/"; // Adjust the redirect path as needed
+        navigate("/"); // Redirect to login page after successful signup
       } else {
-        setError(data.error); // Show error message
+        setError(data.error || "Sign up failed. Please try again."); // Handle errors
       }
     } catch (error) {
       console.error("Error signing up:", error);
       setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
@@ -40,7 +45,6 @@ function SignUp() {
     <div className="flex items-center p-5 h-screen bg-[#F8F4F0]">
       <div className="relative hidden h-full max-w-[560px] flex-1 overflow-hidden rounded-[12px] bg-grey-900 p-12 lg:flex lg:flex-col">
         <img src={logo} alt="" className="z-20 relative w-56 mt-7" />
-
         <div className="absolute inset-0 z-0 h-full w-full">
           <img
             alt="login and signup illustration image"
@@ -49,7 +53,6 @@ function SignUp() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
-
         <div className="z-10 mt-auto flex flex-col gap-8 mb-10 text-white">
           <h2 className="text-5xl font-bold max-w-[20ch]">
             Keep track of your money and save for your future
@@ -64,7 +67,11 @@ function SignUp() {
       <div className="w-[60%] flex justify-center text-2xl">
         <div className="bg-white p-12 rounded-xl shadow-md w-[45%] flex flex-col gap-6">
           <h1 className="text-5xl font-bold mb-6">Sign Up</h1>
-          {error && <p className="text-red-500 text-2xl mb-4">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-2xl mb-4" aria-live="assertive">
+              {error}
+            </p>
+          )}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="mb-4">
               <label
@@ -85,13 +92,13 @@ function SignUp() {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-xl font-bold mb-2"
-                htmlFor="email" // Corrected id and htmlFor
+                htmlFor="email"
               >
                 Email
               </label>
               <input
-                type="email" // Changed input type to email for validation
-                id="email" // Corrected id
+                type="email"
+                id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="shadow appearance-none border rounded-xl w-full py-5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -117,16 +124,14 @@ function SignUp() {
             <button
               type="submit"
               className="bg-gray-900 text-2xl hover:bg-gray-800 text-white font-bold py-6 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
+              disabled={isLoading} // Disable button while loading
             >
-              Sign Up {/* Changed from Login to Sign Up */}
+              {isLoading ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
           <div className="text-gray-600 text-2xl text-center p-3">
             Already have an account?{" "}
-            <Link
-              to="/" // Adjusted link to the login page
-              className="text-gray-900 font-semibold underline"
-            >
+            <Link to="/" className="text-gray-900 font-semibold underline">
               Log in
             </Link>
           </div>

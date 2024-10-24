@@ -70,7 +70,7 @@ function AddNewPot() {
       theme: selectedColorHex,
       target: parseFloat(targetAmount), // Ensure target amount is a number
       total: 0,
-      id: Date.now(), // Consider using a more robust ID generation strategy
+
       userId: payload.userId, // Use the extracted userId from the payload
     };
 

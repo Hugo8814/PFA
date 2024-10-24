@@ -13,9 +13,9 @@ function AddModal() {
   const amountLeft = item.target - item.total;
 
   function handleAdd() {
-    dispatch(updatePot({ id: item._id, total: value }));
+    dispatch(updatePot({ id: item._id, total: value + item.total }));
     dispatch(closeModal());
-    console.log("idk");
+    console.log("Pot successfully updated");
   }
 
   if (!isAddOpen) return null;
