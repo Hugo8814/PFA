@@ -11,7 +11,7 @@ import {
   getTransactionIncome,
 } from "../transactions/transactionSlice";
 import { getPotTotal } from "../pots/potSlice";
-import { getReData } from "../recurringBills/recurringSlice";
+
 import { useEffect } from "react";
 
 import { selectAuthToken, setAuthToken } from "../../../backend/data/authSlice"; // Adjust the path
@@ -24,11 +24,8 @@ function OverviewPage() {
   const transactionIncome = useSelector(getTransactionIncome);
   const transactionEpenses = useSelector(getTransactionExpense);
   const PotTotal = useSelector(getPotTotal);
-  const { paidBills, totalUpcoming, dueSoon } = useSelector(getReData);
 
-  const reTotal = paidBills + totalUpcoming + dueSoon;
-
-  const expenses = (budgetTotal - reTotal - transactionEpenses).toFixed(2);
+  const expenses = (budgetTotal - transactionEpenses).toFixed(2);
   const income = (PotTotal + transactionIncome).toFixed(2);
   const currentBalance = (income - expenses).toFixed(2);
 

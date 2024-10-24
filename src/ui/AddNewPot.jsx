@@ -110,11 +110,6 @@ function AddNewPot() {
             &times;
           </div>
         </div>
-        <div className="text-2xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-          nesciunt voluptates. Mollitia similique eos pariatur quae rerum
-          facere.
-        </div>
         <div>
           <div className="text-gray-500 text-2xl font-semibold">Pot Name</div>
           <div className="flex items-center border rounded-2xl py-3 px-5 border-gray-900">

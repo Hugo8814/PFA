@@ -19,6 +19,17 @@ function AddNewTransaction() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [recurring, setRecurring] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // Added error message state
+  function handleRecurring(e) {
+    const isChecked = e.target.checked; // Get the checkbox state
+    setRecurring(isChecked); // Set the recurring state
+
+    // Use isChecked to determine whether to negate the amount
+    if (isChecked) {
+      setAmount(-Math.abs(amount)); // Make sure the amount is negative if recurring
+    } else {
+      setAmount(Math.abs(amount)); // Make sure the amount is positive if not recurring
+    }
+  }
 
   const categories = [
     "Entertainment",
@@ -117,7 +128,6 @@ function AddNewTransaction() {
           </div>
         </div>
         {errorMessage && <div className="text-red-500">{errorMessage}</div>}{" "}
-        {/* Display error message */}
         <div>
           <div className="text-gray-500 text-2xl  font-semibold">
             Transaction Name
@@ -198,7 +208,7 @@ function AddNewTransaction() {
         <div className="text-gray-500 text-3xl font-semibold flex items-center">
           Recurring
           <input
-            onChange={(e) => setRecurring(e.target.checked)}
+            onChange={(e) => handleRecurring(e)}
             type="checkbox"
             className="ml-5 mt-2 "
           />

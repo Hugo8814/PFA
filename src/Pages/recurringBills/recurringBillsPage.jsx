@@ -59,7 +59,7 @@ function RecurringBillsPage() {
       <div className="flex gap-10">
         <TotalBills />
 
-        <div className="flex bg-white rounded-xl w-full   p-14 flex-col">
+        <div className="flex bg-white rounded-xl w-full  h-full  p-14 flex-col">
           <div className="flex pb-10 justify-between">
             <div className="flex ">
               <input

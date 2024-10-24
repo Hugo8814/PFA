@@ -73,7 +73,7 @@ function DeleteModal({ item, budget, pot }) {
           Are you sure you want to delete this {pot ? "pot" : "budget"}? This
           action cannot be undone.
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-6 flex-col">
           <button
             onClick={handleDelete}
             className="flex justify-center items-center bg-[#BE6C49] text-white text-3xl font-semibold p-6 rounded-xl"

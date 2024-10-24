@@ -32,12 +32,6 @@ function AddModal() {
           </div>
         </div>
 
-        <div className="text-2xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-          nesciunt voluptates. Mollitia similique eos pariatur quae rerum
-          facere.
-        </div>
-
         <div className="flex justify-between items-center ">
           <div className="text-gray-500 text-2xl">New Amount</div>
           <div className="font-bold text-6xl">
