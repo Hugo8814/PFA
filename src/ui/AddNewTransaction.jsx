@@ -27,7 +27,7 @@ function AddNewTransaction() {
     if (isChecked) {
       setAmount(-Math.abs(amount)); // Make sure the amount is negative if recurring
     } else {
-      setAmount(Math.abs(amount)); // Make sure the amount is positive if not recurring
+      setAmount(Math.abs(amount)); // Make sure the amount is positive if not recurrin
     }
   }
 
