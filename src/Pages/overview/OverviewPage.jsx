@@ -50,11 +50,11 @@ function OverviewPage() {
   }
 
   return (
-    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
+    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-1400:px-7 ">
       <Header title="Overview" />
       <MoneyTabs current={currentBalance} income={income} expenses={expenses} />
 
-      <div className="w-full h-full flex gap-8">
+      <div className="w-full h-full flex gap-8 max-800:flex-col">
         <div className="flex flex-col gap-4 w-full ">
           <PotWiget />
           <TransactionWiget />
