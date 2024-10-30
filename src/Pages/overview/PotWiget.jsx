@@ -20,7 +20,7 @@ function PotWiget() {
           <img src={iconPot} alt="money jar icon" className="w-14" />
           <div className="space-y-4">
             <div className="text-gray-400">Total Saved</div>
-            <div className="text-6xl font-bold">${total}</div>
+            <div className="text-6xl font-bold max-1300:text-4xl">${total}</div>
           </div>
         </div>
         <div className="w-full grid grid-cols-2 gird-rows-2 gap-4">
