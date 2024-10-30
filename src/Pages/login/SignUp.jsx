@@ -42,10 +42,17 @@ function SignUp() {
   };
 
   return (
-    <div className="flex items-center p-5 h-screen bg-[#F8F4F0]">
-      <div className="relative hidden h-full max-w-[560px] flex-1 overflow-hidden rounded-[12px] bg-grey-900 p-12 lg:flex lg:flex-col">
-        <img src={logo} alt="" className="z-20 relative w-56 mt-7" />
-        <div className="absolute inset-0 z-0 h-full w-full">
+    <div className="flex items-center p-5 h-screen bg-[#F8F4F0] max-1100:flex-col max-1100:p-0">
+      <div className="bg-gray-900 w-full justify-center items-center hidden max-1100:flex">
+        <img src={logo} alt="" className="z-20 w-76 p-8" />
+      </div>
+      <div className="relative  h-full max-w-[560px] flex-1 overflow-hidden rounded-[12px] bg-grey-900 p-12 flex flex-col max-1100:hidden max-1100:p-0">
+        <img
+          src={logo}
+          alt=""
+          className="z-20 relative w-56 mt-7 max-1100:hidden"
+        />
+        <div className="absolute inset-0 z-0 h-full w-full max-1100:hidden">
           <img
             alt="login and signup illustration image"
             decoding="async"
@@ -64,8 +71,11 @@ function SignUp() {
         </div>
       </div>
 
-      <div className="w-[60%] flex justify-center text-2xl">
-        <div className="bg-white p-12 rounded-xl shadow-md w-[45%] flex flex-col gap-6">
+      <div className="w-[60%] flex justify-center items-center text-2xl  max-1100:w-full max-1100:h-full">
+        <div
+          className="bg-white p-12   rounded-xl shadow-md w-[45%] flex flex-col gap-6 max-1300:w-[60%] max-1100:w-[55%] max-1100:m-[10%]
+          max-700:w-full max-700:m-[10%] max-380:m-[3%]  "
+        >
           <h1 className="text-5xl font-bold mb-6">Sign Up</h1>
           {error && (
             <p className="text-red-500 text-2xl mb-4" aria-live="assertive">
