@@ -24,6 +24,40 @@ html {
   font-family: "Public Sans"; /* Set Public Sans as the default font */
 }
 
+/* For screens up to 1200px (Large desktops) */
+@media (max-width: 1200px) {
+  html {
+    font-size: 60%; /* 1rem = 9.6px */
+  }
+}
+
+/* For screens up to 992px (Tablets and small desktops) */
+@media (max-width: 992px) {
+  html {
+    font-size: 57.5%; /* 1rem = 9.2px */
+  }
+}
+
+/* For screens up to 768px (Portrait tablets and large phones) */
+@media (max-width: 768px) {
+  html {
+    font-size: 55%; /* 1rem = 8.8px */
+  }
+}
+
+/* For screens up to 576px (Mobile phones) */
+@media (max-width: 576px) {
+  html {
+    font-size: 52.5%; /* 1rem = 8.4px */
+  }
+}
+
+/* For very small screens (Tiny phones and very narrow devices) */
+@media (max-width: 375px) {
+  html {
+    font-size: 50%; /* 1rem = 8px */
+  }
+}
 .loader {
   width: 45px;
   aspect-ratio: 0.75;
