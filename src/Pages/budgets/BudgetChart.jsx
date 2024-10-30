@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { PieChart, Pie, Cell } from "recharts";
 
-const BudgetChart = ({ data }) => {
+const BudgetChart = ({ data, width = 250, height = 250 }) => {
   return (
-    <PieChart key={data.length} width={250} height={250}>
+    <PieChart key={data.length} width={width} height={height}>
       <Pie
         data={data}
         cx={120}
