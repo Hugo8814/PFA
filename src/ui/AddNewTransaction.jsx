@@ -117,7 +117,7 @@ function AddNewTransaction() {
   };
 
   if (!isAddTransactionOpen) return null;
-  //
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 ">
       <div className="bg-white p-16 rounded-[2rem] w-[30%] h-content flex flex-col gap-10">
