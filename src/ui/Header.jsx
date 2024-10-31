@@ -11,7 +11,7 @@ function Header({ title, btn, text, budget, pot, transaction }) {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center ">
       <h1 className="text-6xl font-bold">{title}</h1>
       {btn && (
         <button
@@ -24,7 +24,7 @@ function Header({ title, btn, text, budget, pot, transaction }) {
               dispatch(openAddTransaction());
             }
           }}
-          className="bg-black text-white text-3xl font-semibold p-6 rounded-xl"
+          className="bg-black text-white text-3xl font-semibold p-6 rounded-xl max-500:text-2xl"
         >
           {text}
         </button>

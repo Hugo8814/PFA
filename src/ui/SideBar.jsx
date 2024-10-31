@@ -8,9 +8,9 @@ import NavBtn from "./navBtn";
 
 function SideBar() {
   return (
-    <div className="rounded-tr-3xl h-full flex flex-col p-12 gap-4 bg-gray-900 text-white ">
+    <div className="rounded-tr-3xl h-full flex flex-col p-12 gap-4 bg-gray-900 text-white max-1300:px-4 max-1100:flex-row  max-1100:p-[1rem] max-1100:h-auto max-500:text-transparent  ">
       {/* Logo Section */}
-      <div className="mt-4 mb-28">
+      <div className="mt-4 mb-28  max-1100:hidden">
         <img src={logo} alt="logo" />
       </div>
 

@@ -28,11 +28,11 @@ function AppLayout() {
   }
 
   return (
-    <div className="w-screen h-screen grid bg-[#F8F4F0] grid-cols-[18%,82%]">
+    <div className="w-screen h-screen grid bg-[#F8F4F0] grid-cols-[18%,82%] max-1100:flex max-1100:flex-col-reverse  justify-between ">
       <SideBar />
       {isLoading && <Loader />}
 
-      <main className="px-20 overflow-y-auto">
+      <main className="overflow-y-auto  ">
         <Outlet />
       </main>
     </div>
