@@ -12,7 +12,7 @@ function Header({ title, btn, text, budget, pot, transaction }) {
 
   return (
     <div className="flex justify-between items-center ">
-      <h1 className="text-6xl font-bold">{title}</h1>
+      <h1 className="text-6xl font-bold  max-500:text-5xl">{title}</h1>
       {btn && (
         <button
           onClick={() => {
