@@ -4,10 +4,13 @@ import downArrow from "../../../assets/images/icon-caret-down.svg";
 import iconCaretLeft from "../../../assets/images/icon-caret-left.svg";
 import iconCaretRight from "../../../assets/images/icon-caret-right.svg";
 import { useSelector } from "react-redux";
+import sort from "../../../assets/images/icon-sort-mobile.svg";
 
 import { getTransactions } from "./transactionSlice";
 import { useState } from "react";
 import AddNewTransaction from "../../ui/AddNewTransaction";
+import filter from "../../../assets/images/icon-filter-mobile.svg";
+import { useMediaQuery } from "react-responsive";
 
 function TransactionsPage() {
   const transactions = useSelector(getTransactions);
@@ -17,7 +20,7 @@ function TransactionsPage() {
   const [sortBy, setSortBy] = useState("Latest");
   const [category, setCategory] = useState("All Transactions");
 
-  ////
+  const isScreenSmall = useMediaQuery({ maxWidth: 700 });
 
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 8;
@@ -129,13 +132,14 @@ function TransactionsPage() {
   ///////////////////////////////////////////
 
   return (
-    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto">
+    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-900:px-10 max-1500:pb-10 max-1000:pt-16 max-600:pt-20  ">
       <div>
         <Header
           title="Transactions"
           btn={true}
           text="+Add New Transaction"
           transaction={true}
+          className="text-4xl"
         />
       </div>
       <AddNewTransaction />
@@ -145,29 +149,39 @@ function TransactionsPage() {
             <input
               type="text"
               placeholder="Search transactions"
-              className="border-gray-500 border-[1px] pr-72 pl-6 py-4 rounded-xl text-2xl "
+              className="border-gray-500 border-[1px] pr-72 pl-6 py-4 rounded-xl text-2xl max-1400:pr-16 max-1200:pr-0 max-800:mx-3"
               onChange={(e) => handleSearchChange(e)}
             />
           </div>
 
           <div className="flex gap-12">
             <div className="flex gap-6 items-center      ">
-              <p type="dropdown" className="text-2xl text-gray-600">
+              <p
+                type="dropdown"
+                className="text-2xl text-gray-600  max-700:hidden"
+              >
                 sort by
               </p>
               <div className="h-full relative space-y-3 text-2xl">
-                <button
-                  onClick={() => handleDropdown()}
-                  className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-24  justify-between font-semibold"
-                >
-                  {sortBy}
-                  <img src={downArrow} alt="" />
-                </button>
+                {isScreenSmall && (
+                  <button onClick={() => handleDropdown()}>
+                    <img src={filter} alt="" />
+                  </button>
+                )}
+                <div className="h-full  max-700:hidden">
+                  <button
+                    onClick={() => handleDropdown()}
+                    className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-24  justify-between font-semibold max-1200:gap-7"
+                  >
+                    {sortBy}
+                    <img src={downArrow} alt="" />
+                  </button>
+                </div>
                 {isdropdownOpen && (
-                  <div className="absolute w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px] ">
+                  <div className="absolute w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px] max-700:w-[10rem] max-700:right-0 ">
                     <div
                       onClick={() => handleSortBy("Latest")}
-                      className="hover:bg-gray-200 pl-6 py-4"
+                      className="hover:bg-gray-200 pl-6 py-4 "
                     >
                       Latest
                     </div>
@@ -210,19 +224,24 @@ function TransactionsPage() {
               </div>
             </div>
 
-            <div className="flex gap-6 items-center ">
-              <p className="text-2xl text-gray-600">Category</p>
+            <div className="flex gap-6 items-center">
+              <p className="text-2xl text-gray-600  max-700:hidden">Category</p>
 
               <div className="h-full relative space-y-3 text-2xl">
+                {isScreenSmall && (
+                  <button onClick={() => handleDropdown2()}>
+                    <img src={sort} alt="sort icone" />
+                  </button>
+                )}
                 <button
                   onClick={() => handleDropdown2()}
-                  className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-24  justify-between font-semibold"
+                  className="border-gray-500 border-[1px] px-6 rounded-xl h-full flex items-center gap-24  justify-between font-semibold max-1200:gap-7  max-700:hidden"
                 >
                   {category}
                   <img src={downArrow} alt="" />
                 </button>
                 {isdropdownOpen2 && (
-                  <div className="absolute w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px] ">
+                  <div className="absolute w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px] max-700:w-[15rem] max-700:right-0 ">
                     <div
                       onClick={() => handleCategory("All Transactions")}
                       className="hover:bg-gray-200 pl-6 py-4"
@@ -298,7 +317,7 @@ function TransactionsPage() {
         </div>
 
         <table>
-          <thead>
+          <thead className="max-700:hidden">
             <tr>
               <th className="text-2xl font-normal text-gray-500 text-left p-6">
                 Recipent / Sender
@@ -325,19 +344,28 @@ function TransactionsPage() {
                       className="w-14 rounded-full"
                       alt="icon"
                     />
-                    <p className="pl-4 font-bold ">{item.name}</p>
+                    <div className="flex flex-col">
+                      <p className="pl-4 font-bold ">{item.name}</p>
+                      <div className="hidden max-500:block pl-4 text-[1.4rem] text-gray-700">
+                        {item.category}
+                      </div>
+                    </div>
                   </td>
-                  <td className="text-2xl font-normal text-gray-500">
+                  <td className="text-2xl font-normal text-gray-500 max-500:hidden">
                     {item.category}
                   </td>
-                  <td className="text-2xl font-normal text-gray-500">
+                  <td className="text-2xl font-normal text-gray-500 max-500:hidden">
                     {formatDate(item.date)}
                   </td>
-                  <td
-                    style={{ color: item.amount < 0 ? "red" : "green" }}
-                    className="text-2xl  text-green-700 font-bold text-right"
-                  >
-                    {formatCurrency(item.amount)}
+                  <td className="text-2xl  font-bold text-right">
+                    <div className="flex flex-col">
+                      <div style={{ color: item.amount < 0 ? "red" : "green" }}>
+                        {formatCurrency(item.amount)}
+                      </div>
+                      <div className="hidden max-500:block font-normal">
+                        {formatDate(item.date)}
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))}
