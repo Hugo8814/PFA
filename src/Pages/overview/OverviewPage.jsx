@@ -50,7 +50,7 @@ function OverviewPage() {
   }
 
   return (
-    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-1400:px-7 ">
+    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-1400:px-7 max-1200:scale-90 max-1200:px-0 max-1000:scale-100  max-1000:p-10">
       <Header title="Overview" />
       <MoneyTabs current={currentBalance} income={income} expenses={expenses} />
 
