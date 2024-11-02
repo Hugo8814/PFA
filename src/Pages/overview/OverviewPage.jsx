@@ -15,6 +15,7 @@ import { getPotTotal } from "../pots/potSlice";
 import { useEffect } from "react";
 
 import { selectAuthToken, setAuthToken } from "../../../backend/data/authSlice"; // Adjust the path
+import { Link } from "react-router-dom";
 
 function OverviewPage() {
   const dispatch = useDispatch();
@@ -51,7 +52,16 @@ function OverviewPage() {
 
   return (
     <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-1400:px-7 max-1200:scale-90 max-1200:px-0 max-1000:scale-100  max-1000:p-10">
-      <Header title="Overview" />
+      <div className="flex justify-between items-center ">
+        <h1 className="text-6xl font-bold  max-500:text-5xl">Overview</h1>
+
+        <Link
+          to="/" 
+          className="bg-black text-white text-3xl font-semibold p-6 rounded-xl max-500:text-2xl"
+        >
+          Log Out
+        </Link>
+      </div>
       <MoneyTabs current={currentBalance} income={income} expenses={expenses} />
 
       <div className="w-full h-full flex gap-8 max-800:flex-col">

@@ -57,7 +57,7 @@ function EditBugetModal({ item }) {
   if (!isEditBudgetOpen) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 ">
-      <div className="bg-white p-16 rounded-[2rem] w-[30%] h-content flex flex-col gap-10">
+      <div className="bg-white p-16 rounded-[2rem] w-[55rem] h-content flex flex-col gap-10 max-500:w-[45rem]">
         <div className=" flex justify-between items-center">
           <div className="text-5xl font-bold">
             Edit &quot;{item.category}&quot; Budget
@@ -66,7 +66,7 @@ function EditBugetModal({ item }) {
             &times;
           </div>
         </div>
-       
+
         <div className="">
           <div className="text-gray-500 text-2xl font-semibold ">Category</div>
           <div className="flex items-center border rounded-2xl py-3 px-5 border-gray-900 relative">

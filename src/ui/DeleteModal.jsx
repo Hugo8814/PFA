@@ -57,9 +57,9 @@ function DeleteModal({ item, budget, pot }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-      <div className="bg-white p-16 rounded-[2rem] w-[28%] h-content flex flex-col gap-14">
+      <div className="bg-white p-16 rounded-[2rem] w-[55rem] h-content flex flex-col gap-14 max-500:w-[35rem] max-500:p-10">
         <div className="flex justify-between items-center">
-          <div className="text-5xl font-bold">
+          <div className="text-5xl font-bold max-500:text-4xl">
             Delete &quot;{item.name || item.category}&quot;
           </div>
           <div
