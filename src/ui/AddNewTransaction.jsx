@@ -120,7 +120,7 @@ function AddNewTransaction() {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 ">
-      <div className="bg-white p-16 rounded-[2rem] w-[30%] h-content flex flex-col gap-10">
+      <div className="bg-white p-16 rounded-[2rem] w-[55rem] h-content flex flex-col gap-10 max-500:w-[45rem]">
         <div className=" flex justify-between items-center">
           <div className="text-5xl font-bold">Add New Transaction</div>
           <div onClick={() => dispatch(closeModal())} className="text-6xl ">
@@ -149,16 +149,16 @@ function AddNewTransaction() {
           <div className="text-gray-500 text-2xl font-semibold  ">
             Transaction Date
           </div>
-          <div className="flex items-center  rounded-2xl  relative bg-[#F6F6F6]">
+          <div className="flex items-center justify-between  rounded-2xl  relative bg-[#F6F6F6]">
             <DatePicker
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
               dateFormat="MMMM d, yyyy"
-              className="w-full focus:outline-none bg-inherit border-none pr-96 pl-6 py-6 rounded-xl text-[1.7rem]"
+              className="w-full focus:outline-none bg-inherit border-none pr-96 pl-6 py-6 rounded-xl text-[1.7rem] max-500:pr-20"
               withPortal
               calendarClassName="scale-150"
             />
-            <img className="ml-auto p-5" src={downArrow} alt="" />
+            <img className=" p-5" src={downArrow} alt="" />
           </div>
         </div>
         <div>
