@@ -77,7 +77,7 @@ function AddNewBudget() {
   if (!isAddBudgetOpen) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 ">
-      <div className="bg-white p-16 rounded-[2rem] w-[30%] h-content flex flex-col gap-10">
+      <div className="bg-white p-16 rounded-[2rem] w-[55rem] h-content flex flex-col gap-10 max-500:w-[45rem]">
         <div className=" flex justify-between items-center">
           <div className="text-5xl font-bold">Add Budget</div>
           <div onClick={() => dispatch(closeModal())} className="text-6xl ">
