@@ -1,6 +1,8 @@
 import OverviewPage from "./Pages/overview/OverviewPage";
 import PotsPage from "./Pages/pots/PotsPage";
+
 import RecurringBillsPage from "./Pages/recurringBills/RecurringBillsPage";
+
 import TransactionsPage from "./Pages/transactions/TransactionsPage";
 import BudgetsPage from "./Pages/budgets/BudgetsPage";
 import LoginPage from "./Pages/login/LoginPage";
