@@ -144,7 +144,7 @@ function TransactionsPage() {
       </div>
       <AddNewTransaction />
       <div className="flex bg-white rounded-xl   p-14 flex-col">
-        <div className="flex pb-10">
+        <div className="flex pb-10 max-700:items-center">
           <div className="flex mr-auto">
             <input
               type="text"
