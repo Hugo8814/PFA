@@ -30,19 +30,19 @@ function RecTable({ data, perPage }) {
 
   return (
     <div>
-      <table className="w-full">
-        <thead>
+      <table className="w-full ">
+        <thead className="">
           <tr>
-            <th className="text-2xl font-normal text-gray-500 text-left p-6">
-              Recipient / Sender
+            <th className="text-2xl font-normal text-gray-500 text-left p-6 max-500:text-xl">
+              Bill Title
             </th>
-            <th className="text-2xl font-normal text-gray-500 text-left">
+            <th className="text-2xl font-normal text-gray-500 text-left max-600:hidden">
               Category
             </th>
-            <th className="text-2xl font-normal text-gray-500 text-left">
-              Transaction Date
+            <th className="text-2xl font-normal text-gray-500 text-left max-500:text-xl">
+              due date
             </th>
-            <th className="text-2xl font-normal text-gray-500 text-right">
+            <th className="text-2xl font-normal text-gray-500 text-right max-500:text-xl">
               Amount
             </th>
           </tr>
@@ -71,7 +71,7 @@ function RecTable({ data, perPage }) {
                     />
                     <p className="pl-4 font-bold">{item.name}</p>
                   </td>
-                  <td className="text-2xl font-normal text-gray-500">
+                  <td className="text-2xl font-normal text-gray-500 max-600:hidden">
                     {item.category}
                   </td>
                   <td
