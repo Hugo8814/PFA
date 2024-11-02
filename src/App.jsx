@@ -3,7 +3,7 @@ import PotsPage from "./Pages/pots/PotsPage";
 
 import RecurringBillsPage from "./Pages/recurringBills/RecurringPage";
 
-import TransactionsPage from "./Pages/transactions/TransactionsPage";
+import TransactionsPage from "./Pages/transactions/TransactionPage";
 import BudgetsPage from "./Pages/budgets/BudgetsPage";
 import LoginPage from "./Pages/login/LoginPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
