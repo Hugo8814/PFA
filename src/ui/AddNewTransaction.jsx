@@ -89,14 +89,17 @@ function AddNewTransaction() {
 
     // Proceed with sending transaction data to the API
     try {
-      const response = await fetch("http://127.0.0.1:9000/api/transactions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Include the token
-        },
-        body: JSON.stringify(transactionData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/transactions`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token
+          },
+          body: JSON.stringify(transactionData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to submit transaction: " + response.statusText);

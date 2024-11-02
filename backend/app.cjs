@@ -31,10 +31,11 @@ const User = mongoose.model("User", userSchema);
 // Middleware for CORS and parsing JSON
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
+
 app.use(express.json()); // To parse JSON request bodies
 
 // Basic route

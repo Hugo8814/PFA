@@ -4,7 +4,7 @@ import transactionsLogo from "../../assets/images/icon-nav-transactions.svg";
 import budgetLogo from "../../assets/images/icon-nav-budgets.svg";
 import recurringLogo from "../../assets/images/icon-nav-recurring-bills.svg";
 import potsLogo from "../../assets/images/icon-nav-pots.svg";
-import NavBtn from "./navBtn";
+import NavBtn from "./NavBtn";
 
 function SideBar() {
   return (

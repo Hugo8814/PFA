@@ -21,9 +21,9 @@ function DeleteModal({ item, budget, pot }) {
 
       // Determine which API endpoint to use based on pot or budget
       if (pot) {
-        url = `http://127.0.0.1:9000/api/pots/${id}`;
+        url = `${import.meta.env.VITE_API_URL}/api/pots/${id}`;
       } else if (budget) {
-        url = `http://127.0.0.1:9000/api/budgets/${id}`;
+        url = `${import.meta.env.VITE_API_URL}/api/budgets/${id}`;
       }
 
       const response = await fetch(url, {

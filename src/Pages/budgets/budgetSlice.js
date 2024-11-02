@@ -10,14 +10,17 @@ export const addBudget = createAsyncThunk(
   async (newBudget) => {
     console.log(newBudget);
 
-    const response = await fetch("http://127.0.0.1:9000/api/budgets", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(newBudget),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/budgets`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(newBudget),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to add pot");
@@ -33,7 +36,7 @@ export const addBudget = createAsyncThunk(
 //   async (updatedBudget) => {
 //     console.log(updatedBudget);
 //     const response = await fetch(
-//       `http://127.0.0.1:9000/api/budgets/${updatedBudget.id}`,
+//       `${import.meta.env.VITE_API_URL}/api/budgets/${updatedBudget.id}`,
 //       {
 //         method: "PUT",
 //         headers: {
@@ -55,7 +58,7 @@ export const updateBudget = createAsyncThunk(
   async (updatedBudget) => {
     console.log("Updating Budget:", updatedBudget);
     const response = await fetch(
-      `http://127.0.0.1:9000/api/budgets/${updatedBudget.id}`,
+      `${import.meta.env.VITE_API_URL}/api/budgets/${updatedBudget.id}`,
       {
         method: "PUT",
         headers: {
