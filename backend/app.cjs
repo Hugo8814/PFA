@@ -11,7 +11,7 @@ const Pot = require("./data/Pot.cjs");
 const Budget = require("./data/Budget.cjs");
 
 const app = express();
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 // Connect to MongoDB
 mongoose
@@ -50,12 +50,12 @@ app.post("/auth/login", async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      return res.status(400).json({ error: "Invalid username or password" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      return res.status(400).json({ error: "Invalid password" });
     }
 
     // Generate JWT token
@@ -68,11 +68,16 @@ app.post("/auth/login", async (req, res) => {
     // Return the token as part of the response
     res.json({ message: "Login successful", token });
   } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).json({ error: "Failed to login" });
+    if (err instanceof mongoose.Error.ValidationError) {
+      return res.status(400).json({ error: "Invalid request data" });
+    } else if (err instanceof bcrypt.Error) {
+      return res.status(500).json({ error: "Error comparing passwords" });
+    } else {
+      console.error("Login error:", err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 });
-
 // User registration
 app.post("/auth/register", async (req, res) => {
   const { username, password } = req.body;
