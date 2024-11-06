@@ -56,7 +56,7 @@ function RecurringBillsPage() {
   console.log(isScreenSmall);
 
   return (
-    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-700:px-10 max-700:pt-14">
+    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-1000:p-10 bg-[#F8F4F0]">
       <Header title="Recurring Bills" />
 
       <div className="flex gap-10 max-900:flex-col">
