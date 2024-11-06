@@ -40,17 +40,18 @@ function TotalBills() {
         </p>
       </div>
 
-      <div className="bg-white p-6 max-900:w-full ">
+      <div className="bg-white p-6 max-900:w-full max-500:p-4 rounded-xl">
         <h4 className="text-3xl font-semibold p-4">Summary</h4>
-        <div className="flex justify-between p-4 border-t-[1px]">
+        <div className="flex justify-between p-4 border-t-[1px] ">
           <div className="text-xl text-gray-600">Paid Bills</div>
           <div className="text-xl text-gray-900 font-bold">{`${paid} (${formatCurrency(
             paidBills
           ).slice(1)})`}</div>
         </div>
-        <div className="flex justify-between p-4 border-t-[1px]">
-          <div className="text-xl text-gray-600">Total Upcoming</div>
-          <div className="text-xl text-gray-900 font-bold">{`${total} (${formatCurrency(
+        <div className="flex justify-between p-4 border-t-[1px]  ">
+          <div className="text-xl text-gray-600 ">Total Upcoming</div>
+
+          <div className="text-xl text-gray-900 font-bold text-nowrap">{`${total} (${formatCurrency(
             totalUpcoming
           ).slice(1)})`}</div>
         </div>
