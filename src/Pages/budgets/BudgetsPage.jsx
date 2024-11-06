@@ -32,7 +32,10 @@ function BudgetsPage() {
   }));
 
   return (
-    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-800:px-10">
+    <div
+      className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-800:px-10 max-1100:p-10
+     bg-[#F8F4F0]"
+    >
       <Header title="Budgets" btn={true} text="+Add New Budget" budget={true} />
 
       <div className="flex gap-8 max-1000:flex-col">
