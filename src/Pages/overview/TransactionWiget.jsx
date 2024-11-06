@@ -13,7 +13,7 @@ function TransactionWiget() {
 
   return (
     <div className="flex bg-white rounded-xl  flex-col p-8">
-      <SubTitle to="/transactions">Transactions</SubTitle>
+      <SubTitle to="/app/transactions">Transactions</SubTitle>
 
       {sortedData &&
         sortedData
