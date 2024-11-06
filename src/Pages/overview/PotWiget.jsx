@@ -13,7 +13,7 @@ function PotWiget() {
 
   return (
     <div className="flex bg-white rounded-xl  w-full flex-col p-8 ">
-      <SubTitle to="/pots">Pots</SubTitle>
+      <SubTitle to="/app/pots">Pots</SubTitle>
 
       <div className="flex  gap-5 ">
         <div className="flex gap-6 bg-  bg-[#F8F4F0] w-[85%] rounded-xl p-8">
