@@ -16,6 +16,7 @@ function AddModal() {
     dispatch(updatePot({ id: item._id, total: value + item.total }));
     dispatch(closeModal());
     console.log("Pot successfully updated");
+    console.log(item._id);
   }
 
   if (!isAddOpen) return null;
