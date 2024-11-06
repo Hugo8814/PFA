@@ -36,7 +36,7 @@ function BugetsWiget() {
           <BudgetChart data={chartData} />
         </div>
 
-        <div className=" grid grid-cols-1 gird-rows-4 gap-4  max-500:grid-cols-4">
+        <div className=" grid grid-cols-1 gird-rows-4 gap-4  max-500:grid-cols-[auto,auto,auto,auto] max-500:gap-0">
           <BugetPots data={budgetData} budget={true} />
         </div>
       </div>
