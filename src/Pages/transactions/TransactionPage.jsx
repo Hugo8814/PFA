@@ -132,7 +132,7 @@ function TransactionsPage() {
   ///////////////////////////////////////////
 
   return (
-    <div className="w-full  h-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-900:px-10 max-1500:pb-10 max-1000:pt-16 max-600:pt-20  ">
+    <div className="w-full  h-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-900:px-10 max-1500:pb-10 max-1000:pt-10  bg-[#F8F4F0]  ">
       <div>
         <Header
           title="Transactions"
