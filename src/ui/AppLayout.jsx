@@ -14,13 +14,16 @@ function AppLayout() {
   const status = useSelector(selectOverviewStatus);
   const error = useSelector((state) => state.overview.error);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchOverviewData());
     }
   }, [status, dispatch]);
-  if (status === "loading") {
-    return <div>Loading...</div>;
+
+  // Show loading or error state as needed
+  if (status === "loading" || isLoading) {
+    return <Loader />;
   }
 
   if (status === "failed") {
@@ -28,9 +31,8 @@ function AppLayout() {
   }
 
   return (
-    <div className="w-full h-screen grid bg-[#F8F4F0] grid-cols-[18%,82%] max-1100:flex max-1100:flex-col  justify-between  ">
+    <div className="w-full h-screen grid bg-[#F8F4F0] grid-cols-[18%,82%] max-1100:flex max-1100:flex-col justify-between">
       <SideBar />
-      {isLoading && <Loader />}
 
       <main className="w-full h-full">
         <Outlet />
