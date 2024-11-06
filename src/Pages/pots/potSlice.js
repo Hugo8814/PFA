@@ -103,11 +103,13 @@ const potSlice = createSlice({
         state.pots.push(action.payload); // Add the new pot to the state
       })
       .addCase(updatePot.fulfilled, (state, action) => {
-        const index = state.pots.findIndex(
-          (pot) => pot.id === action.payload.id
-        );
+        state.status = "succeeded";
+
+        // Find the pot in the state and update it
+        const updatedPot = action.payload;
+        const index = state.pots.findIndex((pot) => pot._id === updatedPot._id);
         if (index !== -1) {
-          state.pots[index] = action.payload; // Update the pot in the state
+          state.pots[index] = updatedPot; // Replace with the updated pot data
         }
       });
   },

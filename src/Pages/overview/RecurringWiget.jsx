@@ -37,7 +37,7 @@ function RecurringWiget() {
   }
   return (
     <div className="flex bg-white rounded-xl h-auto p-10 w-full flex-col gap-6">
-      <SubTitle to="/recurringBills">Recurring Bills</SubTitle>
+      <SubTitle to="/app/recurringBills">Recurring Bills</SubTitle>
 
       <div className="flex justify-between mx-6 p-10 bg-[#F8F4F0]  border-l-4 border-green-600 rounded-xl">
         <div className="flex gap-4 items-center  ">

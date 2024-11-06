@@ -22,7 +22,7 @@ function BugetsWiget() {
 
   return (
     <div className="flex bg-white rounded-md h-content w-full flex-col p-10">
-      <SubTitle to="/budgets">Budgets</SubTitle>
+      <SubTitle to="/app/budgets">Budgets</SubTitle>
 
       <div className="flex gap-6 justify-between max-500:flex-col">
         <div className=" mx-auto relative text-center  max-1200:scale-[0.9]">
