@@ -6,7 +6,7 @@ import {
 
 // Async thunk for fetching pots from the API
 export const fetchPots = createAsyncThunk("pots/fetchPots", async () => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pots`);
+  const response = await fetch(`${import.meta.env.VITE_API_URL}api/pots`);
   if (!response.ok) {
     throw new Error("Failed to fetch pots");
   }
@@ -15,7 +15,7 @@ export const fetchPots = createAsyncThunk("pots/fetchPots", async () => {
 
 // Async thunk for adding a new pot
 export const addPot = createAsyncThunk("pots/addPot", async (newPot) => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pots`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}api/pots`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const updatePot = createAsyncThunk(
   "pots/updatePot",
   async (updatedPot) => {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/pots/${updatedPot.id}`,
+      `${import.meta.env.VITE_API_URL}api/pots/${updatedPot.id}`,
       {
         method: "PUT",
         headers: {

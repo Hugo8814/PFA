@@ -9,7 +9,7 @@ export const addBudget = createAsyncThunk(
   "budget/addBudget",
   async (newBudget) => {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/budgets`,
+      `${import.meta.env.VITE_API_URL}api/budgets`,
       {
         method: "POST",
         headers: {
@@ -55,7 +55,7 @@ export const updateBudget = createAsyncThunk(
   "budget/updateBudget",
   async (updatedBudget) => {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/budgets/${updatedBudget.id}`,
+      `${import.meta.env.VITE_API_URL}api/budgets/${updatedBudget.id}`,
       {
         method: "PUT",
         headers: {

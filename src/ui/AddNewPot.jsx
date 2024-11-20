@@ -64,7 +64,7 @@ function AddNewPot() {
       return;
     }
 
-    // Prepare new pot data
+   
     const newData = {
       name: potName,
       theme: selectedColorHex,
