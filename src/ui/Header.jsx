@@ -24,7 +24,7 @@ function Header({ title, btn, text, budget, pot, transaction }) {
               dispatch(openAddTransaction());
             }
           }}
-          className="bg-black text-white text-3xl font-semibold p-6 rounded-xl max-500:text-2xl"
+          className="bg-black shadow-md text-white text-3xl font-semibold p-6 rounded-xl max-500:text-2xl"
         >
           {text}
         </button>

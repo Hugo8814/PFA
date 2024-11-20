@@ -22,7 +22,7 @@ function PotsPage() {
   );
 
   return (
-    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-y-auto max-1100:p-10 bg-[#F8F4F0]">
+    <div className="w-full flex flex-col px-28 py-28 gap-12 overflow-y-auto max-1100:p-10 bg-[#F8F4F0]">
       <Header title="Pots" btn={true} text="+Add New Pot" pot={true} />
 
       <AddNewPot />

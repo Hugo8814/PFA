@@ -33,24 +33,24 @@ function BudgetsPage() {
 
   return (
     <div
-      className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-800:px-10 max-1100:p-10
+      className="w-full flex flex-col px-28 py-28 gap-12 overflow-auto max-800:px-10 max-1100:p-10
      bg-[#F8F4F0]"
     >
       <Header title="Budgets" btn={true} text="+Add New Budget" budget={true} />
 
-      <div className="flex gap-8 max-1000:flex-col">
+      <div className="flex gap-8 max-1000:flex-col ">
         <Summary
           budgetTotal={budgetTotal}
           data={data}
           budgetData={budgetData}
         />
         <AddNewBudget />
-        <div className="flex flex-col w-full gap-10">
+        <div className="flex flex-col w-full gap-10 ">
           {budgetData &&
             budgetData.map((item, index) => (
               <div
                 key={index}
-                className="w-full bg-white rounded-2xl p-10 h-full flex flex-col gap-8 relative"
+                className="shadow-md w-full bg-white rounded-2xl p-10 h-full flex flex-col gap-8 relative"
               >
                 <div className="flex justify-between p-4 w-full">
                   <div className="flex gap-4 items-center">

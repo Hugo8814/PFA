@@ -7,7 +7,6 @@ import { closeModal } from "./modalSlice";
 import { updatePot } from "../Pages/pots/potSlice";
 
 function EditPotModal({ item }) {
-  console.log(item);
   const { isEditPotOpen } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 

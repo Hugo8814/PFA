@@ -49,9 +49,9 @@ function EditBugetModal({ item }) {
     };
     // Dispatch the action to add a pot
     dispatch(updateBudget(newData));
-    console.log("Budget successfully updated");
 
     dispatch(closeModal());
+    console.log("Budget successfully updated");
   }
 
   if (!isEditBudgetOpen) return null;

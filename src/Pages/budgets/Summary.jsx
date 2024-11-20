@@ -6,7 +6,7 @@ function Summary({ data, budgetTotal, budgetData }) {
   const spentTotal = budgetData.reduce((total, item) => total + item.spent, 0);
 
   return (
-    <div className="flex rounded-2xl flex-col gap-6 h-fit bg-white max-1000:flex-row max-800:flex-col  ">
+    <div className="flex rounded-2xl flex-col gap-6 h-fit bg-white max-1000:flex-row max-800:flex-col shadow-md  ">
       <div className="relative text-center px-40  py-14   max-900:px-0 max-900:mx-auto">
         <div className="text-5xl font-bold absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ">
           ${spentTotal}

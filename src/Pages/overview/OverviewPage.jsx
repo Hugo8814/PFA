@@ -1,4 +1,3 @@
-import Header from "../../ui/Header";
 import MoneyTabs from "./MoneyTabs";
 import PotWiget from "./PotWiget";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,13 +50,13 @@ function OverviewPage() {
   }
 
   return (
-    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-1400:px-7 max-1200:scale-90 max-1200:px-0 max-1000:scale-100  max-1000:p-10 bg-[#F8F4F0]">
+    <div className="w-full flex flex-col px-28 py-28 gap-12 overflow-auto max-1400:px-7 max-1200:scale-90 max-1200:px-0 max-1000:scale-100  max-1000:p-10 bg-[#F8F4F0]">
       <div className="flex justify-between items-center ">
         <h1 className="text-6xl font-bold  max-500:text-5xl">Overview</h1>
 
         <Link
           to="/"
-          className="bg-black text-white text-3xl font-semibold p-6 rounded-xl max-500:text-2xl"
+          className="bg-black shadow-md text-white text-3xl font-semibold p-6 rounded-xl max-500:text-2xl"
         >
           Log Out
         </Link>

@@ -3,7 +3,7 @@ function Pot({ data }) {
     data &&
     data
       .map((item, index) => (
-        <div key={index} className=" w-[11rem] flex  max-500:w-fit">
+        <div key={index} className=" w-[11rem] flex  max-500:w-fit h-[4.5rem] ">
           <span
             className={`h-full w-2 rounded-xl mr-6 max-500:mr-2 `}
             style={{ backgroundColor: item.theme }} // Apply dynamic hex color here

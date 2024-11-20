@@ -132,7 +132,7 @@ function TransactionsPage() {
   ///////////////////////////////////////////
 
   return (
-    <div className="w-full  h-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-900:px-10 max-1500:pb-10 max-1000:pt-10  bg-[#F8F4F0]  ">
+    <div className="w-full  h-full flex flex-col px-28 py-28 gap-12 overflow-auto max-900:px-10 max-1500:pb-10 max-1000:pt-10  bg-[#F8F4F0]   ">
       <div>
         <Header
           title="Transactions"
@@ -143,7 +143,7 @@ function TransactionsPage() {
         />
       </div>
       <AddNewTransaction />
-      <div className="flex bg-white rounded-xl   p-14 flex-col">
+      <div className="flex bg-white rounded-xl   p-14 flex-col shadow-md">
         <div className="flex pb-10 max-700:items-center">
           <div className="flex mr-auto">
             <input

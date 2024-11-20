@@ -46,7 +46,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex items-center p-5 h-screen bg-[#F8F4F0] max-1100:flex-col max-1100:p-0  ">
+    <div className="shadow-xl flex items-center p-5 h-screen bg-[#F8F4F0] max-1100:flex-col max-1100:p-0  ">
       <div className="bg-gray-900 w-full  justify-center items-center hidden max-1100:flex ">
         <img src={logo} alt="" className="z-20  w-76 p-8 " />
       </div>
@@ -117,16 +117,26 @@ function LoginPage() {
             </div>
             <button
               type="submit"
-              className="bg-gray-900 text-2xl hover:bg-gray-800 text-white font-bold py-6 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full  max-380:text-xl"
+              className="bg-gray-900 text-2xl hover:bg-gray-700 text-white font-bold py-6 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full  max-380:text-xl"
             >
               Login
+            </button>
+            <button
+              type="submit"
+              onClick={() => {
+                setUsername("Demo1234");
+                setPassword("Demo1234");
+              }}
+              className="bg-[#008FB1]  border-2 text-white  text-2xl hover:bg-gray-800 font-bold py-6 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full  max-380:text-xl "
+            >
+              Try out a Demo Account
             </button>
           </form>
           <div className="text-gray-600 text-xl text-center p-3">
             Need to create an account?{" "}
             <Link
               to="/SignUp"
-              className="text-gray-900 font-semibold underline"
+              className="text-gray-900 font-semibold underline "
             >
               Sign up
             </Link>

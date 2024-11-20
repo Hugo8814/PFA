@@ -16,6 +16,7 @@ function AddNewBudget() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // Error message state
+  const [isSubmitting, setIsSubmitting] = useState(false); // Submission state
 
   const colors = [
     { color: "#277C78", name: "Green" },
@@ -61,17 +62,34 @@ function AddNewBudget() {
     console.log("Decoded payload:", payload); // Debugging line
 
     const newData = {
-      id: Date.now(),
       category: selectedCategory,
       maximum: Number(maxAmount),
       theme: selectedColorHex,
       userId: payload.userId,
     };
-    // Dispatch the action to add a pot
-    dispatch(addBudget(newData));
-    dispatch(closeModal());
+    // // Dispatch the action to add a pot
+    // dispatch(addBudget(newData));
+    // dispatch(closeModal());
 
-    console.log("Budget successfully added");
+    //
+    try {
+      // Dispatch the action to add the new pot to the Redux store
+      dispatch(addBudget(newData)); // Update the local Redux state
+      console.log("Budget successfully added", newData);
+
+      // Close the modal after successful submission
+      dispatch(closeModal());
+
+      // Reset form fields
+      setMaxAmount("");
+      setSelectedCategory("");
+      setSelectedColorHex("#277C78");
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage("Error adding new pot: " + error.message);
+    } finally {
+      setIsSubmitting(false); // Re-enable form
+    }
   }
 
   if (!isAddBudgetOpen) return null;
@@ -141,7 +159,7 @@ function AddNewBudget() {
         </div>
 
         <div className="">
-          <div className="text-gray-500 text-2xl font-semibold ">Target</div>
+          <div className="text-gray-500 text-2xl font-semibold ">Theme</div>
           <div className="flex items-center border rounded-2xl py-3 px-5 border-gray-900 relative">
             <span
               style={{ backgroundColor: selectedColorHex }}
@@ -186,12 +204,11 @@ function AddNewBudget() {
         </div>
 
         <button
-          onClick={() => {
-            handleSubmit();
-          }}
+          onClick={handleSubmit}
           className="flex justify-center items-center bg-black text-white text-3xl font-semibold p-6 rounded-xl"
+          disabled={isSubmitting} // Disable button when submitting
         >
-          Confirm Addition
+          {isSubmitting ? "Submitting..." : "Confirm Addition"}
         </button>
       </div>
     </div>

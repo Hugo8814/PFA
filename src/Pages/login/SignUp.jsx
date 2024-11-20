@@ -45,7 +45,7 @@ function SignUp() {
   };
 
   return (
-    <div className="flex items-center p-5 h-screen bg-[#F8F4F0] max-1100:flex-col max-1100:p-0">
+    <div className="shadow-xl flex items-center p-5 h-screen bg-[#F8F4F0] max-1100:flex-col max-1100:p-0">
       <div className="bg-gray-900 w-full justify-center items-center hidden max-1100:flex">
         <img src={logo} alt="" className="z-20 w-76 p-8" />
       </div>

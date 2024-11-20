@@ -31,8 +31,8 @@ function TotalBills() {
     useSelector(getReData);
 
   return (
-    <div className="w-[35%] space-y-10 max-900:w-full max-900:flex  max-900:space-y-0  max-900:space-x-8 ">
-      <div className="bg-black w-full text-white rounded-xl p-10 space-y-12">
+    <div className="w-[35%] space-y-10 max-900:w-full max-900:flex  max-900:space-y-0  max-900:space-x-8 shadow- ">
+      <div className="bg-black w-full text-white rounded-xl p-10 space-y-12 shadow-md">
         <img src={BillsIcon} alt="BillsIcon" className="w-16" />
         <p className="text-3xl font-semibold">Total Bills</p>
         <p className="text-6xl font-bold">
@@ -40,7 +40,7 @@ function TotalBills() {
         </p>
       </div>
 
-      <div className="bg-white p-6 max-900:w-full max-500:p-4 rounded-xl">
+      <div className="bg-white p-6 max-900:w-full max-500:p-4 rounded-xl shadow-md">
         <h4 className="text-3xl font-semibold p-4">Summary</h4>
         <div className="flex justify-between p-4 border-t-[1px] ">
           <div className="text-xl text-gray-600">Paid Bills</div>

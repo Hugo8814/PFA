@@ -143,42 +143,46 @@ function AddNewPot() {
             />
           </div>
         </div>
-        <div>
-          <div className="text-gray-500 text-2xl font-semibold">Theme</div>
+        <div className="">
+          <div className="text-gray-500 text-2xl font-semibold ">Theme</div>
           <div className="flex items-center border rounded-2xl py-3 px-5 border-gray-900 relative">
             <span
               style={{ backgroundColor: selectedColorHex }}
-              className="w-7 h-7 rounded-full flex"
+              className=" w-7 h-7 rounded-full flex "
             ></span>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full text-gray-500 flex items-center focus:outline-none border-none pr-37 pl-6 py-3 rounded-xl text-2xl text-left"
+              className="w-full text-gray-500 flex items-center foucus: outline-none border-none pr-37 pl-6 py-3 rounded-xl text-2xl text-left"
             >
               {selectedColor}
               <img className="ml-auto" src={downArrow} alt="" />
             </button>
 
             {isDropdownOpen && (
-              <div className="absolute left-0 top-[6rem] w-full bg-white rounded-xl z-10 border-gray-500 border-[1px]">
-                <div className="overflow-y-scroll h-[20rem]">
-                  {colors.map((color) => (
-                    <div
-                      key={color.color}
-                      onClick={() => {
-                        setSelectedColor(color.name);
-                        setSelectedColorHex(color.color);
-                        setIsDropdownOpen(false);
-                      }}
-                      className="hover:bg-gray-200 pl-6 py-4 flex gap-5 cursor-pointer"
-                    >
-                      <span
-                        className="w-7 h-7 rounded-full"
-                        style={{ backgroundColor: color.color }}
-                      ></span>
-                      {color.name}
+              <div className="h-full space-y-3 text-2xl">
+                {isDropdownOpen && (
+                  <div className="absolute left-0 top-[6rem]  w-full bg-white rounded-xl   z-10 border-gray-500 border-[1px]  ">
+                    <div className="overflow-y-scroll h-[20rem]">
+                      {colors.map((color) => (
+                        <div
+                          key={color.color}
+                          onClick={() => {
+                            setSelectedColor(color.name);
+                            setSelectedColorHex(color.color);
+                            setIsDropdownOpen(!isDropdownOpen);
+                          }}
+                          className="hover:bg-gray-200 pl-6 py-4 flex gap-5 cursor-pointer"
+                        >
+                          <span
+                            className="w-7 h-7 rounded-full"
+                            style={{ backgroundColor: color.color }}
+                          ></span>
+                          {color.name}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

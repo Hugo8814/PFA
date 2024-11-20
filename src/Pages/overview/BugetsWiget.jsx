@@ -21,7 +21,7 @@ function BugetsWiget() {
   }, [budgetData]);
 
   return (
-    <div className="flex bg-white rounded-md h-content w-full flex-col p-10">
+    <div className="flex bg-white rounded-md h-content w-full flex-col p-10 shadow-md ">
       <SubTitle to="/app/budgets">Budgets</SubTitle>
 
       <div className="flex gap-6 justify-between max-500:flex-col">

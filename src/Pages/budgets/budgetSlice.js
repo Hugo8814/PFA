@@ -6,10 +6,8 @@ import {
 import { getTransactions } from "../transactions/transactionSlice"; // Import the transactions selector
 
 export const addBudget = createAsyncThunk(
-  "budget/addPot",
+  "budget/addBudget",
   async (newBudget) => {
-    console.log(newBudget);
-
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/api/budgets`,
       {
@@ -56,7 +54,6 @@ export const addBudget = createAsyncThunk(
 export const updateBudget = createAsyncThunk(
   "budget/updateBudget",
   async (updatedBudget) => {
-    console.log("Updating Budget:", updatedBudget);
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/api/budgets/${updatedBudget.id}`,
       {
@@ -82,17 +79,15 @@ const budgetSlice = createSlice({
     budget: [],
   },
   reducers: {
+    // addBudget(state, action) {
+    //   state.budget = [...state.budget, action.payload];
+    // },
+    // deleteBudget(state, action) {
+    //   const { id } = action.payload;
+    //   state.budget = state.budget.filter((budget) => budget.id !== id);
+    // },
     setBudget(state, action) {
       state.budget = action.payload;
-    },
-    addBudget(state, action) {
-      state.budget = [...state.budget, action.payload];
-    },
-
-    deleteBudget(state, action) {
-      const { id } = action.payload;
-
-      state.budget = state.budget.filter((budget) => budget.id !== id);
     },
   },
   extraReducers: (builder) => {
@@ -100,12 +95,25 @@ const budgetSlice = createSlice({
       state.budget = [...state.budget, action.payload];
     });
 
+    // builder.addCase(updateBudget.fulfilled, (state, action) => {
+    //   const index = state.budget.findIndex(
+    //     (budget) => budget._id === action.payload._id
+    //   );
+    //   if (index !== -1) {
+    //     state.budget[index] = action.payload;
+    //   }
+    // });
+    // bug i ran into, simply bc i was using id instead of the new  _id
+
     builder.addCase(updateBudget.fulfilled, (state, action) => {
+      state.status = "succeeded";
+
+      const updatedBudget = action.payload;
       const index = state.budget.findIndex(
-        (budget) => budget.id === action.payload.id
+        (budget) => budget._id === updatedBudget._id
       );
       if (index !== -1) {
-        state.budget[index] = action.payload;
+        state.budget[index] = updatedBudget;
       }
     });
   },

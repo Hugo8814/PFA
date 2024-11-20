@@ -56,13 +56,13 @@ function RecurringBillsPage() {
   console.log(isScreenSmall);
 
   return (
-    <div className="w-full flex flex-col px-28 pt-28 gap-12 overflow-auto max-1000:p-10 bg-[#F8F4F0]">
+    <div className="w-full flex flex-col p-28 gap-12 overflow-auto max-1000:p-10 bg-[#F8F4F0] ">
       <Header title="Recurring Bills" />
 
       <div className="flex gap-10 max-900:flex-col">
         <TotalBills />
 
-        <div className="flex bg-white rounded-xl w-full  h-full  p-14 flex-col">
+        <div className="flex bg-white rounded-2xl w-full  h-full  p-14 flex-col shadow-md">
           <div className="flex pb-10 justify-between  max-500:pb-2 ">
             <div className="flex h-full">
               <input
