@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
 });
 
-// User model
+// User model//
 const User = mongoose.model("User", userSchema);
 
 // Middleware for CORS and parsing JSON
