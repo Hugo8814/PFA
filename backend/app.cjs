@@ -136,12 +136,12 @@ function authenticateToken(req, res, next) {
 }
 
 // Example protected route
-app.get("/api/protected", authenticateToken, (req, res) => {
+app.get("api/protected", authenticateToken, (req, res) => {
   res.json({ message: `Hello, ${req.user.username}! This is protected data.` });
 });
 
 // Endpoint to handle new transactions
-app.post("/api/transactions", authenticateToken, async (req, res) => {
+app.post("api/transactions", authenticateToken, async (req, res) => {
   const newTransaction = new Transaction({
     ...req.body,
     userId: req.user.userId, // Ensure this is correct
@@ -156,7 +156,7 @@ app.post("/api/transactions", authenticateToken, async (req, res) => {
 });
 
 // Endpoint to handle new pots
-app.post("/api/pots", authenticateToken, async (req, res) => {
+app.post("api/pots", authenticateToken, async (req, res) => {
   const newPot = new Pot({
     ...req.body,
     userId: req.user.userId, // Ensure this is correct
@@ -170,7 +170,7 @@ app.post("/api/pots", authenticateToken, async (req, res) => {
   }
 });
 // Endpoint to handle new Budget
-app.post("/api/budgets", authenticateToken, async (req, res) => {
+app.post("api/budgets", authenticateToken, async (req, res) => {
   console.log("Received new budget data:", req.body);
 
   const newBudget = new Budget({
@@ -191,7 +191,7 @@ app.post("/api/budgets", authenticateToken, async (req, res) => {
 });
 
 // DELETE endpoint to remove a pot by ID
-app.delete("/api/pots/:id", authenticateToken, async (req, res) => {
+app.delete("api/pots/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -208,7 +208,7 @@ app.delete("/api/pots/:id", authenticateToken, async (req, res) => {
   }
 });
 //Delete endpoint to remove to pot by ID
-app.delete("/api/budgets/:id", authenticateToken, async (req, res) => {
+app.delete("api/budgets/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
   try {
     const deletedBudget = await Budget.findByIdAndDelete(id);
@@ -225,7 +225,7 @@ app.delete("/api/budgets/:id", authenticateToken, async (req, res) => {
 // PUT endpoint to update a pot by ID
 
 // PUT endpoint to update a pot by ID
-app.put("/api/pots/:id", authenticateToken, async (req, res) => {
+app.put("api/pots/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body; // Get the updated data from the request body
 
@@ -247,7 +247,7 @@ app.put("/api/pots/:id", authenticateToken, async (req, res) => {
   }
 });
 
-app.put("/api/budgets/:id", authenticateToken, async (req, res) => {
+app.put("api/budgets/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
   const updateData = req.body; // This should contain the fields you want to update
 
@@ -269,7 +269,7 @@ app.put("/api/budgets/:id", authenticateToken, async (req, res) => {
 });
 
 // GET endpoint to retrieve all transactions
-app.get("/api/transactions", authenticateToken, async (req, res) => {
+app.get("api/transactions", authenticateToken, async (req, res) => {
   // Ensure authentication is applied
   try {
     const transactions = await Transaction.find({ userId: req.user.userId }); // Fetch transactions for the authenticated user
@@ -281,7 +281,7 @@ app.get("/api/transactions", authenticateToken, async (req, res) => {
 });
 
 // Endpoint to handle API responses
-app.get("/api", authenticateToken, async (req, res) => {
+app.get("api", authenticateToken, async (req, res) => {
   try {
     // Fetch user-specific transactions
     const transactions = await Transaction.find({ userId: req.user.userId });
