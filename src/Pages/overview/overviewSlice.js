@@ -17,7 +17,7 @@ export const fetchOverviewData = createAsyncThunk(
       throw new Error("Token is not available ");
     }
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}api`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
