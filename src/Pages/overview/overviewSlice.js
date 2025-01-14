@@ -50,7 +50,13 @@ const overviewSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetOverviewState: () => {
+      return {data: {}, status: "idle", error: null};
+    },
+
+
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchOverviewData.pending, (state) => {
@@ -72,3 +78,4 @@ export const selectOverviewStatus = (state) => state.overview.status;
 export const selectOverviewError = (state) => state.overview.error;
 
 export default overviewSlice.reducer;
+export const { resetOverviewState } = overviewSlice.actions;

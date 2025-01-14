@@ -14,7 +14,8 @@ import { getPotTotal } from "../pots/potSlice";
 import { useEffect } from "react";
 
 import { selectAuthToken, setAuthToken } from "../../../backend/data/authSlice"; // Adjust the path
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { resetOverviewState } from "./overviewSlice";
 
 function OverviewPage() {
   const dispatch = useDispatch();
@@ -28,6 +29,21 @@ function OverviewPage() {
   const expenses = (budgetTotal - transactionEpenses).toFixed(2);
   const income = (PotTotal + transactionIncome).toFixed(2);
   const currentBalance = (income - expenses).toFixed(2);
+  const navigate = useNavigate();
+ 
+
+  const handleLogout = () => {
+    // Clear the token from localStorage
+    localStorage.removeItem("token");
+  
+    // Reset all Redux state (e.g., overview and auth tokens)
+    dispatch(resetOverviewState());
+    dispatch(setAuthToken(null));
+  
+    // Navigate to the login page
+    navigate("/login");
+  };
+  
 
   useEffect(() => {
     const localToken = localStorage.getItem("token"); // Retrieve token from local storage
@@ -57,6 +73,7 @@ function OverviewPage() {
         <Link
           to="/"
           className="bg-black shadow-md text-white text-3xl font-semibold p-6 rounded-xl max-500:text-2xl"
+          onClick={handleLogout}
         >
           Log Out
         </Link>

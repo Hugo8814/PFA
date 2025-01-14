@@ -3,9 +3,15 @@ import img from "../../../assets/images/illustration-authentication.svg";
 
 import logo from "../../../assets/images/logo-large.svg";
 import { Link } from "react-router-dom"; // Import useNavigate
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthToken } from "../../../backend/data/authSlice";
 import { useNavigate } from "react-router-dom";
+import {
+  
+  
+  selectOverviewStatus,
+} from "../overview/overviewSlice";
+import Loader from "../../ui/Loader";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -13,6 +19,11 @@ function LoginPage() {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isLoading = navigation.state === "loading";
+  const status = useSelector(selectOverviewStatus);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +55,12 @@ function LoginPage() {
       setError("An unexpected error occurred. Please try again.");
     }
   };
+
+  if (status === "loading" || isLoading) {
+    return <Loader />;
+  }
+
+
 
   return (
     <div className="shadow-xl flex items-center p-5 h-screen bg-[#F8F4F0] max-1100:flex-col max-1100:p-0  ">

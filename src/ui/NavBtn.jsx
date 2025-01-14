@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useMediaQuery } from "react-responsive";
+
 import { NavLink } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 function NavBtn({ logo, to, children }) {
-  const isScreenSmall = useMediaQuery({ maxWidth: 500 });
+  const isScreenSmall = useMediaQuery({ query: "(max-width: 768px)" });
+
 
   return (
     <NavLink
