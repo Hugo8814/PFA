@@ -306,3 +306,33 @@ app.get("/api", authenticateToken, async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+const TrueLayerSigning = require('truelayer-signing');
+
+// Load private key and KID from environment variables
+const privateKey = process.env.PRIVATE_KEY;
+const keyId = process.env.KID;
+
+if (!privateKey || !keyId) {
+  console.error("Private key or Key ID not set in environment variables.");
+  process.exit(1);
+}
+
+// Create an instance of the TrueLayerSigning package
+const signing = new TrueLayerSigning({
+  privateKey,
+  keyId,
+});
+
+// Example payload to sign
+const payload = {
+  amount: 1000,
+  currency: 'GBP',
+  userId: req.user.userId,  // Example user-specific data
+};
+
+// Generate a signed JWT token
+const signedToken = signing.sign(payload);
+
+console.log(signedToken);  // This is the signed JWT token
