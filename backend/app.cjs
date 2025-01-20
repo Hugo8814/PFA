@@ -6,6 +6,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const Transaction = require("./data/Transaction.cjs");
+const fetch = require('node-fetch');
+const fs = require('fs');
+const crypto = require('crypto');
 
 const Pot = require("./data/Pot.cjs");
 const Budget = require("./data/Budget.cjs");
@@ -308,31 +311,60 @@ app.listen(port, () => {
 });
 
 
-const TrueLayerSigning = require('truelayer-signing');
+// //////////////////////////////////////////////
+// // Load private key and KID from environment variables
+// // Load private key and KID from environment variables
+// const privateKey = process.env.PRIVATE_KEY;  // The private key should be set in the .env file
+// const keyId = process.env.KID;
 
-// Load private key and KID from environment variables
-const privateKey = process.env.PRIVATE_KEY;
-const keyId = process.env.KID;
+// // TrueLayer API URL (use sandbox or production URL depending on your environment)
+// const apiUrl = 'https://api.sandbox.truelayer.com';  // For sandbox, replace with production if needed
 
-if (!privateKey || !keyId) {
-  console.error("Private key or Key ID not set in environment variables.");
-  process.exit(1);
-}
+// // Function to sign the request
+// const signRequest = (method, path, body = '') => {
+//   const bodyHash = crypto.createHash('sha256').update(body).digest('hex');
+//   const signedToken = crypto.createSign('ECDSA-SHA256')
+//     .update(method + path + bodyHash)
+//     .sign(privateKey, 'base64');  // Sign with EC private key
 
-// Create an instance of the TrueLayerSigning package
-const signing = new TrueLayerSigning({
-  privateKey,
-  keyId,
-});
+//   return signedToken;
+// };
 
-// Example payload to sign
-const payload = {
-  amount: 1000,
-  currency: 'GBP',
-  userId: req.user.userId,  // Example user-specific data
-};
+// // Example function to make a POST request to TrueLayer API
+// const makeApiRequest = async () => {
+//   const method = 'POST';
+//   const path = '/v3/payments';  // Replace with your actual API path
+//   const body = JSON.stringify({ example: 'data' });  // Your request body
 
-// Generate a signed JWT token
-const signedToken = signing.sign(payload);
+//    // Debugging: Log the path and signedToken to ensure they're correct
+//    console.log('Path:', path);
 
-console.log(signedToken);  // This is the signed JWT token
+//    const signedToken = signRequest(method, path, body);
+//    console.log('Signed Token:', signedToken);
+ 
+//    const idempotencyKey = 'idempotency-key-' + new Date().getTime();  // Create unique idempotency key
+ 
+//    // Send the request to TrueLayer API
+//    try {
+//      const response = await fetch(`${apiUrl}${path}`, {
+//        method: method,
+//        headers: {
+//          'Authorization': `Bearer ${signedToken}`,
+//          'Idempotency-Key': idempotencyKey,
+//          'Content-Type': 'application/json'
+//        },
+//        body: body
+//      });
+ 
+//      const data = await response.json();
+//      if (!response.ok) {
+//        console.error('Error:', data);
+//      } else {
+//        console.log('API Response:', data);
+//      }
+//    } catch (error) {
+//      console.error('Error:', error);
+//    }
+//  };
+// // Run the request
+// makeApiRequest();
